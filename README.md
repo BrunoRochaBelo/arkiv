@@ -1,5 +1,3 @@
-# arkiv
-
 # Arkiv – Arquivo Digital Inteligente
 
 **Centralize, catalogue e encontre suas imagens com segurança empresarial e usabilidade moderna.**
