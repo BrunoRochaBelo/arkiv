@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Env
+.env
+venv/
+
+# Migrations
+migrations/versions/*.py
+
+# SQLite database
+arkiv.db
