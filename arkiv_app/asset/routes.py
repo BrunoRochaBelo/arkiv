@@ -4,8 +4,9 @@ import hashlib
 from flask import render_template, redirect, url_for, flash, request, current_app
 from flask_login import login_required, current_user
 
-from ..extensions import db
+from ..extensions import db, limiter
 from ..models import Asset, Folder, Library
+from ..utils.audit import record_audit
 from . import asset_bp
 from .forms import AssetUploadForm
 from .tasks import generate_thumbnail, perform_ocr
@@ -16,6 +17,7 @@ from .tasks import generate_thumbnail, perform_ocr
 
 @asset_bp.route('/folders/<int:folder_id>/assets', methods=['GET', 'POST'])
 @login_required
+@limiter.limit('20 per minute')
 def upload_asset(folder_id):
     folder = Folder.query.get_or_404(folder_id)
     form = AssetUploadForm()
@@ -49,6 +51,7 @@ def upload_asset(folder_id):
         )
         db.session.add(asset)
         db.session.commit()
+        record_audit('create', 'asset', asset.id, user_id=current_user.id, org_id=org.id)
         generate_thumbnail.delay(asset.id, upload_path, thumb_path)
         perform_ocr.delay(asset.id)
         flash('File uploaded')

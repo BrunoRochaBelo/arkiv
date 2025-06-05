@@ -3,6 +3,7 @@ from flask_login import login_required, current_user
 
 from ..extensions import db
 from ..models import Tag, Asset
+from ..utils.audit import record_audit
 from . import tag_bp
 from .forms import TagForm
 
@@ -24,6 +25,7 @@ def create_tag():
         tag = Tag(org_id=org_id, name=form.name.data, color_hex=form.color_hex.data or '#CCCCCC')
         db.session.add(tag)
         db.session.commit()
+        record_audit('create', 'tag', tag.id, user_id=current_user.id, org_id=org_id)
         flash('Tag created')
         return redirect(url_for('tag.list_tags'))
     return render_template('tag/form.html', form=form)
@@ -38,6 +40,7 @@ def edit_tag(tag_id):
         tag.name = form.name.data
         tag.color_hex = form.color_hex.data
         db.session.commit()
+        record_audit('update', 'tag', tag.id, user_id=current_user.id, org_id=current_user.memberships[0].org_id)
         flash('Tag updated')
         return redirect(url_for('tag.list_tags'))
     return render_template('tag/form.html', form=form)
@@ -49,6 +52,7 @@ def delete_tag(tag_id):
     tag = Tag.query.get_or_404(tag_id)
     db.session.delete(tag)
     db.session.commit()
+    record_audit('delete', 'tag', tag.id, user_id=current_user.id, org_id=current_user.memberships[0].org_id)
     flash('Tag deleted')
     return redirect(url_for('tag.list_tags'))
 

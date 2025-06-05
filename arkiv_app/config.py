@@ -13,6 +13,8 @@ class Config:
     CELERY_RESULT_BACKEND = os.environ.get('CELERY_RESULT_BACKEND', 'redis://localhost:6379/0')
     UPLOAD_FOLDER = os.environ.get('UPLOAD_FOLDER', 'instance/uploads')
     THUMB_FOLDER = os.environ.get('THUMB_FOLDER', 'instance/thumbnails')
+    LOG_LEVEL = os.environ.get('LOG_LEVEL', 'INFO')
+    SENTRY_DSN = os.environ.get('SENTRY_DSN')
 
 class DevelopmentConfig(Config):
     DEBUG = True
@@ -20,7 +22,13 @@ class DevelopmentConfig(Config):
 class ProductionConfig(Config):
     DEBUG = False
 
+
+class TestConfig(Config):
+    TESTING = True
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
+
 config_by_name = {
     'development': DevelopmentConfig,
     'production': ProductionConfig,
+    'testing': TestConfig,
 }
