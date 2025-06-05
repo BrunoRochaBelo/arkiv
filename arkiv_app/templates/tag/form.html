@@ -2,10 +2,10 @@
 {% block title %}Tag{% endblock %}
 {% block content %}
 <h1>Tag</h1>
-<form method="post">
+<form method="post" class="card">
   {{ form.hidden_tag() }}
-  <label>{{ form.name.label }} {{ form.name(size=32) }}</label>
-  <label>{{ form.color_hex.label }} {{ form.color_hex(size=10) }}</label>
-  {{ form.submit() }}
+  <div class="field">{{ form.name.label }} {{ form.name(size=32) }}</div>
+  <div class="field">{{ form.color_hex.label }} {{ form.color_hex(size=10) }}</div>
+  <div>{{ form.submit(class_='btn') }}</div>
 </form>
 {% endblock %}

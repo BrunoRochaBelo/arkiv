@@ -2,10 +2,10 @@
 {% block title %}Library{% endblock %}
 {% block content %}
 <h1>Library</h1>
-<form method="post">
+<form method="post" class="card">
   {{ form.hidden_tag() }}
-  <label>{{ form.name.label }} {{ form.name(size=32) }}</label>
-  <label>{{ form.description.label }} {{ form.description(cols=40, rows=4) }}</label>
-  {{ form.submit() }}
+  <div class="field">{{ form.name.label }} {{ form.name(size=32) }}</div>
+  <div class="field">{{ form.description.label }} {{ form.description(cols=40, rows=4) }}</div>
+  <div>{{ form.submit(class_='btn') }}</div>
 </form>
 {% endblock %}

@@ -2,13 +2,13 @@
 {% block title %}Libraries{% endblock %}
 {% block content %}
 <h1>Libraries</h1>
-<a href="{{ url_for('library.create_library') }}">New Library</a>
+<a href="{{ url_for('library.create_library') }}" class="btn">New Library</a>
 <ul>
   {% for lib in libraries %}
-  <li>
+  <li class="card" style="margin-bottom:1rem; list-style:none;">
     {{ lib.name }} - <a href="{{ url_for('library.edit_library', lib_id=lib.id) }}">Edit</a>
     <form action="{{ url_for('library.delete_library', lib_id=lib.id) }}" method="post" style="display:inline">
-      <button type="submit">Delete</button>
+      <button type="submit" class="btn">Delete</button>
     </form>
   </li>
   {% else %}

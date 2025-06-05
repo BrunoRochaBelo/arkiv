@@ -2,10 +2,10 @@
 {% block title %}Assets{% endblock %}
 {% block content %}
 <h1>Assets for {{ folder.name }}</h1>
-<form method="post" enctype="multipart/form-data">
+<form method="post" enctype="multipart/form-data" class="card">
   {{ form.hidden_tag() }}
-  {{ form.file() }}
-  {{ form.submit() }}
+  <div class="field">{{ form.file() }}</div>
+  <div>{{ form.submit(class_='btn') }}</div>
 </form>
 <ul>
   {% for asset in assets %}
