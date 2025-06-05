@@ -1,9 +1,24 @@
 from datetime import datetime
 
-from argon2 import PasswordHasher
-from argon2.exceptions import VerifyMismatchError
+try:
+    from argon2 import PasswordHasher
+    from argon2.exceptions import VerifyMismatchError
+    ph = PasswordHasher()
+except Exception:  # pragma: no cover - optional argon2 fallback
+    # Allows running without argon2 installed (e.g., in minimal dev envs)
+    from werkzeug.security import generate_password_hash, check_password_hash
 
-from .extensions import db
+    class PasswordHasher:
+        def hash(self, password: str) -> str:
+            return generate_password_hash(password)
+
+        def verify(self, hashed: str, password: str) -> bool:
+            return check_password_hash(hashed, password)
+
+    class VerifyMismatchError(Exception):
+        pass
+
+    ph = PasswordHasher()
 
 ph = PasswordHasher()
 
