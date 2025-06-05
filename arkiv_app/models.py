@@ -19,6 +19,7 @@ except Exception:  # pragma: no cover - optional argon2 fallback
         pass
 
     ph = PasswordHasher()
+
 from .extensions import db
 
 class Organization(db.Model):

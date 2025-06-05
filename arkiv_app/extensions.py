@@ -13,7 +13,6 @@ jwt = JWTManager()
 mail = Mail()
 login_manager = LoginManager()
 
-
 def init_extensions(app):
     db.init_app(app)
     migrate.init_app(app, db)
