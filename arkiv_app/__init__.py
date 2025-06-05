@@ -3,6 +3,7 @@ from .config import config_by_name
 from .extensions import init_extensions, db
 import sentry_sdk
 from sentry_sdk.integrations.flask import FlaskIntegration
+from flask_login import current_user
 
 def create_app(config_name='development'):
     app = Flask(__name__)
@@ -11,6 +12,15 @@ def create_app(config_name='development'):
     dsn = app.config.get('SENTRY_DSN')
     if dsn:
         sentry_sdk.init(dsn=dsn, integrations=[FlaskIntegration()])
+
+        @app.before_request
+        def _sentry_context():
+            if current_user.is_authenticated:
+                with sentry_sdk.configure_scope() as scope:
+                    scope.set_user({'id': current_user.id, 'email': current_user.email})
+                    # Aqui pode dar erro se memberships for vazio. Ajusta se necessário.
+                    org_id = current_user.memberships[0].org_id
+                    scope.set_tag('org_id', org_id)
 
     init_extensions(app)
 
@@ -35,6 +45,14 @@ def create_app(config_name='development'):
     app.register_blueprint(search_bp)
     app.register_blueprint(reports_bp)
     app.register_blueprint(admin_bp)
+
+    @app.after_request
+    def _security_headers(resp):
+        resp.headers['Content-Security-Policy'] = "default-src 'self'; img-src 'self' https:;"
+        resp.headers['X-Frame-Options'] = 'DENY'
+        resp.headers['X-Content-Type-Options'] = 'nosniff'
+        resp.headers['Referrer-Policy'] = 'no-referrer-when-downgrade'
+        return resp
 
     # Só criar tabelas se estiver em desenvolvimento
     if config_name == 'development':
