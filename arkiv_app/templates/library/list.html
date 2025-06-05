@@ -1,5 +1,6 @@
-<!doctype html>
-<title>Libraries</title>
+{% extends 'base.html' %}
+{% block title %}Libraries{% endblock %}
+{% block content %}
 <h1>Libraries</h1>
 <a href="{{ url_for('library.create_library') }}">New Library</a>
 <ul>
@@ -14,3 +15,4 @@
   <li>No libraries</li>
   {% endfor %}
 </ul>
+{% endblock %}

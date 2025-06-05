@@ -1,9 +1,11 @@
-<!doctype html>
-<title>Library</title>
+{% extends 'base.html' %}
+{% block title %}Library{% endblock %}
+{% block content %}
 <h1>Library</h1>
 <form method="post">
   {{ form.hidden_tag() }}
-  <p>{{ form.name.label }} {{ form.name(size=32) }}</p>
-  <p>{{ form.description.label }} {{ form.description(cols=40, rows=4) }}</p>
-  <p>{{ form.submit() }}</p>
+  <label>{{ form.name.label }} {{ form.name(size=32) }}</label>
+  <label>{{ form.description.label }} {{ form.description(cols=40, rows=4) }}</label>
+  {{ form.submit() }}
 </form>
+{% endblock %}

@@ -1,9 +1,11 @@
-<!doctype html>
-<title>Assets</title>
+{% extends 'base.html' %}
+{% block title %}Assets{% endblock %}
+{% block content %}
 <h1>Assets for {{ folder.name }}</h1>
 <form method="post" enctype="multipart/form-data">
   {{ form.hidden_tag() }}
-  <p>{{ form.file() }} {{ form.submit() }}</p>
+  {{ form.file() }}
+  {{ form.submit() }}
 </form>
 <ul>
   {% for asset in assets %}
@@ -12,3 +14,4 @@
   <li>No assets</li>
   {% endfor %}
 </ul>
+{% endblock %}

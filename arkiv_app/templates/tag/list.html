@@ -1,5 +1,6 @@
-<!doctype html>
-<title>Tags</title>
+{% extends 'base.html' %}
+{% block title %}Tags{% endblock %}
+{% block content %}
 <h1>Tags</h1>
 <a href="{{ url_for('tag.create_tag') }}">New Tag</a>
 <ul>
@@ -14,3 +15,4 @@
   <li>No tags</li>
   {% endfor %}
 </ul>
+{% endblock %}

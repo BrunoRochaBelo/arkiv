@@ -1,5 +1,6 @@
-<!doctype html>
-<title>Search</title>
+{% extends 'base.html' %}
+{% block title %}Search{% endblock %}
+{% block content %}
 <h1>Results for "{{ query }}"</h1>
 <ul>
   {% for a in assets %}
@@ -12,3 +13,4 @@
   <li>Library: {{ l.name }}</li>
   {% endfor %}
 </ul>
+{% endblock %}
