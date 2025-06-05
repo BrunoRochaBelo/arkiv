@@ -1,1 +1,7 @@
-from flask import Blueprint\n\nreports_bp = Blueprint('reports', __name__)\n\nfrom . import routes  # noqa: E402,F401
+from flask import Blueprint
+
+
+reports_bp = Blueprint('reports', __name__)
+
+
+from . import routes  # noqa: E402,F401
