@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="utf-8">
   <title>{% block title %}Arkiv{% endblock %}</title>
@@ -11,9 +11,12 @@
   <header>
     <nav class="container">
       <div class="brand"><a href="{{ url_for('main.index') }}">Arkiv</a></div>
-      {% if current_user.is_authenticated %}
-      <div><a href="{{ url_for('auth.logout') }}">Logout</a></div>
-      {% endif %}
+      <div class="actions">
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+        {% if current_user.is_authenticated %}
+        <a href="{{ url_for('auth.logout') }}">Logout</a>
+        {% endif %}
+      </div>
     </nav>
   </header>
   <main class="container">
