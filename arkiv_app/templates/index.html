@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
-{% block title %}Home{% endblock %}
+{% block title %}Início{% endblock %}
 {% block content %}
-<h1>Welcome to Arkiv</h1>
-<p>Manage your libraries and assets efficiently.</p>
+<h1>Bem-vindo ao Arkiv</h1>
+<p>Gerencie suas bibliotecas e arquivos de forma eficiente.</p>
 {% if not current_user.is_authenticated %}
-<a href="{{ url_for('auth.login') }}" class="btn">Login</a>
+<a href="{{ url_for('auth.login') }}" class="btn">Entrar</a>
 {% endif %}
 {% endblock %}

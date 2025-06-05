@@ -2,17 +2,17 @@
 {% block title %}Tags{% endblock %}
 {% block content %}
 <h1>Tags</h1>
-<a href="{{ url_for('tag.create_tag') }}" class="btn">New Tag</a>
+<a href="{{ url_for('tag.create_tag') }}" class="btn"><i class="bi bi-plus-circle"></i> Nova Tag</a>
 <ul>
   {% for t in tags %}
   <li class="card" style="margin-bottom:1rem; list-style:none;">
-    {{ t.name }} - <a href="{{ url_for('tag.edit_tag', tag_id=t.id) }}">Edit</a>
+    {{ t.name }} - <a href="{{ url_for('tag.edit_tag', tag_id=t.id) }}"><i class="bi bi-pencil"></i> Editar</a>
     <form action="{{ url_for('tag.delete_tag', tag_id=t.id) }}" method="post" style="display:inline">
-      <button type="submit" class="btn">Delete</button>
+      <button type="submit" class="btn"><i class="bi bi-trash"></i> Excluir</button>
     </form>
   </li>
   {% else %}
-  <li>No tags</li>
+  <li>Nenhuma tag</li>
   {% endfor %}
 </ul>
 {% endblock %}
