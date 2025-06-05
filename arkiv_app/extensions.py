@@ -4,7 +4,18 @@ from flask_jwt_extended import JWTManager
 from flask_cors import CORS
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
-from prometheus_flask_exporter import PrometheusMetrics
+try:
+    from prometheus_flask_exporter import PrometheusMetrics
+except ModuleNotFoundError:  # pragma: no cover - optional dependency
+    class PrometheusMetrics:
+        """Fallback implementation when prometheus_flask_exporter is missing."""
+
+        def __init__(self, *args, **kwargs):
+            pass
+
+        def init_app(self, app):  # noqa: D401 - no functionality
+            """Stub method to keep interface compatible."""
+            return
 from pythonjsonlogger import jsonlogger
 import logging
 from flask_mail import Mail
