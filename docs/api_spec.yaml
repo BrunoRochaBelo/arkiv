@@ -26,15 +26,71 @@ paths:
       responses:
         '201':
           description: Created
-  /api/v1/folders/create:
+  /api/v1/libraries/{lib_id}/folders:
+    get:
+      summary: List folders
+      responses:
+        '200':
+          description: Success
+  /api/v1/folders:
     post:
       summary: Create folder
       responses:
         '201':
           description: Created
+  /api/v1/folders/{id}:
+    put:
+      summary: Update folder
+      responses:
+        '200':
+          description: Success
+    delete:
+      summary: Delete folder
+      responses:
+        '200':
+          description: Success
   /api/v1/folders/{id}/assets:
+    get:
+      summary: List assets
+      responses:
+        '200':
+          description: Success
     post:
       summary: Upload asset
       responses:
         '201':
           description: Created
+  /api/v1/tags:
+    get:
+      summary: List tags
+      responses:
+        '200':
+          description: Success
+    post:
+      summary: Create tag
+      responses:
+        '201':
+          description: Created
+  /api/v1/tags/{id}:
+    put:
+      summary: Update tag
+      responses:
+        '200':
+          description: Success
+    delete:
+      summary: Delete tag
+      responses:
+        '200':
+          description: Success
+  /api/v1/assets/{id}/tags:
+    post:
+      summary: Set asset tags
+      responses:
+        '200':
+          description: Success
+  /api/v1/search:
+    get:
+      summary: Search
+      responses:
+        '200':
+          description: Success

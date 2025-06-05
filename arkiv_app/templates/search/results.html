@@ -1,0 +1,14 @@
+<!doctype html>
+<title>Search</title>
+<h1>Results for "{{ query }}"</h1>
+<ul>
+  {% for a in assets %}
+  <li>Asset: {{ a.filename_orig }}</li>
+  {% endfor %}
+  {% for f in folders %}
+  <li>Folder: {{ f.name }}</li>
+  {% endfor %}
+  {% for l in libraries %}
+  <li>Library: {{ l.name }}</li>
+  {% endfor %}
+</ul>
