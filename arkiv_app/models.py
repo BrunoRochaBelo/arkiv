@@ -29,6 +29,7 @@ class Organization(db.Model):
     name = db.Column(db.String(150), unique=True, nullable=False)
     slug = db.Column(db.String(100), unique=True, nullable=False)
     plan_id = db.Column(db.Integer, db.ForeignKey('plan.id'), nullable=False)
+    plan = db.relationship('Plan', backref='organizations')
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     is_active = db.Column(db.Boolean, default=True)
 

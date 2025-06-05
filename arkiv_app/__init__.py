@@ -5,6 +5,8 @@ import sentry_sdk
 from sentry_sdk.integrations.flask import FlaskIntegration
 from flask_login import current_user
 
+from .utils import current_org_id
+
 def create_app(config_name='development'):
     app = Flask(__name__)
     app.config.from_object(config_by_name[config_name])
@@ -18,9 +20,10 @@ def create_app(config_name='development'):
             if current_user.is_authenticated:
                 with sentry_sdk.configure_scope() as scope:
                     scope.set_user({'id': current_user.id, 'email': current_user.email})
-                    # Aqui pode dar erro se memberships for vazio. Ajusta se necessário.
-                    org_id = current_user.memberships[0].org_id
-                    scope.set_tag('org_id', org_id)
+                    # set organization tag only if available
+                    org_id = current_org_id()
+                    if org_id is not None:
+                        scope.set_tag('org_id', org_id)
 
     init_extensions(app)
 

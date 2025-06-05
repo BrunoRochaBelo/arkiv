@@ -1,6 +1,8 @@
 from flask import render_template, redirect, url_for, flash, request
 from flask_login import login_required, current_user
 
+from ..utils import current_org_id
+
 from ..extensions import db
 from ..utils.audit import record_audit
 from ..models import Library, Folder
@@ -11,7 +13,8 @@ from .forms import LibraryForm
 @library_bp.route("/libraries")
 @login_required
 def list_libraries():
-    libs = Library.query.filter_by(org_id=current_user.memberships[0].org_id).all()
+    org_id = current_org_id()
+    libs = Library.query.filter_by(org_id=org_id).all() if org_id else []
     return render_template("library/list.html", libraries=libs)
 
 
@@ -28,7 +31,7 @@ def show_library(lib_id):
 def create_library():
     form = LibraryForm()
     if form.validate_on_submit():
-        org_id = current_user.memberships[0].org_id
+        org_id = current_org_id()
         lib = Library(
             org_id=org_id, name=form.name.data, description=form.description.data
         )
@@ -56,7 +59,7 @@ def edit_library(lib_id):
             "library",
             lib.id,
             user_id=current_user.id,
-            org_id=current_user.memberships[0].org_id,
+            org_id=current_org_id(),
         )
         flash("Biblioteca atualizada")
         return redirect(url_for("library.list_libraries"))
@@ -74,7 +77,7 @@ def delete_library(lib_id):
         "library",
         lib.id,
         user_id=current_user.id,
-        org_id=current_user.memberships[0].org_id,
+        org_id=current_org_id(),
     )
     flash("Biblioteca removida")
     return redirect(url_for("library.list_libraries"))

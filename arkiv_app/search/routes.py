@@ -1,6 +1,8 @@
 from flask import render_template, request, jsonify
 from flask_login import login_required, current_user
 
+from ..utils import current_org_id
+
 from ..models import Asset, Library, Folder
 from . import search_bp
 
@@ -9,7 +11,7 @@ from . import search_bp
 @login_required
 def search_page():
     q = request.args.get('q', '')
-    org_id = current_user.memberships[0].org_id
+    org_id = current_org_id()
     assets = []
     folders = []
     libs = []
@@ -25,7 +27,7 @@ def search_page():
 @login_required
 def api_search():
     q = request.args.get('q', '')
-    org_id = current_user.memberships[0].org_id
+    org_id = current_org_id()
     results = []
     if q:
         like = f"%{q}%"
