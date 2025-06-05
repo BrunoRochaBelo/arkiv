@@ -4,5 +4,5 @@ from wtforms import SubmitField
 
 
 class AssetUploadForm(FlaskForm):
-    file = FileField('File', validators=[FileRequired()])
-    submit = SubmitField('Upload')
+    file = FileField('Arquivo', validators=[FileRequired()])
+    submit = SubmitField('Enviar')

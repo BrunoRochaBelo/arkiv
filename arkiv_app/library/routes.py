@@ -25,7 +25,7 @@ def create_library():
         db.session.add(lib)
         db.session.commit()
         record_audit('create', 'library', lib.id, user_id=current_user.id, org_id=org_id)
-        flash('Library created')
+        flash('Biblioteca criada')
         return redirect(url_for('library.list_libraries'))
     return render_template('library/form.html', form=form)
 
@@ -40,7 +40,7 @@ def edit_library(lib_id):
         lib.description = form.description.data
         db.session.commit()
         record_audit('update', 'library', lib.id, user_id=current_user.id, org_id=current_user.memberships[0].org_id)
-        flash('Library updated')
+        flash('Biblioteca atualizada')
         return redirect(url_for('library.list_libraries'))
     return render_template('library/form.html', form=form)
 
@@ -52,5 +52,5 @@ def delete_library(lib_id):
     db.session.delete(lib)
     db.session.commit()
     record_audit('delete', 'library', lib.id, user_id=current_user.id, org_id=current_user.memberships[0].org_id)
-    flash('Library deleted')
+    flash('Biblioteca removida')
     return redirect(url_for('library.list_libraries'))

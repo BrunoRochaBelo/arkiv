@@ -21,7 +21,7 @@ def login():
         if user and user.check_password(form.password.data):
             login_user(user)
             return redirect(url_for('library.list_libraries'))
-        flash('Invalid credentials')
+        flash('Credenciais inválidas')
     return render_template('auth/login.html', form=form)
 
 

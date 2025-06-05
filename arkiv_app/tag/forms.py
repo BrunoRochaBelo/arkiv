@@ -4,6 +4,6 @@ from wtforms.validators import DataRequired
 
 
 class TagForm(FlaskForm):
-    name = StringField('Name', validators=[DataRequired()])
-    color_hex = StringField('Color')
-    submit = SubmitField('Save')
+    name = StringField('Nome', validators=[DataRequired()])
+    color_hex = StringField('Cor')
+    submit = SubmitField('Salvar')
