@@ -3,6 +3,7 @@ from .config import config_by_name
 from .extensions import init_extensions
 
 
+
 def create_app(config_name='development'):
     app = Flask(__name__)
     app.config.from_object(config_by_name[config_name])

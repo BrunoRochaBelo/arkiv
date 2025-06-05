@@ -4,7 +4,6 @@ from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError
 
 ph = PasswordHasher()
-
 from .extensions import db
 
 class Organization(db.Model):
@@ -50,7 +49,6 @@ class User(db.Model):
             return ph.verify(self.password_hash, password)
         except VerifyMismatchError:
             return False
-
 
 class Membership(db.Model):
     __tablename__ = 'membership'

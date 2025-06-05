@@ -1,3 +1,4 @@
+"""Seed initial data for development."""
 from arkiv_app import create_app
 from arkiv_app.extensions import db
 from arkiv_app.models import Plan, Organization, User, Membership, Library
@@ -17,7 +18,7 @@ def main():
             org = Organization(name='DemoCorp', slug='democorp', plan_id=plan.id)
             db.session.add(org)
             db.session.commit()
-        
+
         user = User.query.filter_by(email='owner@democorp.com').first()
         if not user:
             user = User(name='Owner', email='owner@democorp.com')
@@ -27,7 +28,7 @@ def main():
             membership = Membership(user_id=user.id, org_id=org.id, role='OWNER')
             db.session.add(membership)
             db.session.commit()
-        
+
         lib = Library.query.filter_by(org_id=org.id, name='Default Library').first()
         if not lib:
             lib = Library(org_id=org.id, name='Default Library', description='Exemplo de biblioteca')
