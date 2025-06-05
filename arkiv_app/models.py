@@ -21,6 +21,7 @@ except Exception:  # pragma: no cover - optional argon2 fallback
     ph = PasswordHasher()
 
 from .extensions import db
+from flask_login import UserMixin
 
 class Organization(db.Model):
     __tablename__ = 'organization'
@@ -44,7 +45,7 @@ class Plan(db.Model):
     features = db.Column(db.JSON)
 
 
-class User(db.Model):
+class User(db.Model, UserMixin):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(150), nullable=False)

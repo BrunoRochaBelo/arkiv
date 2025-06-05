@@ -20,6 +20,7 @@ from pythonjsonlogger import jsonlogger
 import logging
 from flask_mail import Mail
 from flask_login import LoginManager
+from flask_wtf import CSRFProtect
 
 # Instances of extensions
 
@@ -28,8 +29,11 @@ migrate = Migrate()
 jwt = JWTManager()
 mail = Mail()
 login_manager = LoginManager()
+login_manager.login_view = "auth.login"
+login_manager.session_protection = "strong"
 limiter = Limiter(key_func=get_remote_address)
 metrics = None
+csrf = CSRFProtect()
 
 def init_extensions(app):
     db.init_app(app)
@@ -38,6 +42,7 @@ def init_extensions(app):
     mail.init_app(app)
     login_manager.init_app(app)
     limiter.init_app(app)
+    csrf.init_app(app)
     global metrics
     metrics = PrometheusMetrics(app)
     _setup_logging(app)
