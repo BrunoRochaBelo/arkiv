@@ -51,6 +51,7 @@ class User(db.Model):
     email = db.Column(db.String(150), unique=True, nullable=False, index=True)
     password_hash = db.Column(db.String(255), nullable=False)
     is_active = db.Column(db.Boolean, default=True)
+    is_staff = db.Column(db.Boolean, default=False)
     last_login = db.Column(db.DateTime)
     mfa_enabled = db.Column(db.Boolean, default=False)
 

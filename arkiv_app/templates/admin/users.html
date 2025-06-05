@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}Usuários{% endblock %}
+{% block content %}
+<h1>Usuários</h1>
+<table class="card" style="width:100%">
+  <tr><th>Nome</th><th>Email</th><th>Ativo</th><th>Admin</th></tr>
+  {% for u in users %}
+  <tr>
+    <td>{{ u.name }}</td>
+    <td>{{ u.email }}</td>
+    <td>{{ 'Sim' if u.is_active else 'Não' }}</td>
+    <td>{{ 'Sim' if u.is_staff else 'Não' }}</td>
+  </tr>
+  {% else %}
+  <tr><td colspan="4">Nenhum usuário</td></tr>
+  {% endfor %}
+</table>
+{% endblock %}
