@@ -1,0 +1,9 @@
+<!doctype html>
+<title>Tag</title>
+<h1>Tag</h1>
+<form method="post">
+  {{ form.hidden_tag() }}
+  <p>{{ form.name.label }} {{ form.name(size=32) }}</p>
+  <p>{{ form.color_hex.label }} {{ form.color_hex(size=10) }}</p>
+  <p>{{ form.submit() }}</p>
+</form>

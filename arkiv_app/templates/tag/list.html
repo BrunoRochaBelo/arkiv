@@ -1,0 +1,16 @@
+<!doctype html>
+<title>Tags</title>
+<h1>Tags</h1>
+<a href="{{ url_for('tag.create_tag') }}">New Tag</a>
+<ul>
+  {% for t in tags %}
+  <li>
+    {{ t.name }} - <a href="{{ url_for('tag.edit_tag', tag_id=t.id) }}">Edit</a>
+    <form action="{{ url_for('tag.delete_tag', tag_id=t.id) }}" method="post" style="display:inline">
+      <button type="submit">Delete</button>
+    </form>
+  </li>
+  {% else %}
+  <li>No tags</li>
+  {% endfor %}
+</ul>

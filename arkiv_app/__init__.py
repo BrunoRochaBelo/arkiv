@@ -14,6 +14,8 @@ def create_app(config_name='development'):
     from .library import library_bp
     from .folder import folder_bp
     from .asset import asset_bp
+    from .tag import tag_bp
+    from .search import search_bp
 
     app.register_blueprint(main_bp)
     app.register_blueprint(api_bp)
@@ -21,6 +23,8 @@ def create_app(config_name='development'):
     app.register_blueprint(library_bp)
     app.register_blueprint(folder_bp)
     app.register_blueprint(asset_bp)
+    app.register_blueprint(tag_bp)
+    app.register_blueprint(search_bp)
 
     # Só criar tabelas se estiver em desenvolvimento
     if config_name == 'development':
