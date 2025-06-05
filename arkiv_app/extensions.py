@@ -18,7 +18,7 @@ jwt = JWTManager()
 mail = Mail()
 login_manager = LoginManager()
 limiter = Limiter(key_func=get_remote_address)
-metrics = PrometheusMetrics()
+metrics = None
 
 def init_extensions(app):
     db.init_app(app)
@@ -27,7 +27,8 @@ def init_extensions(app):
     mail.init_app(app)
     login_manager.init_app(app)
     limiter.init_app(app)
-    metrics.init_app(app)
+    global metrics
+    metrics = PrometheusMetrics(app)
     _setup_logging(app)
     CORS(app, resources={r"/api/*": {"origins": app.config.get('CORS_ORIGINS', '*')}})
 
