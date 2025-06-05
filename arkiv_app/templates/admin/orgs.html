@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Organizações{% endblock %}
+{% block content %}
+<h1>Organizações</h1>
+<ul>
+  {% for org in orgs %}
+  <li class="card">{{ org.name }} ({{ org.slug }})</li>
+  {% else %}
+  <li>Nenhuma organização</li>
+  {% endfor %}
+</ul>
+{% endblock %}

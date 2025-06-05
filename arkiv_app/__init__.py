@@ -54,9 +54,11 @@ def create_app(config_name='development'):
         resp.headers['Referrer-Policy'] = 'no-referrer-when-downgrade'
         return resp
 
-    # Só criar tabelas se estiver em desenvolvimento
-    if config_name == 'development':
+    # Só criar tabelas e dados iniciais em desenvolvimento/produção
+    if config_name != 'testing':
         with app.app_context():
             db.create_all()
+            from .utils.create_initial_data import ensure_initial_data
+            ensure_initial_data()
 
     return app

@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}Admin{% endblock %}
+{% block content %}
+<h1>Painel Administrativo</h1>
+<nav class="card" style="display:flex;gap:1rem;flex-wrap:wrap;">
+  <a href="{{ url_for('admin.list_users') }}" class="btn">Usuários</a>
+  <a href="{{ url_for('admin.list_orgs') }}" class="btn">Organizações</a>
+  <a href="{{ url_for('admin.list_plans') }}" class="btn">Planos</a>
+  <a href="{{ url_for('admin.list_logs') }}" class="btn">Auditoria</a>
+</nav>
+{% endblock %}

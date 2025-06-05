@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}Auditoria{% endblock %}
+{% block content %}
+<h1>Últimos Logs</h1>
+<table class="card" style="width:100%">
+  <tr><th>Org</th><th>Usuário</th><th>Ação</th><th>Entidade</th><th>ID</th><th>Data</th></tr>
+  {% for l in logs %}
+  <tr>
+    <td>{{ l.org_id }}</td>
+    <td>{{ l.user_id }}</td>
+    <td>{{ l.action }}</td>
+    <td>{{ l.entity }}</td>
+    <td>{{ l.entity_id }}</td>
+    <td>{{ l.timestamp.strftime('%Y-%m-%d %H:%M') }}</td>
+  </tr>
+  {% else %}
+  <tr><td colspan="6">Nenhum log</td></tr>
+  {% endfor %}
+</table>
+{% endblock %}
