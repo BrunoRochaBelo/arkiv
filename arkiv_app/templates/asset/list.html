@@ -1,0 +1,14 @@
+<!doctype html>
+<title>Assets</title>
+<h1>Assets for {{ folder.name }}</h1>
+<form method="post" enctype="multipart/form-data">
+  {{ form.hidden_tag() }}
+  <p>{{ form.file() }} {{ form.submit() }}</p>
+</form>
+<ul>
+  {% for asset in assets %}
+  <li>{{ asset.filename_orig }} ({{ asset.size }} bytes)</li>
+  {% else %}
+  <li>No assets</li>
+  {% endfor %}
+</ul>

@@ -1,0 +1,10 @@
+<!doctype html>
+<title>Folder</title>
+<h1>Folder</h1>
+<form method="post">
+  {{ form.hidden_tag() }}
+  <p>{{ form.library_id.label }} {{ form.library_id() }}</p>
+  <p>{{ form.parent_id.label }} {{ form.parent_id() }}</p>
+  <p>{{ form.name.label }} {{ form.name(size=32) }}</p>
+  <p>{{ form.submit() }}</p>
+</form>

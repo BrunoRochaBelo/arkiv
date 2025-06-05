@@ -1,0 +1,9 @@
+<!doctype html>
+<title>Login</title>
+<h1>Login</h1>
+<form method="post">
+  {{ form.hidden_tag() }}
+  <p>{{ form.email.label }} {{ form.email(size=32) }}</p>
+  <p>{{ form.password.label }} {{ form.password(size=32) }}</p>
+  <p>{{ form.submit() }}</p>
+</form>
