@@ -1,5 +1,12 @@
 from datetime import datetime
+
+from argon2 import PasswordHasher
+from argon2.exceptions import VerifyMismatchError
+
 from .extensions import db
+
+ph = PasswordHasher()
+
 
 class Organization(db.Model):
     __tablename__ = 'organization'
@@ -35,6 +42,15 @@ class User(db.Model):
 
     memberships = db.relationship('Membership', back_populates='user')
     uploads = db.relationship('Asset', back_populates='uploader')
+
+    def set_password(self, password: str) -> None:
+        self.password_hash = ph.hash(password)
+
+    def check_password(self, password: str) -> bool:
+        try:
+            return ph.verify(self.password_hash, password)
+        except VerifyMismatchError:
+            return False
 
 
 class Membership(db.Model):
