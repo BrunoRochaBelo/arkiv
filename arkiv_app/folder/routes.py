@@ -3,6 +3,7 @@ from flask_login import login_required, current_user
 
 from ..extensions import db
 from ..models import Library, Folder
+from ..utils.audit import record_audit
 from . import folder_bp
 from .forms import FolderForm
 
@@ -31,6 +32,7 @@ def create_folder():
         )
         db.session.add(folder)
         db.session.commit()
+        record_audit('create', 'folder', folder.id, user_id=current_user.id, org_id=current_user.memberships[0].org_id)
         flash('Folder created')
         return redirect(url_for('library.list_libraries'))
     return render_template('folder/form.html', form=form)
@@ -47,6 +49,7 @@ def edit_folder(folder_id):
         folder.parent_id = form.parent_id.data or None
         folder.name = form.name.data
         db.session.commit()
+        record_audit('update', 'folder', folder.id, user_id=current_user.id, org_id=current_user.memberships[0].org_id)
         flash('Folder updated')
         return redirect(url_for('library.list_libraries'))
     return render_template('folder/form.html', form=form)
@@ -58,5 +61,6 @@ def delete_folder(folder_id):
     folder = Folder.query.get_or_404(folder_id)
     db.session.delete(folder)
     db.session.commit()
+    record_audit('delete', 'folder', folder.id, user_id=current_user.id, org_id=current_user.memberships[0].org_id)
     flash('Folder deleted')
     return redirect(url_for('library.list_libraries'))
