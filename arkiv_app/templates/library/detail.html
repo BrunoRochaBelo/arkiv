@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}{{ library.name }}{% endblock %}
+{% block content %}
+<h1>{{ library.name }}</h1>
+<p><a href="{{ url_for('library.list_libraries') }}">Voltar para lista</a></p>
+<p>{{ library.description }}</p>
+<a href="{{ url_for('folder.create_folder') }}?library_id={{ library.id }}" class="btn"><i class="bi bi-folder-plus"></i> Nova Pasta</a>
+<ul>
+  {% for folder in folders %}
+  <li><a href="{{ url_for('folder.view_folder', folder_id=folder.id) }}">{{ folder.name }}</a></li>
+  {% else %}
+  <li>Nenhuma pasta</li>
+  {% endfor %}
+</ul>
+{% endblock %}

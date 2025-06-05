@@ -2,6 +2,7 @@
 {% block title %}Arquivos{% endblock %}
 {% block content %}
 <h1>Arquivos de {{ folder.name }}</h1>
+<p><a href="{{ url_for('folder.view_folder', folder_id=folder.id) }}">Voltar para pasta</a></p>
 <form method="post" enctype="multipart/form-data" class="card">
   {{ form.hidden_tag() }}
   <div class="field">{{ form.file() }}</div>
