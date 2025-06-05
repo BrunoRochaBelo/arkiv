@@ -2,7 +2,7 @@ from flask import render_template, redirect, url_for, flash, request
 from flask_login import login_user, logout_user
 
 from ..models import User
-from ..extensions import db, login_manager
+from ..extensions import db, login_manager, limiter
 from . import auth_bp
 from .forms import LoginForm
 
@@ -13,6 +13,7 @@ def load_user(user_id):
 
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
+@limiter.limit('5 per minute')
 def login():
     form = LoginForm()
     if form.validate_on_submit():

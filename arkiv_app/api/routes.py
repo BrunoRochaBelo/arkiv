@@ -8,12 +8,14 @@ from flask_jwt_extended import (
     jwt_required,
 )
 
-from ..extensions import db
+from ..extensions import db, limiter
 from ..models import User, Library, Folder, Asset, Tag
+from ..utils.audit import record_audit
 from . import api_bp
 
 
 @api_bp.route('/auth/login', methods=['POST'])
+@limiter.limit('10 per minute')
 def login():
     data = request.get_json() or {}
     email = data.get('email')
@@ -224,6 +226,7 @@ def list_assets_api(folder_id):
 
 @api_bp.route('/folders/<int:folder_id>/assets', methods=['POST'])
 @jwt_required()
+@limiter.limit('20 per minute')
 def upload_asset_api(folder_id):
     folder = Folder.query.get_or_404(folder_id)
     file = request.files.get('file')
@@ -248,4 +251,5 @@ def upload_asset_api(folder_id):
     )
     db.session.add(asset)
     db.session.commit()
+    record_audit('create', 'asset', asset.id, user_id=get_jwt_identity(), org_id=folder.library.organization.id)
     return jsonify(success=True, data={'id': asset.id, 'filename_orig': asset.filename_orig}, message='Asset uploaded'), 201

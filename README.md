@@ -678,15 +678,7 @@ class AuditLog(db.Model):
 
 1. **Página de Relatórios (`/reports/assets`)**
 
-   * **Filtros Disponíveis**:
-
-     * **Biblioteca / Pasta** (dropdown hierárquico).
-     * **Intervalo de Datas**: upload ou modificação (datepickers com seleção rápida: “Última semana”, “Último mês”).
-     * **Tags**: autocomplete com chips, suporte a lógica AND/OR/NOT.
-     * **Tipo MIME**: imagem, vídeo, PDF, outros.
-     * **Tamanho**: faixa em KB/MB/GB.
-     * **Uploader**: dropdown de usuários ativos.
-   * **Botões de Ação**:
+   * Exporta lista de assets da organização logada em formato CSV.
 
      * “Pré-visualizar”: mostra tabela com 5 primeiras linhas + contagem total.
      * “Exportar CSV” / “Exportar Excel” / “Exportar PDF” / “Exportar ZIP”.

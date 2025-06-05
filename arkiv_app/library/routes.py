@@ -2,6 +2,7 @@ from flask import render_template, redirect, url_for, flash, request
 from flask_login import login_required, current_user
 
 from ..extensions import db
+from ..utils.audit import record_audit
 from ..models import Library
 from . import library_bp
 from .forms import LibraryForm
@@ -23,6 +24,7 @@ def create_library():
         lib = Library(org_id=org_id, name=form.name.data, description=form.description.data)
         db.session.add(lib)
         db.session.commit()
+        record_audit('create', 'library', lib.id, user_id=current_user.id, org_id=org_id)
         flash('Library created')
         return redirect(url_for('library.list_libraries'))
     return render_template('library/form.html', form=form)
@@ -37,6 +39,7 @@ def edit_library(lib_id):
         lib.name = form.name.data
         lib.description = form.description.data
         db.session.commit()
+        record_audit('update', 'library', lib.id, user_id=current_user.id, org_id=current_user.memberships[0].org_id)
         flash('Library updated')
         return redirect(url_for('library.list_libraries'))
     return render_template('library/form.html', form=form)
@@ -48,5 +51,6 @@ def delete_library(lib_id):
     lib = Library.query.get_or_404(lib_id)
     db.session.delete(lib)
     db.session.commit()
+    record_audit('delete', 'library', lib.id, user_id=current_user.id, org_id=current_user.memberships[0].org_id)
     flash('Library deleted')
     return redirect(url_for('library.list_libraries'))
