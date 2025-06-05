@@ -1,9 +1,11 @@
-<!doctype html>
-<title>Tag</title>
+{% extends 'base.html' %}
+{% block title %}Tag{% endblock %}
+{% block content %}
 <h1>Tag</h1>
-<form method="post">
+<form method="post" class="card">
   {{ form.hidden_tag() }}
-  <p>{{ form.name.label }} {{ form.name(size=32) }}</p>
-  <p>{{ form.color_hex.label }} {{ form.color_hex(size=10) }}</p>
-  <p>{{ form.submit() }}</p>
+  <div class="field">{{ form.name.label }} {{ form.name(size=32) }}</div>
+  <div class="field">{{ form.color_hex.label }} {{ form.color_hex(size=10) }}</div>
+  <div>{{ form.submit(class_='btn') }}</div>
 </form>
+{% endblock %}

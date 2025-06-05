@@ -1,16 +1,18 @@
-<!doctype html>
-<title>Tags</title>
+{% extends 'base.html' %}
+{% block title %}Tags{% endblock %}
+{% block content %}
 <h1>Tags</h1>
-<a href="{{ url_for('tag.create_tag') }}">New Tag</a>
+<a href="{{ url_for('tag.create_tag') }}" class="btn">New Tag</a>
 <ul>
   {% for t in tags %}
-  <li>
+  <li class="card" style="margin-bottom:1rem; list-style:none;">
     {{ t.name }} - <a href="{{ url_for('tag.edit_tag', tag_id=t.id) }}">Edit</a>
     <form action="{{ url_for('tag.delete_tag', tag_id=t.id) }}" method="post" style="display:inline">
-      <button type="submit">Delete</button>
+      <button type="submit" class="btn">Delete</button>
     </form>
   </li>
   {% else %}
   <li>No tags</li>
   {% endfor %}
 </ul>
+{% endblock %}

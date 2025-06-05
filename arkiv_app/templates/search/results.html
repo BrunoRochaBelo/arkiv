@@ -1,14 +1,16 @@
-<!doctype html>
-<title>Search</title>
+{% extends 'base.html' %}
+{% block title %}Search{% endblock %}
+{% block content %}
 <h1>Results for "{{ query }}"</h1>
 <ul>
   {% for a in assets %}
-  <li>Asset: {{ a.filename_orig }}</li>
+  <li class="card">Asset: {{ a.filename_orig }}</li>
   {% endfor %}
   {% for f in folders %}
-  <li>Folder: {{ f.name }}</li>
+  <li class="card">Folder: {{ f.name }}</li>
   {% endfor %}
   {% for l in libraries %}
-  <li>Library: {{ l.name }}</li>
+  <li class="card">Library: {{ l.name }}</li>
   {% endfor %}
 </ul>
+{% endblock %}
