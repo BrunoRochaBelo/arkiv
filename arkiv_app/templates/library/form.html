@@ -1,0 +1,9 @@
+<!doctype html>
+<title>Library</title>
+<h1>Library</h1>
+<form method="post">
+  {{ form.hidden_tag() }}
+  <p>{{ form.name.label }} {{ form.name(size=32) }}</p>
+  <p>{{ form.description.label }} {{ form.description(cols=40, rows=4) }}</p>
+  <p>{{ form.submit() }}</p>
+</form>

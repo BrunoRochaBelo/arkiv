@@ -1,12 +1,26 @@
 from datetime import datetime
 
-from argon2 import PasswordHasher
-from argon2.exceptions import VerifyMismatchError
+try:
+    from argon2 import PasswordHasher
+    from argon2.exceptions import VerifyMismatchError
+    ph = PasswordHasher()
+except Exception:  # pragma: no cover - optional argon2 fallback
+    # Allows running without argon2 installed (e.g., in minimal dev envs)
+    from werkzeug.security import generate_password_hash, check_password_hash
+
+    class PasswordHasher:
+        def hash(self, password: str) -> str:
+            return generate_password_hash(password)
+
+        def verify(self, hashed: str, password: str) -> bool:
+            return check_password_hash(hashed, password)
+
+    class VerifyMismatchError(Exception):
+        pass
+
+    ph = PasswordHasher()
 
 from .extensions import db
-
-ph = PasswordHasher()
-
 
 class Organization(db.Model):
     __tablename__ = 'organization'
@@ -51,7 +65,6 @@ class User(db.Model):
             return ph.verify(self.password_hash, password)
         except VerifyMismatchError:
             return False
-
 
 class Membership(db.Model):
     __tablename__ = 'membership'

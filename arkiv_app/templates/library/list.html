@@ -1,0 +1,16 @@
+<!doctype html>
+<title>Libraries</title>
+<h1>Libraries</h1>
+<a href="{{ url_for('library.create_library') }}">New Library</a>
+<ul>
+  {% for lib in libraries %}
+  <li>
+    {{ lib.name }} - <a href="{{ url_for('library.edit_library', lib_id=lib.id) }}">Edit</a>
+    <form action="{{ url_for('library.delete_library', lib_id=lib.id) }}" method="post" style="display:inline">
+      <button type="submit">Delete</button>
+    </form>
+  </li>
+  {% else %}
+  <li>No libraries</li>
+  {% endfor %}
+</ul>

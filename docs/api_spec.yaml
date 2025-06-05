@@ -26,3 +26,15 @@ paths:
       responses:
         '201':
           description: Created
+  /api/v1/folders/create:
+    post:
+      summary: Create folder
+      responses:
+        '201':
+          description: Created
+  /api/v1/folders/{id}/assets:
+    post:
+      summary: Upload asset
+      responses:
+        '201':
+          description: Created
