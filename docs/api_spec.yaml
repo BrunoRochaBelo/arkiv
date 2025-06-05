@@ -1,0 +1,28 @@
+openapi: 3.0.3
+info:
+  title: Arkiv API
+  version: 1.0.0
+paths:
+  /api/v1/auth/login:
+    post:
+      summary: Login
+      responses:
+        '200':
+          description: Success
+  /api/v1/auth/profile:
+    get:
+      summary: Current user profile
+      responses:
+        '200':
+          description: Success
+  /api/v1/libraries:
+    get:
+      summary: List libraries
+      responses:
+        '200':
+          description: Success
+    post:
+      summary: Create library
+      responses:
+        '201':
+          description: Created
