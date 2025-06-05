@@ -1,18 +1,18 @@
 {% extends 'base.html' %}
-{% block title %}Libraries{% endblock %}
+{% block title %}Bibliotecas{% endblock %}
 {% block content %}
-<h1>Libraries</h1>
-<a href="{{ url_for('library.create_library') }}" class="btn">New Library</a>
+<h1>Bibliotecas</h1>
+<a href="{{ url_for('library.create_library') }}" class="btn">Nova Biblioteca</a>
 <ul>
   {% for lib in libraries %}
   <li class="card" style="margin-bottom:1rem; list-style:none;">
-    {{ lib.name }} - <a href="{{ url_for('library.edit_library', lib_id=lib.id) }}">Edit</a>
+    {{ lib.name }} - <a href="{{ url_for('library.edit_library', lib_id=lib.id) }}">Editar</a>
     <form action="{{ url_for('library.delete_library', lib_id=lib.id) }}" method="post" style="display:inline">
-      <button type="submit" class="btn">Delete</button>
+      <button type="submit" class="btn">Excluir</button>
     </form>
   </li>
   {% else %}
-  <li>No libraries</li>
+  <li>Nenhuma biblioteca</li>
   {% endfor %}
 </ul>
 {% endblock %}

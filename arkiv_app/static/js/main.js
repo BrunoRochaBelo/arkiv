@@ -16,4 +16,13 @@ function toggleTheme() {
 document.addEventListener('DOMContentLoaded', () => {
   const saved = localStorage.getItem('theme') || 'light';
   applyTheme(saved);
+
+  document.querySelectorAll('.flash li').forEach((item) => {
+    const btn = document.createElement('button');
+    btn.className = 'close-btn';
+    btn.innerHTML = '&times;';
+    btn.addEventListener('click', () => item.remove());
+    item.appendChild(btn);
+    setTimeout(() => item.remove(), 5000);
+  });
 });

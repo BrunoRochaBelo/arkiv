@@ -4,7 +4,7 @@ from wtforms.validators import DataRequired
 
 
 class FolderForm(FlaskForm):
-    library_id = SelectField('Library', coerce=int, validators=[DataRequired()])
-    parent_id = SelectField('Parent', coerce=int, choices=[(0, 'Root')])
-    name = StringField('Name', validators=[DataRequired()])
-    submit = SubmitField('Save')
+    library_id = SelectField('Biblioteca', coerce=int, validators=[DataRequired()])
+    parent_id = SelectField('Pai', coerce=int, choices=[(0, 'Raiz')])
+    name = StringField('Nome', validators=[DataRequired()])
+    submit = SubmitField('Salvar')

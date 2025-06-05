@@ -37,7 +37,7 @@ def upload_asset(folder_id):
         quota = org.plan.storage_quota_gb * 1024 * 1024 * 1024
         if used + size > quota:
             os.remove(filepath)
-            flash('Storage quota exceeded')
+            flash('Cota de armazenamento excedida')
             return redirect(url_for('library.list_libraries'))
         asset = Asset(
             library_id=folder.library_id,
@@ -54,7 +54,7 @@ def upload_asset(folder_id):
         record_audit('create', 'asset', asset.id, user_id=current_user.id, org_id=org.id)
         generate_thumbnail.delay(asset.id, upload_path, thumb_path)
         perform_ocr.delay(asset.id)
-        flash('File uploaded')
+        flash('Arquivo enviado')
         return redirect(url_for('library.list_libraries'))
     assets = Asset.query.filter_by(folder_id=folder_id).all()
     return render_template('asset/list.html', form=form, assets=assets, folder=folder)

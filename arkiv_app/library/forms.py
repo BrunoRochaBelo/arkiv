@@ -4,6 +4,6 @@ from wtforms.validators import DataRequired
 
 
 class LibraryForm(FlaskForm):
-    name = StringField('Name', validators=[DataRequired()])
-    description = TextAreaField('Description')
-    submit = SubmitField('Save')
+    name = StringField('Nome', validators=[DataRequired()])
+    description = TextAreaField('Descrição')
+    submit = SubmitField('Salvar')

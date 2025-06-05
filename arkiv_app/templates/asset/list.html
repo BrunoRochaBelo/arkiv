@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
-{% block title %}Assets{% endblock %}
+{% block title %}Arquivos{% endblock %}
 {% block content %}
-<h1>Assets for {{ folder.name }}</h1>
+<h1>Arquivos de {{ folder.name }}</h1>
 <form method="post" enctype="multipart/form-data" class="card">
   {{ form.hidden_tag() }}
   <div class="field">{{ form.file() }}</div>
@@ -11,7 +11,7 @@
   {% for asset in assets %}
   <li>{{ asset.filename_orig }} ({{ asset.size }} bytes)</li>
   {% else %}
-  <li>No assets</li>
+  <li>Nenhum arquivo</li>
   {% endfor %}
 </ul>
 {% endblock %}

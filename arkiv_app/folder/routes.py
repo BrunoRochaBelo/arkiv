@@ -33,7 +33,7 @@ def create_folder():
         db.session.add(folder)
         db.session.commit()
         record_audit('create', 'folder', folder.id, user_id=current_user.id, org_id=current_user.memberships[0].org_id)
-        flash('Folder created')
+        flash('Pasta criada')
         return redirect(url_for('library.list_libraries'))
     return render_template('folder/form.html', form=form)
 
@@ -50,7 +50,7 @@ def edit_folder(folder_id):
         folder.name = form.name.data
         db.session.commit()
         record_audit('update', 'folder', folder.id, user_id=current_user.id, org_id=current_user.memberships[0].org_id)
-        flash('Folder updated')
+        flash('Pasta atualizada')
         return redirect(url_for('library.list_libraries'))
     return render_template('folder/form.html', form=form)
 
@@ -62,5 +62,5 @@ def delete_folder(folder_id):
     db.session.delete(folder)
     db.session.commit()
     record_audit('delete', 'folder', folder.id, user_id=current_user.id, org_id=current_user.memberships[0].org_id)
-    flash('Folder deleted')
+    flash('Pasta excluída')
     return redirect(url_for('library.list_libraries'))
