@@ -30,7 +30,6 @@ def assets_report():
         headers={'Content-Disposition': 'attachment;filename=assets.csv'}
     )
 
-
 @reports_bp.route('/reports/assets.xlsx')
 @login_required
 def assets_report_xlsx():

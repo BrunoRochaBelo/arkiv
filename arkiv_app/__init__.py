@@ -18,6 +18,7 @@ def create_app(config_name='development'):
             if current_user.is_authenticated:
                 with sentry_sdk.configure_scope() as scope:
                     scope.set_user({'id': current_user.id, 'email': current_user.email})
+                    # Aqui pode dar erro se memberships for vazio. Ajusta se necessário.
                     org_id = current_user.memberships[0].org_id
                     scope.set_tag('org_id', org_id)
 
