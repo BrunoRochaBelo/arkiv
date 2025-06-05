@@ -1,6 +1,6 @@
 from flask import Flask
 from .config import config_by_name
-from .extensions import init_extensions, db
+from .extensions import init_extensions, db, csrf
 import sentry_sdk
 from sentry_sdk.integrations.flask import FlaskIntegration
 from flask_login import current_user
@@ -45,6 +45,7 @@ def create_app(config_name='development'):
     app.register_blueprint(search_bp)
     app.register_blueprint(reports_bp)
     app.register_blueprint(admin_bp)
+    csrf.exempt(api_bp)
 
     @app.after_request
     def _security_headers(resp):
