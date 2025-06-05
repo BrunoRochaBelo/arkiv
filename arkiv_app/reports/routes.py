@@ -1,5 +1,7 @@
 from flask import Response
 from flask_login import login_required, current_user
+
+from ..utils import current_org_id
 import csv
 from io import StringIO, BytesIO
 import pandas as pd
@@ -11,7 +13,7 @@ from . import reports_bp
 @reports_bp.route('/reports/assets.csv')
 @login_required
 def assets_report():
-    org_id = current_user.memberships[0].org_id
+    org_id = current_org_id()
     assets = (
         Asset.query
         .join(Library)
@@ -33,7 +35,7 @@ def assets_report():
 @reports_bp.route('/reports/assets.xlsx')
 @login_required
 def assets_report_xlsx():
-    org_id = current_user.memberships[0].org_id
+    org_id = current_org_id()
     assets = (
         Asset.query
         .join(Library)

@@ -1,6 +1,8 @@
 from flask import render_template, redirect, url_for, flash, request
 from flask_login import login_required, current_user
 
+from ..utils import current_org_id
+
 from ..extensions import db
 from ..models import Library, Folder
 from ..utils.audit import record_audit
@@ -23,7 +25,7 @@ def _populate_form_choices(form, libs):
 @login_required
 def create_folder():
     form = FolderForm()
-    org_id = current_user.memberships[0].org_id
+    org_id = current_org_id()
     libs = Library.query.filter_by(org_id=org_id).all()
     if not libs:
         flash("Crie uma biblioteca antes de adicionar pastas")
@@ -47,7 +49,7 @@ def create_folder():
             "folder",
             folder.id,
             user_id=current_user.id,
-            org_id=current_user.memberships[0].org_id,
+            org_id=org_id,
         )
         flash("Pasta criada")
         return redirect(url_for("library.list_libraries"))
@@ -59,7 +61,7 @@ def create_folder():
 def edit_folder(folder_id):
     folder = Folder.query.get_or_404(folder_id)
     form = FolderForm(obj=folder)
-    org_id = current_user.memberships[0].org_id
+    org_id = current_org_id()
     libs = Library.query.filter_by(org_id=org_id).all()
     if not libs:
         flash("Crie uma biblioteca antes de adicionar pastas")
@@ -75,7 +77,7 @@ def edit_folder(folder_id):
             "folder",
             folder.id,
             user_id=current_user.id,
-            org_id=current_user.memberships[0].org_id,
+            org_id=org_id,
         )
         flash("Pasta atualizada")
         return redirect(url_for("library.list_libraries"))
@@ -93,7 +95,7 @@ def delete_folder(folder_id):
         "folder",
         folder.id,
         user_id=current_user.id,
-        org_id=current_user.memberships[0].org_id,
+        org_id=current_org_id(),
     )
     flash("Pasta removida")
     return redirect(url_for("library.list_libraries"))
