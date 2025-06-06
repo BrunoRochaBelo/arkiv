@@ -30,5 +30,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const cancel = document.querySelector('.btn-cancel');
       if (cancel) cancel.click();
     }
+
+    if ((ev.ctrlKey || ev.metaKey) && ev.key.toLowerCase() === 'k') {
+      ev.preventDefault();
+      const input = document.querySelector('#globalSearchInput');
+      if (input) input.focus();
+    }
   });
 });
