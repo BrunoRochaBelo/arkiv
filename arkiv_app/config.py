@@ -27,6 +27,9 @@ class TestConfig(Config):
     TESTING = True
     SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
     WTF_CSRF_ENABLED = False
+    CELERY_BROKER_URL = 'memory://'
+    CELERY_RESULT_BACKEND = 'cache+memory://'
+    CELERY_TASK_ALWAYS_EAGER = True
 
 config_by_name = {
     'development': DevelopmentConfig,

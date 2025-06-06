@@ -851,6 +851,15 @@ Se o app mobile será feito em **MAUI**, convém expor APIs RESTful no backend p
      ```
    * O arquivo `celery_app.py` dentro de `arkiv_app/` configura o broker para o Redis, que dispara tarefas de thumbnail, OCR e relatórios agendados.
 
+### Ambiente de testes sem Redis/S3/Postgres
+
+Para rodar a suíte de testes ou experimentar a aplicação localmente sem depender
+de serviços externos, basta manter as variáveis padrão do `.env.example`. O
+`config.TestConfig` usa banco SQLite em memória e os uploads ficam em
+`instance/uploads`. Caso o Redis não esteja ativo, o `celery_app` cai
+automaticamente para o modo em memória, executando as tasks de forma síncrona.
+Assim é possível rodar `pytest` sem precisar de Postgres, S3 ou Redis.
+
 ---
 
 ## Roadmap

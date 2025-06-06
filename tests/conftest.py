@@ -2,6 +2,10 @@ import os
 import sys
 import pytest
 
+os.environ.setdefault("FLASK_ENV", "testing")
+os.environ.setdefault("TESTING", "1")
+os.environ.setdefault("CELERY_ALWAYS_EAGER", "1")
+
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from arkiv_app import create_app
