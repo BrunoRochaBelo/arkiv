@@ -5,7 +5,7 @@ from ..utils import current_org_id
 
 from ..extensions import db
 from ..utils.audit import record_audit
-from ..models import Library, Folder
+from ..models import Library, Folder, Asset
 from . import library_bp
 from .forms import LibraryForm
 
@@ -14,8 +14,50 @@ from .forms import LibraryForm
 @login_required
 def list_libraries():
     org_id = current_org_id()
-    libs = Library.query.filter_by(org_id=org_id).all() if org_id else []
-    return render_template("library/list.html", libraries=libs, title="Bibliotecas")
+    q = request.args.get("q", "")
+    libs_query = Library.query.filter_by(org_id=org_id) if org_id else Library.query.filter(False)
+    if q:
+        like = f"%{q}%"
+        libs_query = libs_query.filter(Library.name.ilike(like))
+    libs = libs_query.all()
+
+    libraries = []
+    for lib in libs:
+        asset_count = (
+            db.session.query(db.func.count(Asset.id))
+            .filter(Asset.library_id == lib.id)
+            .scalar()
+            or 0
+        )
+        last_asset = (
+            Asset.query
+            .filter_by(library_id=lib.id)
+            .order_by(Asset.updated_at.desc().nullslast(), Asset.created_at.desc())
+            .first()
+        )
+        last_update = None
+        if last_asset:
+            last_update = last_asset.updated_at or last_asset.created_at
+        thumbs = (
+            Asset.query
+            .filter_by(library_id=lib.id)
+            .order_by(Asset.created_at.desc())
+            .limit(4)
+            .all()
+        )
+        libraries.append({
+            "instance": lib,
+            "asset_count": asset_count,
+            "last_update": last_update,
+            "thumbs": thumbs,
+        })
+
+    return render_template(
+        "library/list.html",
+        libraries=libraries,
+        q=q,
+        title="Bibliotecas",
+    )
 
 
 @library_bp.route("/libraries/<int:lib_id>")
