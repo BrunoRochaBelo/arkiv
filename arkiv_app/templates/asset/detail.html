@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block breadcrumb %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item"><a href="{{ url_for('library.list_libraries') }}">Bibliotecas</a></li>
+    <li class="breadcrumb-item"><a href="{{ url_for('library.show_library', lib_id=asset.folder.library_id) }}">{{ asset.folder.library.name }}</a></li>
+    <li class="breadcrumb-item"><a href="{{ url_for('folder.view_folder', folder_id=asset.folder_id) }}">{{ asset.folder.name }}</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ asset.filename_orig }}</li>
+  </ol>
+</nav>
+{% endblock %}
+{% block content %}
+<div class="row">
+  <div class="col-md-8 mb-4 text-center">
+    <div class="card p-3">
+      {% if asset.mime.startswith('image') %}
+      <img id="assetPreview" src="{{ url_for('asset.asset_file', asset_id=asset.id) }}" class="img-fluid rounded" alt="{{ asset.filename_orig }}">
+      <div class="mt-2">
+        <button class="btn btn-outline-secondary btn-sm" onclick="zoom(1.1)" aria-label="Zoom in"><i class="bi bi-zoom-in"></i></button>
+        <button class="btn btn-outline-secondary btn-sm" onclick="zoom(0.9)" aria-label="Zoom out"><i class="bi bi-zoom-out"></i></button>
+        <button class="btn btn-outline-secondary btn-sm" onclick="rotate()" aria-label="Rotate"><i class="bi bi-arrow-clockwise"></i></button>
+      </div>
+      {% else %}
+      <div class="display-1 text-muted py-5"><i class="bi bi-file-earmark"></i></div>
+      {% endif %}
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card mb-3 p-3">
+      <h6 class="mb-2">Metadados</h6>
+      <dl class="row small mb-0">
+        <dt class="col-4">Nome</dt><dd class="col-8">{{ asset.filename_orig }}</dd>
+        <dt class="col-4">Tamanho</dt><dd class="col-8">{{ (asset.size/1024)|int }} KB</dd>
+        <dt class="col-4">Formato</dt><dd class="col-8">{{ asset.mime }}</dd>
+        {% if asset.width and asset.height %}
+        <dt class="col-4">Dimensões</dt><dd class="col-8">{{ asset.width }}x{{ asset.height }}</dd>
+        {% endif %}
+        <dt class="col-4">Upload</dt><dd class="col-8">{{ asset.created_at.strftime('%d/%m/%Y %H:%M') }}</dd>
+        <dt class="col-4">Uploader</dt><dd class="col-8">{{ asset.uploader.name }}</dd>
+      </dl>
+    </div>
+    <div class="card mb-3 p-3">
+      <h6 class="mb-2">Tags</h6>
+      {% if asset.tags %}
+      <ul class="list-inline mb-1">
+        {% for t in asset.tags %}
+        <li class="list-inline-item"><span class="badge" style="background-color: {{ t.color_hex }}">{{ t.name }}</span></li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p class="text-muted small mb-1">Nenhuma tag</p>
+      {% endif %}
+      <a href="{{ url_for('tag.list_tags') }}" class="small">Gerenciar Tags</a>
+    </div>
+    <div class="d-grid gap-2">
+      <a href="{{ url_for('asset.download_asset', asset_id=asset.id) }}" class="btn btn-accent"><i class="bi bi-download"></i> Download</a>
+      <form action="{{ url_for('asset.delete_asset', asset_id=asset.id) }}" method="post" onsubmit="return confirm('Excluir arquivo?');">
+        <button class="btn btn-outline-danger"><i class="bi bi-trash"></i> Excluir</button>
+      </form>
+    </div>
+  </div>
+</div>
+<script>
+let scale = 1, rotation = 0;
+function zoom(f){
+  scale *= f;
+  const img = document.getElementById('assetPreview');
+  if(img) img.style.transform = `scale(${scale}) rotate(${rotation}deg)`;
+}
+function rotate(){
+  rotation = (rotation + 90) % 360;
+  const img = document.getElementById('assetPreview');
+  if(img) img.style.transform = `scale(${scale}) rotate(${rotation}deg)`;
+}
+</script>
+{% endblock %}
