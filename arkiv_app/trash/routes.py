@@ -38,12 +38,12 @@ def restore_asset(asset_id):
     asset = Asset.query.get_or_404(asset_id)
     org_id = current_org_id()
     if asset.folder.library.org_id != org_id or not asset.deleted_at:
-        flash('Ação inválida')
+        flash('Ação inválida', 'error')
         return redirect(url_for('trash.list_trash'))
     asset.deleted_at = None
     db.session.commit()
     record_audit('restore', 'asset', asset.id, user_id=current_user.id, org_id=org_id)
-    flash('Arquivo restaurado!')
+    flash('Arquivo restaurado!', 'success')
     return redirect(url_for('trash.list_trash'))
 
 
@@ -53,7 +53,7 @@ def purge_asset(asset_id):
     asset = Asset.query.get_or_404(asset_id)
     org_id = current_org_id()
     if asset.folder.library.org_id != org_id or not asset.deleted_at:
-        flash('Ação inválida')
+        flash('Ação inválida', 'error')
         return redirect(url_for('trash.list_trash'))
     upload_path = current_app.config['UPLOAD_FOLDER']
     thumb_path = current_app.config['THUMB_FOLDER']
@@ -68,5 +68,5 @@ def purge_asset(asset_id):
     db.session.delete(asset)
     db.session.commit()
     record_audit('purge', 'asset', asset.id, user_id=current_user.id, org_id=org_id)
-    flash('Arquivo excluído permanentemente!')
+    flash('Arquivo excluído permanentemente!', 'success')
     return redirect(url_for('trash.list_trash'))

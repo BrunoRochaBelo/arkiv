@@ -364,3 +364,56 @@ nav[aria-label="breadcrumb"] .breadcrumb-item.active {
     gap: 0.5rem;
   }
 }
+
+/* ---------- Toasts ---------- */
+.toast-container {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.toast {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  color: #fff;
+  min-width: 200px;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+.toast-success {
+  background: #28a745;
+}
+.toast-warning {
+  background: #ffc107;
+  color: #212529;
+}
+.toast-error {
+  background: #dc3545;
+}
+.toast button {
+  background: transparent;
+  border: none;
+  color: inherit;
+  margin-left: auto;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+/* ---------- Empty States ---------- */
+.empty-state {
+  padding: 2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+.empty-state img {
+  max-width: 240px;
+}

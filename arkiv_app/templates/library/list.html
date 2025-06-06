@@ -22,9 +22,11 @@
   {% endfor %}
 </div>
 {% else %}
-<div class="text-center py-5">
-  <p class="lead">Você ainda não criou nenhuma biblioteca. Comece agora!</p>
-  <a href="{{ url_for('library.create_library') }}" class="btn btn-accent btn-lg"><i class="bi bi-plus-circle"></i> Criar primeira biblioteca</a>
-</div>
+{% include 'components/empty.html' with
+    img='empty.svg',
+    title='Nenhuma biblioteca encontrada',
+    description='Crie sua primeira biblioteca para começar a organizar seus arquivos.',
+    cta_url=url_for('library.create_library'),
+    cta_label='Criar Minha Primeira Biblioteca' %}
 {% endif %}
 {% endblock %}

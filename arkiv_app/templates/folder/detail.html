@@ -17,7 +17,12 @@
   {% set item_count = sub.assets|length + sub.children|length %}
   {% include 'folder/_tile.html' %}
   {% else %}
-  <p class="text-muted">Nenhuma subpasta</p>
+  {% include 'components/empty.html' with
+      img='empty.svg',
+      title='Esta pasta está vazia',
+      description="Clique em 'Enviar Arquivo' para adicionar arquivos.",
+      cta_url=url_for('asset.upload_asset', folder_id=folder.id),
+      cta_label='Enviar Arquivo' %}
   {% endfor %}
 </div>
 {% endblock %}

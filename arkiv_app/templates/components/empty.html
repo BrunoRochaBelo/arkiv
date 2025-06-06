@@ -1,0 +1,12 @@
+<div class="empty-state">
+  {% if img %}
+  <img src="{{ url_for('static', filename='img/' + img) }}" alt="" class="mb-3">
+  {% endif %}
+  <h2 class="h4">{{ title }}</h2>
+  {% if description %}
+  <p class="text-muted">{{ description }}</p>
+  {% endif %}
+  {% if cta_url and cta_label %}
+  <a href="{{ cta_url }}" class="btn btn-accent btn-lg">{{ cta_label }}</a>
+  {% endif %}
+</div>

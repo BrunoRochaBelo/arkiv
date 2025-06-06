@@ -27,7 +27,12 @@
       {% set item_count = folder.assets|length + folder.children|length %}
       {% include 'folder/_tile.html' %}
       {% else %}
-      <p class="text-muted">Nenhuma pasta</p>
+      {% include 'components/empty.html' with
+          img='empty.svg',
+          title='Nenhuma pasta',
+          description='Crie uma pasta para organizar seus arquivos.',
+          cta_url=url_for('folder.create_folder') ~ '?library_id=' ~ library.id,
+          cta_label='Nova Pasta' %}
       {% endfor %}
     </div>
   </div>
@@ -39,10 +44,12 @@
     {% set assets = assets %}
     {% include 'asset/gallery.html' %}
     {% else %}
-    <div class="text-center p-5 border rounded bg-light">
-      <p class="lead mb-3">Nada aqui ainda. Faça seu primeiro upload!</p>
-      <a href="{{ url_for('folder.create_folder') }}?library_id={{ library.id }}" class="btn btn-accent"><i class="bi bi-folder-plus"></i> Nova Pasta</a>
-    </div>
+    {% include 'components/empty.html' with
+        img='empty.svg',
+        title='Nada aqui ainda',
+        description='Envie arquivos ou crie uma pasta para começar.',
+        cta_url=url_for('folder.create_folder') ~ '?library_id=' ~ library.id,
+        cta_label='Nova Pasta' %}
     {% endif %}
   </div>
 </div>

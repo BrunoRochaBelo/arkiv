@@ -1,7 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-  document.querySelectorAll('.flash-item').forEach((el) => {
-    setTimeout(() => el.remove(), 5000);
+  document.querySelectorAll('.toast').forEach((el) => {
+    const timer = setTimeout(() => el.remove(), 4000);
+    const btn = el.querySelector('button');
+    if (btn) btn.addEventListener('click', () => {
+      clearTimeout(timer);
+      el.remove();
+    });
   });
 
   const forms = document.querySelectorAll('.guarded-form');

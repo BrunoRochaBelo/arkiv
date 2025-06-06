@@ -59,7 +59,7 @@ def create_tag():
         db.session.add(tag)
         db.session.commit()
         record_audit('create', 'tag', tag.id, user_id=current_user.id, org_id=org_id)
-        flash('Tag criada')
+        flash('Tag criada', 'success')
         return redirect(url_for('tag.list_tags'))
     return render_template('tag/form.html', form=form, title='Nova Tag')
 
@@ -74,7 +74,7 @@ def edit_tag(tag_id):
         tag.color_hex = form.color_hex.data
         db.session.commit()
         record_audit('update', 'tag', tag.id, user_id=current_user.id, org_id=current_org_id())
-        flash('Tag atualizada')
+        flash('Tag atualizada', 'success')
         return redirect(url_for('tag.list_tags'))
     return render_template('tag/form.html', form=form, title='Editar Tag')
 
@@ -86,7 +86,7 @@ def delete_tag(tag_id):
     db.session.delete(tag)
     db.session.commit()
     record_audit('delete', 'tag', tag.id, user_id=current_user.id, org_id=current_org_id())
-    flash('Tag removida')
+    flash('Tag removida', 'success')
     return redirect(url_for('tag.list_tags'))
 
 
@@ -97,5 +97,5 @@ def set_asset_tags(asset_id):
     tag_ids = request.form.getlist('tag_ids')
     asset.tags = Tag.query.filter(Tag.id.in_(tag_ids)).all()
     db.session.commit()
-    flash('Tags atualizadas')
+    flash('Tags atualizadas', 'success')
     return redirect(request.referrer or url_for('asset.upload_asset', folder_id=asset.folder_id))
