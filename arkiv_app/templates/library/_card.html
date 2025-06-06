@@ -12,7 +12,9 @@
     <div class="library-metrics text-muted">{{ asset_count }} imagens · {{ library.created_at.strftime('%d/%m/%Y') }}</div>
   </div>
   <div class="library-menu dropdown">
-    <button class="btn btn-sm btn-link text-muted" data-bs-toggle="dropdown" aria-label="Ações"><i class="bi bi-three-dots-vertical"></i></button>
+    <button class="btn btn-sm btn-link text-muted" data-bs-toggle="dropdown" aria-label="Ações">
+      <i class="bi bi-three-dots-vertical" aria-hidden="true"></i>
+    </button>
     <ul class="dropdown-menu dropdown-menu-end">
       <li><a class="dropdown-item" href="{{ url_for('library.edit_library', lib_id=library.id) }}">Editar</a></li>
       <li>

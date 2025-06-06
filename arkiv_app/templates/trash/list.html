@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="d-flex align-items-center gap-2 mb-4">
-  <i class="bi bi-trash3-fill fs-2 text-danger"></i>
+  <i class="bi bi-trash3-fill fs-2 text-danger" aria-hidden="true"></i>
   <h1 class="m-0">Lixeira</h1>
 </div>
 <div class="alert alert-info">
@@ -11,12 +11,12 @@
 <table class="table table-hover align-middle">
   <thead>
     <tr>
-      <th>Nome</th>
-      <th>Biblioteca/Pasta</th>
-      <th>Deletado por</th>
-      <th>Data</th>
-      <th>Expira em</th>
-      <th></th>
+      <th scope="col">Nome</th>
+      <th scope="col">Biblioteca/Pasta</th>
+      <th scope="col">Deletado por</th>
+      <th scope="col">Data</th>
+      <th scope="col">Expira em</th>
+      <th scope="col"></th>
     </tr>
   </thead>
   <tbody>
@@ -24,7 +24,7 @@
     <tr>
       <td>
         {% if a.mime.startswith('image') %}
-        <img src="{{ url_for('asset.asset_file', asset_id=a.id) }}" alt="" width="40" class="me-2 rounded">
+        <img src="{{ url_for('asset.asset_file', asset_id=a.id) }}" alt="" width="40" class="me-2 rounded" loading="lazy">
         {% endif %}
         {{ a.filename_orig }}
       </td>
@@ -41,10 +41,14 @@
       </td>
       <td class="text-end">
         <form action="{{ url_for('trash.restore_asset', asset_id=a.id) }}" method="post" class="d-inline">
-          <button class="btn btn-outline-success btn-sm" title="Restaurar"><i class="bi bi-arrow-counterclockwise"></i></button>
+          <button class="btn btn-outline-success btn-sm" aria-label="Restaurar">
+            <i class="bi bi-arrow-counterclockwise" aria-hidden="true"></i>
+          </button>
         </form>
         <form action="{{ url_for('trash.purge_asset', asset_id=a.id) }}" method="post" class="d-inline" onsubmit="return confirm('Excluir permanentemente?');">
-          <button class="btn btn-outline-danger btn-sm" title="Excluir definitivamente"><i class="bi bi-trash"></i></button>
+          <button class="btn btn-outline-danger btn-sm" aria-label="Excluir definitivamente">
+            <i class="bi bi-trash" aria-hidden="true"></i>
+          </button>
         </form>
       </td>
     </tr>

@@ -45,6 +45,26 @@ body {
   line-height: 1.5;
 }
 
+/* Acessibilidade: foco visível */
+:focus {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Link de pular para o conteúdo */
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  background: var(--bg-color);
+  color: var(--text-color);
+  padding: 0.5rem 1rem;
+  z-index: calc(var(--z-navbar) + 1);
+}
+.skip-link:focus {
+  left: 0;
+}
+
 /* ---------- Links & Botões ---------- */
 a {
   color: var(--accent-dark);

@@ -16,6 +16,7 @@
   {% block head %}{% endblock %}
 </head>
 <body>
+  <a href="#content" class="skip-link">Pular para o conteúdo</a>
   {% include 'components/navbar.html' %}
   <main id="content">
     <div class="floating-container container-fluid">
@@ -28,11 +29,11 @@
           {% for category, m in messages %}
           <div class="toast toast-{{ category }}" role="status">
             {% if category == 'success' %}
-            <i class="bi bi-check-circle-fill"></i>
+            <i class="bi bi-check-circle-fill" aria-hidden="true"></i>
             {% elif category == 'warning' %}
-            <i class="bi bi-exclamation-triangle-fill"></i>
+            <i class="bi bi-exclamation-triangle-fill" aria-hidden="true"></i>
             {% else %}
-            <i class="bi bi-x-circle-fill"></i>
+            <i class="bi bi-x-circle-fill" aria-hidden="true"></i>
             {% endif %}
             <span>{{ m }}</span>
             <button aria-label="Fechar">&times;</button>

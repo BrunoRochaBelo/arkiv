@@ -10,7 +10,7 @@
   <div class="navbar-actions">
     <div class="dropdown me-2">
       <button class="btn btn-link p-0" id="addMenu" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Adicionar">
-        <i class="bi bi-plus-circle fs-4"></i>
+        <i class="bi bi-plus-circle fs-4" aria-hidden="true"></i>
       </button>
       <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="addMenu">
         <li><a class="dropdown-item" href="{{ url_for('library.create_library') }}">Nova Biblioteca</a></li>
@@ -18,7 +18,7 @@
         <li><a class="dropdown-item" href="{{ url_for('library.list_libraries') }}">Novo Upload</a></li>
       </ul>
     </div>
-    <button class="btn btn-link theme-toggle p-0" onclick="toggleTheme()" aria-label="Alternar tema" aria-pressed="false"><i class="bi bi-moon-fill"></i></button>
+    <button class="btn btn-link theme-toggle p-0" onclick="toggleTheme()" aria-label="Alternar tema" aria-pressed="false"><i class="bi bi-moon-fill" aria-hidden="true"></i></button>
     {% if current_user.is_authenticated %}
     {% set pending = pending_tasks if pending_tasks is defined else 0 %}
     <div class="avatar-frame position-relative" data-bs-toggle="modal" data-bs-target="#userModal">

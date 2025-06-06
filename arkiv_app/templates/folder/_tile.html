@@ -1,5 +1,5 @@
 <div class="folder-tile">
-  <i class="bi bi-folder text-accent"></i>
+  <i class="bi bi-folder text-accent" aria-hidden="true"></i>
   <a class="flex-grow-1 text-decoration-none" href="{{ url_for('folder.view_folder', folder_id=folder.id) }}">{{ folder.name }}</a>
   <span class="badge folder-badge">{{ item_count }}</span>
 </div>

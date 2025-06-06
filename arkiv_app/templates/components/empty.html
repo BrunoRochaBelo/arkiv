@@ -1,6 +1,6 @@
 <div class="empty-state">
   {% if img %}
-  <img src="{{ url_for('static', filename='img/' + img) }}" alt="" class="mb-3">
+  <img src="{{ url_for('static', filename='img/' + img) }}" alt="" class="mb-3" loading="lazy">
   {% endif %}
   <h2 class="h4">{{ title }}</h2>
   {% if description %}
