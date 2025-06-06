@@ -12,7 +12,12 @@
     </div>
   </div>
   {% else %}
-  <p class="text-muted">Nenhum arquivo</p>
+  {% include 'components/empty.html' with
+      img='empty.svg',
+      title='Nenhum arquivo',
+      description='Use o botão acima para enviar arquivos.',
+      cta_url=url_for('asset.upload_asset', folder_id=folder.id) if folder else None,
+      cta_label='Upload' %}
   {% endfor %}
 </div>
 <div data-gallery-sentinel></div>

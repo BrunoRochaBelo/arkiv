@@ -21,7 +21,7 @@ def settings():
     if form.validate_on_submit():
         org.name = form.name.data
         db.session.commit()
-        flash('Configurações salvas')
+        flash('Configurações salvas!', 'success')
         return redirect(url_for('organization.settings'))
 
     used_storage = (
@@ -63,9 +63,9 @@ def members():
             m = Membership(user_id=user.id, org_id=org.id, role=invite_form.role.data)
             db.session.add(m)
             db.session.commit()
-            flash('Usuário convidado')
+            flash('Usuário convidado', 'success')
         else:
-            flash('Usuário já é membro')
+            flash('Usuário já é membro', 'warning')
         return redirect(url_for('organization.members'))
 
     q = request.args.get('q', '')
@@ -108,11 +108,11 @@ def update_member_role(user_id):
     new_role = request.form.get('role')
     mem = Membership.query.filter_by(user_id=user_id, org_id=org.id).first_or_404()
     if mem.user_id == current_user.id and mem.role == 'OWNER' and new_role != 'OWNER':
-        flash('Você não pode rebaixar seu próprio papel de OWNER')
+        flash('Você não pode rebaixar seu próprio papel de OWNER', 'warning')
         return redirect(url_for('organization.members'))
     mem.role = new_role
     db.session.commit()
-    flash('Permissão alterada!')
+    flash('Permissão alterada!', 'success')
     return redirect(url_for('organization.members'))
 
 
@@ -126,9 +126,9 @@ def remove_member(user_id):
     if mem.role == 'OWNER':
         owner_count = Membership.query.filter_by(org_id=org.id, role='OWNER').count()
         if owner_count <= 1:
-            flash('Não é possível remover o último OWNER')
+            flash('Não é possível remover o último OWNER', 'error')
             return redirect(url_for('organization.members'))
     db.session.delete(mem)
     db.session.commit()
-    flash('Usuário removido')
+    flash('Usuário removido', 'success')
     return redirect(url_for('organization.members'))

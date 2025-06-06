@@ -40,13 +40,13 @@ def login():
         if user and user.check_password(form.password.data):
             if user.mfa_enabled:
                 if not form.token.data or not user.verify_totp(form.token.data):
-                    flash('Código de 2FA inválido')
+                    flash('Código de 2FA inválido', 'error')
                     return render_template('auth/login.html', form=form, title='Entrar', login_page=True)
             user.last_login = datetime.utcnow()
             db.session.commit()
             login_user(user, remember=form.remember.data)
             return redirect(url_for('library.list_libraries'))
-        flash('Credenciais inválidas')
+        flash('Credenciais inválidas', 'error')
     return render_template('auth/login.html', form=form, title='Entrar', login_page=True)
 
 
@@ -59,7 +59,7 @@ def logout():
 @auth_bp.route('/login/google')
 def google_login():
     if not google:
-        flash('Google OAuth não configurado')
+        flash('Google OAuth não configurado', 'error')
         return redirect(url_for('auth.login'))
     redirect_uri = url_for('auth.google_authorized', _external=True)
     return google.authorize_redirect(redirect_uri)
@@ -68,7 +68,7 @@ def google_login():
 @auth_bp.route('/login/google/authorized')
 def google_authorized():
     if not google:
-        flash('Google OAuth não configurado')
+        flash('Google OAuth não configurado', 'error')
         return redirect(url_for('auth.login'))
     token = google.authorize_access_token()
     resp = google.get('userinfo')
@@ -95,7 +95,7 @@ def reset_request():
         if user:
             token = _token_serializer().dumps(user.id)
             send_reset_email(current_app, user, token)
-        flash('Se o email estiver cadastrado, enviaremos instruções.')
+        flash('Se o email estiver cadastrado, enviaremos instruções.', 'success')
         return redirect(url_for('auth.login'))
     return render_template('auth/reset_request.html', form=form, title='Recuperar senha')
 
@@ -106,15 +106,15 @@ def reset_with_token(token):
     try:
         user_id = _token_serializer().loads(token, max_age=3600)
     except BadSignature:
-        flash('Link inválido ou expirado')
+        flash('Link inválido ou expirado', 'error')
         return redirect(url_for('auth.login'))
     user = User.query.get(user_id)
     if not user:
-        flash('Usuário não encontrado')
+        flash('Usuário não encontrado', 'error')
         return redirect(url_for('auth.login'))
     if form.validate_on_submit():
         user.set_password(form.password.data)
         db.session.commit()
-        flash('Senha atualizada')
+        flash('Senha atualizada', 'success')
         return redirect(url_for('auth.login'))
     return render_template('auth/reset_password.html', form=form, title='Definir nova senha')

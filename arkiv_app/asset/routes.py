@@ -51,7 +51,7 @@ def upload_asset(folder_id):
         quota = org.plan.storage_quota_gb * 1024 * 1024 * 1024
         if used + size > quota:
             os.remove(filepath)
-            flash("Limite de armazenamento excedido")
+            flash("Limite de armazenamento excedido!", "error")
             return redirect(url_for("asset.upload_asset", folder_id=folder.id))
         asset = Asset(
             library_id=folder.library_id,
@@ -70,7 +70,7 @@ def upload_asset(folder_id):
         )
         generate_thumbnail.delay(asset.id, upload_path, thumb_path)
         perform_ocr.delay(asset.id)
-        flash("Arquivo enviado")
+        flash("Upload concluído!", "success")
         return redirect(url_for("asset.upload_asset", folder_id=folder.id))
     assets = Asset.query.filter_by(folder_id=folder_id).all()
     return render_template(
@@ -113,5 +113,5 @@ def delete_asset(asset_id):
     asset.deleted_at = datetime.utcnow()
     db.session.commit()
     record_audit("delete", "asset", asset.id, user_id=current_user.id, org_id=asset.folder.library.org_id)
-    flash("Asset removido")
+    flash("Asset removido!", "success")
     return redirect(url_for("folder.view_folder", folder_id=asset.folder_id))

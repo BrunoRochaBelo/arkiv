@@ -23,15 +23,23 @@
       {% block back %}{% endblock %}
       {% block breadcrumb %}{% endblock %}
       {% endif %}
-      {% with messages = get_flashed_messages() %}
-        {% if messages %}
-        <ul class="flash">
-          {% for m in messages %}
-          <li class="flash-item">{{ m }} <button class="flash-close" aria-label="Fechar" onclick="this.parentElement.remove()">&times;</button></li>
+      <div class="toast-container">
+        {% with messages = get_flashed_messages(with_categories=True) %}
+          {% for category, m in messages %}
+          <div class="toast toast-{{ category }}" role="status">
+            {% if category == 'success' %}
+            <i class="bi bi-check-circle-fill"></i>
+            {% elif category == 'warning' %}
+            <i class="bi bi-exclamation-triangle-fill"></i>
+            {% else %}
+            <i class="bi bi-x-circle-fill"></i>
+            {% endif %}
+            <span>{{ m }}</span>
+            <button aria-label="Fechar">&times;</button>
+          </div>
           {% endfor %}
-        </ul>
-        {% endif %}
-      {% endwith %}
+        {% endwith %}
+      </div>
       {% block content %}{% endblock %}
     </div>
   </main>

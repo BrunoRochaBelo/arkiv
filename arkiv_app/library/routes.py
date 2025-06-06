@@ -96,7 +96,7 @@ def create_library():
         record_audit(
             "create", "library", lib.id, user_id=current_user.id, org_id=org_id
         )
-        flash("Biblioteca criada")
+        flash("Biblioteca criada!", "success")
         return redirect(url_for("library.list_libraries"))
     return render_template("library/form.html", form=form, title="Nova Biblioteca")
 
@@ -118,7 +118,7 @@ def edit_library(lib_id):
             user_id=current_user.id,
             org_id=current_org_id(),
         )
-        flash("Biblioteca atualizada")
+        flash("Biblioteca atualizada!", "success")
         return redirect(url_for("library.list_libraries"))
     return render_template("library/form.html", form=form, title="Editar Biblioteca")
 
@@ -137,5 +137,5 @@ def delete_library(lib_id):
         user_id=current_user.id,
         org_id=current_org_id(),
     )
-    flash("Biblioteca removida")
+    flash("Biblioteca removida!", "success")
     return redirect(url_for("library.list_libraries"))

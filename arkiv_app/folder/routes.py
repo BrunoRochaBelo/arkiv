@@ -29,7 +29,7 @@ def create_folder():
     org_id = current_org_id()
     libs = Library.query.filter_by(org_id=org_id).all()
     if not libs:
-        flash("Crie uma biblioteca antes de adicionar pastas")
+        flash("Crie uma biblioteca antes de adicionar pastas", "warning")
         return redirect(url_for("library.create_library"))
     if request.args.get("library_id"):
         form.library_id.data = int(request.args["library_id"])
@@ -52,7 +52,7 @@ def create_folder():
             user_id=current_user.id,
             org_id=org_id,
         )
-        flash("Pasta criada")
+        flash("Pasta criada!", "success")
         return redirect(url_for("library.list_libraries"))
     return render_template("folder/form.html", form=form, title="Nova Pasta")
 
@@ -66,7 +66,7 @@ def edit_folder(folder_id):
     org_id = current_org_id()
     libs = Library.query.filter_by(org_id=org_id).all()
     if not libs:
-        flash("Crie uma biblioteca antes de adicionar pastas")
+        flash("Crie uma biblioteca antes de adicionar pastas", "warning")
         return redirect(url_for("library.create_library"))
     _populate_form_choices(form, libs)
     if form.validate_on_submit():
@@ -81,7 +81,7 @@ def edit_folder(folder_id):
             user_id=current_user.id,
             org_id=org_id,
         )
-        flash("Pasta atualizada")
+        flash("Pasta atualizada!", "success")
         return redirect(url_for("library.list_libraries"))
     return render_template("folder/form.html", form=form, title="Editar Pasta")
 
@@ -100,7 +100,7 @@ def delete_folder(folder_id):
         user_id=current_user.id,
         org_id=current_org_id(),
     )
-    flash("Pasta removida")
+    flash("Pasta removida!", "success")
     return redirect(url_for("library.list_libraries"))
 
 
