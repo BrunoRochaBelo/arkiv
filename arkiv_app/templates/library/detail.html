@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% import 'components/breadcrumb.html' as breadcrumb %}
+{% import 'components/empty.html' as empty %}
 {% block breadcrumb %}
 {{ breadcrumb.render([
   ('Bibliotecas', url_for('library.list_libraries')),
@@ -27,12 +28,13 @@
       {% set item_count = folder.assets|length + folder.children|length %}
       {% include 'folder/_tile.html' %}
       {% else %}
-      {% include 'components/empty.html' with
+      {{ empty.render(
           img='empty.svg',
           title='Nenhuma pasta',
           description='Crie uma pasta para organizar seus arquivos.',
           cta_url=url_for('folder.create_folder') ~ '?library_id=' ~ library.id,
-          cta_label='Nova Pasta' %}
+          cta_label='Nova Pasta'
+      ) }}
       {% endfor %}
     </div>
   </div>
@@ -44,12 +46,13 @@
     {% set assets = assets %}
     {% include 'asset/gallery.html' %}
     {% else %}
-    {% include 'components/empty.html' with
+    {{ empty.render(
         img='empty.svg',
         title='Nada aqui ainda',
         description='Envie arquivos ou crie uma pasta para começar.',
         cta_url=url_for('folder.create_folder') ~ '?library_id=' ~ library.id,
-        cta_label='Nova Pasta' %}
+        cta_label='Nova Pasta'
+    ) }}
     {% endif %}
   </div>
 </div>

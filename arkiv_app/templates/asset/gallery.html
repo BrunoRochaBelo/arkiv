@@ -1,3 +1,4 @@
+{% import 'components/empty.html' as empty %}
 <div class="asset-gallery">
   {% for asset in assets %}
   <div class="asset-item asset-item-selectable">
@@ -18,12 +19,13 @@
     </div>
   </div>
   {% else %}
-  {% include 'components/empty.html' with
+  {{ empty.render(
       img='empty.svg',
       title='Nenhum arquivo',
       description='Use o botão acima para enviar arquivos.',
       cta_url=url_for('asset.upload_asset', folder_id=folder.id) if folder else None,
-      cta_label='Upload' %}
+      cta_label='Upload'
+  ) }}
   {% endfor %}
 </div>
 <div data-gallery-sentinel></div>

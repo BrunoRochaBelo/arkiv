@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% import 'components/breadcrumb.html' as breadcrumb %}
+{% import 'components/empty.html' as empty %}
 {% block breadcrumb %}
 {{ breadcrumb.render([
   ('Bibliotecas', url_for('library.list_libraries')),
@@ -17,12 +18,13 @@
   {% set item_count = sub.assets|length + sub.children|length %}
   {% include 'folder/_tile.html' %}
   {% else %}
-  {% include 'components/empty.html' with
+  {{ empty.render(
       img='empty.svg',
       title='Esta pasta está vazia',
       description="Clique em 'Enviar Arquivo' para adicionar arquivos.",
       cta_url=url_for('asset.upload_asset', folder_id=folder.id),
-      cta_label='Enviar Arquivo' %}
+      cta_label='Enviar Arquivo'
+  ) }}
   {% endfor %}
 </div>
 {% endblock %}
