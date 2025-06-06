@@ -1,12 +1,13 @@
-<nav class="navbar navbar-floating" aria-label="Barra de navegação principal">
-  <div class="container-fluid d-flex align-items-center justify-content-between gap-3">
-    <a class="navbar-brand" href="{{ url_for('main.index') }}">Arkiv</a>
-    {% if not login_page %}
-    <form class="flex-grow-1 mx-3" role="search" hx-get="/search" hx-trigger="keyup changed delay:300ms" hx-target="#content" hx-push-url="true">
-      <input class="form-control" type="search" placeholder="Buscar" name="q" aria-label="Buscar">
+<header class="navbar-floating" aria-label="Barra de navegação principal">
+  <span class="navbar-brand"><a href="{{ url_for('main.index') }}">Arkiv</a></span>
+  {% if not login_page %}
+  <div class="global-search">
+    <form role="search" hx-get="/search" hx-trigger="keyup changed delay:300ms" hx-target="#content" hx-push-url="true">
+      <input id="globalSearchInput" type="search" placeholder="Buscar..." name="q" aria-label="Buscar">
     </form>
-    {% endif %}
-  <div class="d-flex align-items-center gap-2">
+  </div>
+  {% endif %}
+  <div class="navbar-actions">
     <button class="btn btn-link theme-toggle p-0" onclick="toggleTheme()" aria-label="Alternar tema" aria-pressed="false"><i class="bi bi-moon-fill"></i></button>
     {% if current_user.is_authenticated %}
     <div class="avatar-frame" data-bs-toggle="modal" data-bs-target="#userModal">
@@ -14,8 +15,7 @@
     </div>
     {% endif %}
   </div>
-  </div>
-</nav>
+</header>
 
 <div class="modal fade user-modal" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
