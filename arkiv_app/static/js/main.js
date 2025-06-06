@@ -37,4 +37,12 @@ document.addEventListener('DOMContentLoaded', () => {
       if (input) input.focus();
     }
   });
+
+  document.querySelectorAll('.btn-logout').forEach((btn) => {
+    btn.addEventListener('click', (ev) => {
+      if (!confirm('Tem certeza que deseja sair?')) {
+        ev.preventDefault();
+      }
+    });
+  });
 });
