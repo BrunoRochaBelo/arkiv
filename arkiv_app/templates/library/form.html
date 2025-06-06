@@ -7,7 +7,7 @@
   <div class="field">{{ form.description.label }} {{ form.description(cols=40, rows=4) }}</div>
   <div class="d-flex gap-2">
     {{ form.submit(class_='btn btn-accent') }}
-    <button type="button" class="btn btn-outline-secondary btn-cancel" onclick="history.back()">Cancelar</button>
+    <a href="{{ url_for('library.list_libraries') }}" class="btn btn-outline-secondary btn-cancel">Cancelar</a>
   </div>
 </form>
 {% from 'components/form_dirty_guard.html' import guard %}

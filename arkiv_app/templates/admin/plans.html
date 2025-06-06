@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <h1>Planos</h1>
+<p><a href="{{ url_for('admin.index') }}">Voltar</a></p>
 <ul>
   {% for plan in plans %}
   <li class="card">{{ plan.name }} - {{ plan.storage_quota_gb }}GB</li>
