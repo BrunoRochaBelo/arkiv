@@ -517,7 +517,7 @@ class AssetTag(db.Model):
 
 class AuditLog(db.Model):
     __tablename__ = "audit_log"
-    id = db.Column(db.BigInteger, primary_key=True)
+    id = db.Column(db.BigInteger, primary_key=True, autoincrement=True)
     org_id = db.Column(db.Integer, db.ForeignKey("organization.id"), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     action = db.Column(db.String(50), nullable=False)       # ex.: "CREATE_ASSET", "DELETE_TAG"
