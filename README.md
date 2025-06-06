@@ -648,6 +648,7 @@ class AuditLog(db.Model):
 
    * **Grid de Thumbnails**: CSS Grid / Masonry para reflow suave de 320px a 4K.
    * **Navbar Fixa** com campo de busca e menu de usuário.
+   * **Breadcrumb** com ícones indica o caminho atual da pasta.
    * **Tema Claro/Escuro** alternável pelo botão no topo. A escolha fica salva em `localStorage`.
    * Fonte base **Inter** e botões `.btn-accent` padronizam o visual.
    * **Sidebar Colapsável** para filtros em telas maiores; em telas pequenas vira dropdown no topo.
@@ -669,12 +670,14 @@ class AuditLog(db.Model):
 
 5. **Dark Mode**
 
+   * Visual repaginado com melhor contraste.
    * Detecta `prefers-color-scheme` do navegador, mas permite alternar manualmente por ícone (sol/lua) no cabeçalho.
-   * Variáveis CSS definem temas claro e escuro (cores, backgrounds, bordas).
+   * Variáveis CSS definem temas claro e escuro (cores, backgrounds, bordas) via `data-bs-theme`.
 
 6. **Formulários Intuitivos**
 
-   * Validação inline (via HTMX + Flask-WTF), sem recarregar a página.
+   * Campos com cantos arredondados e foco destacado.
+   * Validação inline (via HTMX + Flask-WTF) sem recarregar a página.
    * Campos obrigatórios marcados com `*` e mensagens de erro contextualizadas abaixo do campo.
 
 ---
