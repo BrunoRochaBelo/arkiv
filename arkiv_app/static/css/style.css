@@ -262,17 +262,16 @@ nav[aria-label="breadcrumb"] ol li + li::before {
 }
 
 /* ---------- Modal ---------- */
-.modal,
-.user-modal {
+.modal {
   z-index: var(--z-modal);
 }
-.user-modal .modal-content {
+.modal-content {
   background: var(--card-bg);
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
   padding: 1.5rem;
 }
-.user-modal .modal-body {
+.modal-footer {
   display: flex;
   justify-content: flex-end;
   gap: 0.5rem;
