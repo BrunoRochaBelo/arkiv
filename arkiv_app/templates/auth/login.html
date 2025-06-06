@@ -1,17 +1,18 @@
 {% extends 'base.html' %}
 {% block title %}Entrar{% endblock %}
 {% block content %}
-<h1>Entrar</h1>
-<form method="post" class="card">
-  {{ form.hidden_tag() }}
-  <div class="field">
-    {{ form.email.label }} {{ form.email(size=32) }}
-  </div>
-  <div class="field">
-    {{ form.password.label }} {{ form.password(size=32) }}
-  </div>
-  <div>
-    {{ form.submit(class_='btn') }}
-  </div>
-</form>
+<div class="d-flex justify-content-center">
+  <form method="post" class="card shadow-soft rounded-md" style="max-width: 400px; width:100%;">
+    {{ form.hidden_tag() }}
+    <div class="field">
+      {{ form.email.label }} {{ form.email(size=32) }}
+    </div>
+    <div class="field">
+      {{ form.password.label }} {{ form.password(size=32) }}
+    </div>
+    <div>
+      {{ form.submit(class_='btn') }}
+    </div>
+  </form>
+</div>
 {% endblock %}
