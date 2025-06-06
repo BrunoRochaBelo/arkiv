@@ -41,13 +41,13 @@ def login():
             if user.mfa_enabled:
                 if not form.token.data or not user.verify_totp(form.token.data):
                     flash('Código de 2FA inválido')
-                    return render_template('auth/login.html', form=form, title='Entrar')
+                    return render_template('auth/login.html', form=form, title='Entrar', login_page=True)
             user.last_login = datetime.utcnow()
             db.session.commit()
             login_user(user, remember=form.remember.data)
             return redirect(url_for('library.list_libraries'))
         flash('Credenciais inválidas')
-    return render_template('auth/login.html', form=form, title='Entrar')
+    return render_template('auth/login.html', form=form, title='Entrar', login_page=True)
 
 
 @auth_bp.route('/logout')
