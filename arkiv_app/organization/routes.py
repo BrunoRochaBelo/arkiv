@@ -4,17 +4,16 @@ from flask_login import login_required, current_user
 
 from ..extensions import db
 from ..models import Asset, Library, User, Membership
-from ..utils import current_org_id
+from ..utils import current_org_id, role_required
 from .forms import OrganizationForm, InviteUserForm
 from . import organization_bp
 
 
 @organization_bp.route('/settings', methods=['GET', 'POST'])
 @login_required
+@role_required('OWNER', 'MANAGER')
 def settings():
     membership = current_user.memberships[0] if current_user.memberships else None
-    if not membership or membership.role not in ('OWNER', 'MANAGER'):
-        abort(403)
 
     org = membership.organization
     form = OrganizationForm(name=org.name)
@@ -46,10 +45,9 @@ def settings():
 
 @organization_bp.route('/members', methods=['GET', 'POST'])
 @login_required
+@role_required('OWNER', 'MANAGER')
 def members():
     membership = current_user.memberships[0] if current_user.memberships else None
-    if not membership or membership.role not in ('OWNER', 'MANAGER'):
-        abort(403)
 
     org = membership.organization
     invite_form = InviteUserForm()
@@ -103,10 +101,9 @@ def members():
 
 @organization_bp.route('/members/<int:user_id>/role', methods=['POST'])
 @login_required
+@role_required('OWNER', 'MANAGER')
 def update_member_role(user_id):
     membership = current_user.memberships[0] if current_user.memberships else None
-    if not membership or membership.role not in ('OWNER', 'MANAGER'):
-        abort(403)
     org = membership.organization
     new_role = request.form.get('role')
     mem = Membership.query.filter_by(user_id=user_id, org_id=org.id).first_or_404()
@@ -121,10 +118,9 @@ def update_member_role(user_id):
 
 @organization_bp.route('/members/<int:user_id>/remove', methods=['POST'])
 @login_required
+@role_required('OWNER', 'MANAGER')
 def remove_member(user_id):
     membership = current_user.memberships[0] if current_user.memberships else None
-    if not membership or membership.role not in ('OWNER', 'MANAGER'):
-        abort(403)
     org = membership.organization
     mem = Membership.query.filter_by(user_id=user_id, org_id=org.id).first_or_404()
     if mem.role == 'OWNER':

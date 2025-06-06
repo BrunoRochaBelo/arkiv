@@ -1,7 +1,7 @@
 from flask import render_template, redirect, url_for, flash, request
 from flask_login import login_required, current_user
 
-from ..utils import current_org_id
+from ..utils import current_org_id, role_required
 
 from ..extensions import db
 from ..models import Library, Folder
@@ -23,6 +23,7 @@ def _populate_form_choices(form, libs):
 
 @folder_bp.route("/folders/create", methods=["GET", "POST"])
 @login_required
+@role_required("OWNER", "MANAGER", "EDITOR", "CONTRIBUTOR")
 def create_folder():
     form = FolderForm()
     org_id = current_org_id()
@@ -58,6 +59,7 @@ def create_folder():
 
 @folder_bp.route("/folders/<int:folder_id>/edit", methods=["GET", "POST"])
 @login_required
+@role_required("OWNER", "MANAGER", "EDITOR")
 def edit_folder(folder_id):
     folder = Folder.query.get_or_404(folder_id)
     form = FolderForm(obj=folder)
@@ -86,6 +88,7 @@ def edit_folder(folder_id):
 
 @folder_bp.route("/folders/<int:folder_id>/delete", methods=["POST"])
 @login_required
+@role_required("OWNER", "MANAGER", "EDITOR")
 def delete_folder(folder_id):
     folder = Folder.query.get_or_404(folder_id)
     db.session.delete(folder)

@@ -1,7 +1,7 @@
 from flask import render_template, redirect, url_for, flash, request
 from flask_login import login_required, current_user
 
-from ..utils import current_org_id
+from ..utils import current_org_id, role_required
 
 from ..extensions import db
 from ..utils.audit import record_audit
@@ -83,6 +83,7 @@ def show_library(lib_id):
 
 @library_bp.route("/libraries/create", methods=["GET", "POST"])
 @login_required
+@role_required("OWNER", "MANAGER", "EDITOR")
 def create_library():
     form = LibraryForm()
     if form.validate_on_submit():
@@ -102,6 +103,7 @@ def create_library():
 
 @library_bp.route("/libraries/<int:lib_id>/edit", methods=["GET", "POST"])
 @login_required
+@role_required("OWNER", "MANAGER", "EDITOR")
 def edit_library(lib_id):
     lib = Library.query.get_or_404(lib_id)
     form = LibraryForm(obj=lib)
@@ -123,6 +125,7 @@ def edit_library(lib_id):
 
 @library_bp.route("/libraries/<int:lib_id>/delete", methods=["POST"])
 @login_required
+@role_required("OWNER", "MANAGER")
 def delete_library(lib_id):
     lib = Library.query.get_or_404(lib_id)
     db.session.delete(lib)
