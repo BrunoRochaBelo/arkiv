@@ -1,11 +1,6 @@
 <nav class="navbar navbar-floating" aria-label="Barra de navegação principal">
   <div class="container-fluid d-flex align-items-center justify-content-between gap-3">
-    <div class="d-flex align-items-center gap-2">
-      <div class="avatar-frame" data-bs-toggle="modal" data-bs-target="#userModal">
-        <img src="{{ url_for('static', filename='img/avatar.svg') }}" alt="{{ current_user.name }}" loading="lazy">
-      </div>
-      <a class="navbar-brand" href="{{ url_for('main.index') }}">Arkiv</a>
-    </div>
+    <a class="navbar-brand" href="{{ url_for('main.index') }}">Arkiv</a>
     {% if not login_page %}
     <form class="flex-grow-1 mx-3" role="search" hx-get="/search" hx-trigger="keyup changed delay:300ms" hx-target="#content" hx-push-url="true">
       <input class="form-control" type="search" placeholder="Buscar" name="q" aria-label="Buscar">
@@ -13,9 +8,11 @@
     {% endif %}
   <div class="d-flex align-items-center gap-2">
     <button class="btn btn-link theme-toggle p-0" onclick="toggleTheme()" aria-label="Alternar tema" aria-pressed="false"><i class="bi bi-moon-fill"></i></button>
+    {% if current_user.is_authenticated %}
     <div class="avatar-frame" data-bs-toggle="modal" data-bs-target="#userModal">
       <img src="{{ url_for('static', filename='img/avatar.svg') }}" alt="{{ current_user.name }}" loading="lazy">
     </div>
+    {% endif %}
   </div>
   </div>
 </nav>
