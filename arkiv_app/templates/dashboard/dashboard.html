@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% block breadcrumb %}
+<span class="text-muted">Org: {{ org.name }} &gt; Dashboard</span>
+{% endblock %}
+{% block content %}
+<h1 class="mb-4">Dashboard</h1>
+<div class="row g-3 mb-4">
+  <div class="col-6 col-md-4 col-lg-2">
+    <div class="dashboard-widget">
+      <div class="display-6">{{ stats.assets }}</div>
+      <h6>Total de Assets</h6>
+    </div>
+  </div>
+  <div class="col-6 col-md-4 col-lg-3">
+    <div class="dashboard-widget">
+      <div class="progress mb-1" style="height:6px;">
+        {% set pct = (stats.storage / stats.quota * 100) if stats.quota else 0 %}
+        <div class="progress-bar{% if pct > 80 %} bg-danger{% elif pct > 60 %} bg-warning text-dark{% else %} bg-success{% endif %}" role="progressbar" style="width: {{ pct|round(0) }}%" aria-valuenow="{{ pct|round(0) }}" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+      <small>{{ (stats.storage/1024/1024/1024)|round(1) }}GB de {{ (stats.quota/1024/1024/1024)|int }}GB usados</small>
+      <h6 class="mt-1">Armazenamento</h6>
+    </div>
+  </div>
+  <div class="col-6 col-md-4 col-lg-2">
+    <div class="dashboard-widget">
+      <div class="display-6">{{ stats.libraries }}</div>
+      <h6>Bibliotecas</h6>
+    </div>
+  </div>
+  <div class="col-6 col-md-4 col-lg-2">
+    <div class="dashboard-widget">
+      <div class="display-6">{{ stats.folders }}</div>
+      <h6>Pastas</h6>
+    </div>
+  </div>
+  <div class="col-6 col-md-4 col-lg-2">
+    <div class="dashboard-widget">
+      <div class="display-6">{{ stats.tags }}</div>
+      <h6>Tags Ativas</h6>
+    </div>
+  </div>
+  <div class="col-6 col-md-4 col-lg-3">
+    <div class="dashboard-widget">
+      <div class="display-6">{{ stats.plan.name if stats.plan else '-' }}</div>
+      <h6>Status do Plano</h6>
+    </div>
+  </div>
+</div>
+<div class="row g-4">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="mb-3">Uploads no Mês</h6>
+        <canvas id="uploadsChart" height="120"></canvas>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="mb-3">Uso por Biblioteca</h6>
+        <canvas id="spaceChart" height="120"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="mt-4">
+  <h4 class="h5">Últimas ações</h4>
+  <ul class="list-group list-group-flush">
+    {% for a in stats.recent_actions %}
+    <li class="list-group-item small">{{ a.timestamp.strftime('%d/%m %H:%M') }} - {{ a.action }} {{ a.entity }} ID {{ a.entity_id }}</li>
+    {% else %}
+    <li class="list-group-item small text-muted">Nenhuma ação recente</li>
+    {% endfor %}
+  </ul>
+</div>
+<div class="mt-4 d-flex flex-wrap gap-2">
+  <a href="{{ url_for('library.list_libraries') }}" class="btn btn-accent">Fazer upload</a>
+  <a href="{{ url_for('library.create_library') }}" class="btn btn-accent">Criar biblioteca</a>
+  <a href="{{ url_for('reports.assets_report') }}" class="btn btn-accent">Gerar relatório</a>
+  <a href="{{ url_for('organization.members') }}" class="btn btn-accent">Gerenciar membros</a>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.3/dist/chart.umd.min.js"></script>
+<script>
+const uploads = {{ stats.uploads_chart|tojson }};
+const uLabels = uploads.map(u => u.date);
+const uData = uploads.map(u => u.count);
+new Chart(document.getElementById('uploadsChart'), {
+  type: 'bar',
+  data: { labels: uLabels, datasets:[{label:'Uploads', data:uData, backgroundColor:'#28a0b0'}] },
+  options:{responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}}
+});
+const spaces = {{ stats.size_per_library|tojson }};
+const sLabels = spaces.map(s => s.name);
+const sData = spaces.map(s => s.size);
+new Chart(document.getElementById('spaceChart'), {
+  type: 'pie',
+  data: { labels: sLabels, datasets:[{ data:sData, backgroundColor:['#28a0b0','#6f42c1','#198754','#0d6efd','#6610f2'] }] },
+  options:{responsive:true, maintainAspectRatio:false}
+});
+</script>
+{% endblock %}

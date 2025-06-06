@@ -39,6 +39,7 @@ def create_app(config_name='development'):
     from .asset import asset_bp
     from .tag import tag_bp
     from .search import search_bp
+    from .dashboard import dashboard_bp
     from .reports import reports_bp
     from .admin import admin_bp
     from .organization import organization_bp
@@ -51,6 +52,7 @@ def create_app(config_name='development'):
     app.register_blueprint(asset_bp)
     app.register_blueprint(tag_bp)
     app.register_blueprint(search_bp)
+    app.register_blueprint(dashboard_bp)
     app.register_blueprint(reports_bp)
     app.register_blueprint(admin_bp)
     app.register_blueprint(organization_bp)
