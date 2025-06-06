@@ -38,6 +38,10 @@ nav {
   align-items: center;
   gap: 1rem;
 }
+.navbar-brand {
+  font-weight: 600;
+  font-size: 1.25rem;
+}
 
 nav a {
   color: #fff;
@@ -82,6 +86,17 @@ input, textarea, select, button {
   border-radius: 4px;
 }
 
+.form-control {
+  border-radius: 6px;
+  border: none;
+  background-color: rgba(255,255,255,0.7);
+  transition: background-color 0.2s;
+}
+[data-theme="dark"] .form-control {
+  background-color: rgba(50,50,50,0.7);
+  color: #fff;
+}
+
 button {
   background-color: var(--brand-color);
   color: #fff;
@@ -96,12 +111,18 @@ button:hover {
 }
 
 .btn {
-  background-color: var(--brand-color);
+  background: linear-gradient(to bottom, var(--brand-color), var(--brand-color-dark));
   color: #fff;
   border: none;
   cursor: pointer;
-  border-radius: 4px;
-  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  padding: 0.5rem 1.25rem;
+  transition: transform 0.1s, box-shadow 0.2s;
+}
+
+.btn:active {
+  transform: scale(0.97);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
 }
 
 .theme-toggle {
@@ -109,11 +130,11 @@ button:hover {
   border: none;
   color: inherit;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 1.2rem;
 }
 
 .btn:hover {
-  background-color: var(--brand-color-dark);
+  background: linear-gradient(to bottom, var(--brand-color-dark), var(--brand-color));
 }
 
 .card {
@@ -155,7 +176,13 @@ button:hover {
   border-radius: 8px !important;
 }
 .navbar {
+  backdrop-filter: saturate(180%) blur(20px);
+  background-color: rgba(255,255,255,0.8);
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: background-color 0.2s ease-in-out;
+}
+[data-theme="dark"] .navbar {
+  background-color: rgba(18,18,18,0.8);
 }
 .floating-container {
   background: var(--card-bg);

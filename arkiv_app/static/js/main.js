@@ -8,6 +8,7 @@ function applyTheme(theme) {
     toggleBtn.innerHTML = theme === 'dark'
       ? '<i class="bi bi-sun-fill"></i>'
       : '<i class="bi bi-moon-fill"></i>';
+    toggleBtn.setAttribute('aria-pressed', theme === 'dark');
   }
 }
 
@@ -15,6 +16,14 @@ function toggleTheme() {
   const current = document.documentElement.getAttribute('data-theme');
   const next = current === 'dark' ? 'light' : 'dark';
   applyTheme(next);
+}
+
+function goBack(fallback = '/') {
+  if (document.referrer && document.referrer !== location.href) {
+    history.back();
+  } else {
+    window.location.href = fallback;
+  }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -51,5 +60,13 @@ document.addEventListener('DOMContentLoaded', () => {
       const cancel = document.querySelector('.btn-cancel');
       if (cancel) cancel.click();
     }
+  });
+
+  document.querySelectorAll('.btn-cancel').forEach((btn) => {
+    const url = btn.dataset.fallback;
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      goBack(url);
+    });
   });
 });
