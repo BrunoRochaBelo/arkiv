@@ -7,12 +7,14 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 from arkiv_app import create_app
 from arkiv_app.extensions import db
 from arkiv_app.models import Plan, Organization, User, Membership
+from arkiv_app.utils.audit import ensure_audit_log_schema
 
 @pytest.fixture
 def app():
     app = create_app('testing')
     with app.app_context():
         db.create_all()
+        ensure_audit_log_schema()
         plan = Plan(name='Test', storage_quota_gb=1, price_monthly=0)
         db.session.add(plan)
         db.session.commit()

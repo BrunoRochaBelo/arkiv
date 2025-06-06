@@ -517,7 +517,7 @@ class AssetTag(db.Model):
 
 class AuditLog(db.Model):
     __tablename__ = "audit_log"
-    id = db.Column(db.BigInteger, primary_key=True, autoincrement=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     org_id = db.Column(db.Integer, db.ForeignKey("organization.id"), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     action = db.Column(db.String(50), nullable=False)       # ex.: "CREATE_ASSET", "DELETE_TAG"
@@ -529,6 +529,7 @@ class AuditLog(db.Model):
 
     __table_args__ = (
         db.Index("idx_audit_org_time", "org_id", "timestamp"),
+        {"sqlite_autoincrement": True},
     )
 ```
 
@@ -613,6 +614,7 @@ class AuditLog(db.Model):
    * Cada CRUD importante dispara gravação em `AuditLog`.
    * Armazenamos: `org_id`, `user_id`, `action`, `entity`, `entity_id`, `timestamp`, `ip_address` e `payload` (dados antes e depois).
    * Particionamento mensal para performance (via `pg_partman` ou particionamento nativo do PostgreSQL 16).
+   * Para bancos SQLite legados sem `AUTOINCREMENT` nessa tabela, execute `ensure_audit_log_schema()` ou recrie `audit_log` manualmente.
 
 3. **Métricas & Monitoramento**
 
@@ -826,6 +828,8 @@ Se o app mobile será feito em **MAUI**, convém expor APIs RESTful no backend p
    flask db upgrade
    python -m arkiv_app.utils.create_initial_data
    ```
+
+   * Caso utilize SQLite legado, execute também `ensure_audit_log_schema()` para corrigir a tabela `audit_log`.
 
    * Cria organização “DemoCorp” e usuário `owner@democorp.com` / `(OWNER)1234`.
 
