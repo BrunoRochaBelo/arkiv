@@ -13,8 +13,40 @@ from .forms import TagForm
 @login_required
 def list_tags():
     org_id = current_org_id()
-    tags = Tag.query.filter_by(org_id=org_id).all()
-    return render_template('tag/list.html', tags=tags, title='Tags')
+    q = request.args.get('q', '').strip()
+    color = request.args.get('color', '').strip()
+    sort = request.args.get('sort', 'name')
+
+    tags_query = Tag.query.filter_by(org_id=org_id)
+    if q:
+        tags_query = tags_query.filter(Tag.name.ilike(f'%{q}%'))
+    if color:
+        tags_query = tags_query.filter(Tag.color_hex == color)
+
+    if sort == 'usage':
+        tags_query = (
+            tags_query.outerjoin(Tag.assets)
+            .group_by(Tag.id)
+            .order_by(db.func.count(Asset.id).desc(), Tag.name.asc())
+        )
+    else:
+        tags_query = tags_query.order_by(Tag.name.asc())
+
+    result = []
+    for tag in tags_query.all():
+        result.append({'instance': tag, 'asset_count': len(tag.assets)})
+
+    colors = sorted({t.color_hex for t in Tag.query.filter_by(org_id=org_id).all()})
+
+    return render_template(
+        'tag/list.html',
+        tags=result,
+        colors=colors,
+        q=q,
+        color=color,
+        sort=sort,
+        title='Tags da Organização'
+    )
 
 
 @tag_bp.route('/tags/create', methods=['GET', 'POST'])
@@ -36,7 +68,7 @@ def create_tag():
 @login_required
 def edit_tag(tag_id):
     tag = Tag.query.get_or_404(tag_id)
-    form = TagForm(obj=tag)
+    form = TagForm(original=tag, obj=tag)
     if form.validate_on_submit():
         tag.name = form.name.data
         tag.color_hex = form.color_hex.data

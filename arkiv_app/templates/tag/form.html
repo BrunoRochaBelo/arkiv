@@ -4,7 +4,7 @@
 <form method="post" class="card guarded-form">
   {{ form.hidden_tag() }}
   <div class="field">{{ form.name.label }} {{ form.name(size=32, required=True) }}</div>
-  <div class="field">{{ form.color_hex.label }} {{ form.color_hex(size=10) }}</div>
+  <div class="field">{{ form.color_hex.label }} {{ form.color_hex(type='color') }}</div>
   <div class="d-flex gap-2">
     {{ form.submit(class_='btn btn-accent') }}
     <a href="{{ url_for('tag.list_tags') }}" class="btn btn-outline-secondary btn-cancel">Cancelar</a>
