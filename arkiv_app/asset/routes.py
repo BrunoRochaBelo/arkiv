@@ -16,6 +16,7 @@ from flask_login import login_required, current_user
 from ..extensions import db, limiter
 from ..models import Asset, Folder, Library
 from ..utils.audit import record_audit
+from ..utils import role_required
 from . import asset_bp
 from .forms import AssetUploadForm
 from .tasks import generate_thumbnail, perform_ocr
@@ -24,6 +25,7 @@ from .tasks import generate_thumbnail, perform_ocr
 @asset_bp.route("/folders/<int:folder_id>/assets", methods=["GET", "POST"])
 @login_required
 @limiter.limit("20 per minute")
+@role_required("OWNER", "MANAGER", "EDITOR", "CONTRIBUTOR")
 def upload_asset(folder_id):
     folder = Folder.query.get_or_404(folder_id)
     form = AssetUploadForm()
@@ -105,6 +107,7 @@ def asset_file(asset_id):
 
 @asset_bp.route("/assets/<int:asset_id>/delete", methods=["POST"])
 @login_required
+@role_required("OWNER", "MANAGER", "EDITOR")
 def delete_asset(asset_id):
     asset = Asset.query.get_or_404(asset_id)
     asset.deleted_at = datetime.utcnow()
