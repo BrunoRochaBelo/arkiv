@@ -1,0 +1,9 @@
+```
+sequenceDiagram
+    participant User
+    participant Client
+    participant Server
+    User->>Client: escolhe arquivo
+    Client->>Server: POST /upload
+    Server-->>Client: 200 OK
+```
