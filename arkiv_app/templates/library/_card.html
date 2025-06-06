@@ -19,6 +19,7 @@
       <li><a class="dropdown-item" href="{{ url_for('library.edit_library', lib_id=library.id) }}">Editar</a></li>
       <li>
         <form action="{{ url_for('library.delete_library', lib_id=library.id) }}" method="post" onsubmit="return confirm('Remover biblioteca?');">
+          {{ csrf_token() }}
           <button type="submit" class="dropdown-item text-danger">Deletar</button>
         </form>
       </li>

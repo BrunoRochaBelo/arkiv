@@ -40,6 +40,7 @@
     <div class="btn-group">
       <a href="{{ url_for('tag.edit_tag', tag_id=tag.id) }}" class="btn btn-outline-secondary btn-sm" aria-label="Editar"><i class="bi bi-pencil"></i></a>
       <form action="{{ url_for('tag.delete_tag', tag_id=tag.id) }}" method="post" class="d-inline" onsubmit="return confirm('Remover tag?');">
+        {{ csrf_token() }}
         <button type="submit" class="btn btn-outline-danger btn-sm" aria-label="Remover"><i class="bi bi-trash"></i></button>
       </form>
     </div>
