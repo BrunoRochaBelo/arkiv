@@ -78,6 +78,11 @@ button:hover,
   background: var(--accent);
   color: #fff;
 }
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
 
 /* ---------- Navbar flutuante ---------- */
 .navbar-floating {

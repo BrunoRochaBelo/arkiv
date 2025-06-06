@@ -1,7 +1,10 @@
 {% extends 'base.html' %}
+{% import 'components/back_button.html' as back_btn %}
+{% block back %}
+{{ back_btn.back(url_for('admin.index')) }}
+{% endblock %}
 {% block content %}
 <h1>Planos</h1>
-<p><a href="{{ url_for('admin.index') }}">Voltar</a></p>
 <ul>
   {% for plan in plans %}
   <li class="card">{{ plan.name }} - {{ plan.storage_quota_gb }}GB</li>
