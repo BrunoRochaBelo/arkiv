@@ -6,6 +6,7 @@ from sentry_sdk.integrations.flask import FlaskIntegration
 from flask_login import current_user
 
 from .utils import current_org_id
+from .utils.audit import ensure_audit_log_schema
 
 def create_app(config_name='development'):
     app = Flask(__name__)
@@ -62,7 +63,11 @@ def create_app(config_name='development'):
     if config_name != 'testing':
         with app.app_context():
             db.create_all()
+            ensure_audit_log_schema()
             from .utils.create_initial_data import ensure_initial_data
             ensure_initial_data()
+    else:
+        with app.app_context():
+            ensure_audit_log_schema()
 
     return app

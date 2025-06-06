@@ -155,7 +155,7 @@ class AssetTag(db.Model):
 
 class AuditLog(db.Model):
     __tablename__ = 'audit_log'
-    id = db.Column(db.BigInteger, primary_key=True, autoincrement=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     org_id = db.Column(db.Integer, db.ForeignKey('organization.id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     action = db.Column(db.String(50), nullable=False)
@@ -167,4 +167,7 @@ class AuditLog(db.Model):
 
     __table_args__ = (
         db.Index('idx_audit_org_time', 'org_id', 'timestamp'),
+        {
+            'sqlite_autoincrement': True,
+        },
     )
