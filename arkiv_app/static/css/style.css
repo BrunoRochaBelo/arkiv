@@ -45,7 +45,7 @@ nav {
 }
 
 nav a {
-  color: #fff;
+  color: inherit;
   font-weight: bold;
   text-decoration: none;
 }
@@ -63,11 +63,6 @@ a:hover {
   text-decoration: underline;
 }
 
-.container {
-  width: 90%;
-  max-width: 960px;
-  margin: 2rem auto;
-}
 
 form {
   display: flex;
