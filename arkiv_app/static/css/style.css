@@ -226,6 +226,7 @@ button:hover, .btn:hover {
   overflow: hidden;
   border: 2px solid var(--accent);
   cursor: pointer;
+  transition: transform .24s cubic-bezier(.4,0,.2,1);
 }
 
 .avatar-frame img {
@@ -234,11 +235,24 @@ button:hover, .btn:hover {
   object-fit: cover;
 }
 
+.avatar-frame:hover {
+  transform: scale(1.05);
+}
+
 .user-modal .modal-content {
   background: var(--card-bg);
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   padding: 1.5rem;
+}
+
+.user-modal.fade .modal-dialog {
+  transform: translateY(-15px);
+  transition: transform .25s ease-out;
+}
+
+.user-modal.show .modal-dialog {
+  transform: translateY(0);
 }
 
 .welcome {

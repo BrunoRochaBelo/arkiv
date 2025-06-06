@@ -1,8 +1,8 @@
-<nav class="navbar navbar-floating">
+<nav class="navbar navbar-floating" aria-label="Barra de navegação principal">
   <div class="container-fluid d-flex align-items-center justify-content-between gap-3">
     <div class="d-flex align-items-center gap-2">
       <div class="avatar-frame" data-bs-toggle="modal" data-bs-target="#userModal">
-        <img src="{{ url_for('static', filename='img/avatar.svg') }}" alt="Usuário">
+        <img src="{{ url_for('static', filename='img/avatar.svg') }}" alt="{{ current_user.name }}" loading="lazy">
       </div>
       <a class="navbar-brand" href="{{ url_for('main.index') }}">Arkiv</a>
     </div>
@@ -11,21 +11,21 @@
       <input class="form-control" type="search" placeholder="Buscar" name="q" aria-label="Buscar">
     </form>
     {% endif %}
-    <div class="d-flex align-items-center gap-2">
-      <button class="btn btn-link theme-toggle p-0" onclick="toggleTheme()" aria-label="Alternar tema" aria-pressed="false"><i class="bi bi-moon-fill"></i></button>
-      <div class="avatar-frame" data-bs-toggle="modal" data-bs-target="#userModal">
-        <img src="{{ url_for('static', filename='img/avatar.svg') }}" alt="Usuário">
-      </div>
+  <div class="d-flex align-items-center gap-2">
+    <button class="btn btn-link theme-toggle p-0" onclick="toggleTheme()" aria-label="Alternar tema" aria-pressed="false"><i class="bi bi-moon-fill"></i></button>
+    <div class="avatar-frame" data-bs-toggle="modal" data-bs-target="#userModal">
+      <img src="{{ url_for('static', filename='img/avatar.svg') }}" alt="{{ current_user.name }}" loading="lazy">
     </div>
+  </div>
   </div>
 </nav>
 
-<div class="modal fade user-modal" id="userModal" tabindex="-1" aria-hidden="true">
+<div class="modal fade user-modal" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content rounded-md">
-      <div class="modal-body d-flex flex-column gap-3 align-items-stretch">
+      <div class="modal-body d-flex flex-column gap-3 align-items-stretch" id="userModalLabel">
         <a href="#" class="btn btn-accent">Configurações do Perfil</a>
-        <a href="{{ url_for('auth.logout') }}" class="btn btn-outline-danger">Logout</a>
+        <a href="{{ url_for('auth.logout') }}" class="btn btn-outline-danger btn-logout">Logout</a>
       </div>
     </div>
   </div>
