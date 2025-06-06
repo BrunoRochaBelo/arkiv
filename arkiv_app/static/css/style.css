@@ -11,7 +11,10 @@
   --w-normal: 400;
   --w-medium: 500;
   --w-semibold: 600;
-  --navbar-height: 64px; /* ⇠ altura real da navbar */
+  --navbar-height: 64px; /* altura real da navbar */
+  --z-navbar: 1050;
+  --z-modal: 1060;
+  --z-tooltip: 1070;
 }
 
 [data-theme="dark"] {
@@ -32,8 +35,6 @@ body {
   color: var(--text-color);
   background: var(--bg-color);
   line-height: 1.5;
-  /* reserva espaço real p/ navbar, ajustável por var */
-  padding-top: var(--navbar-height);
 }
 
 /* ---------- Links & Botões ---------- */
@@ -94,7 +95,7 @@ button:hover,
   background: var(--card-bg);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   border-radius: 12px;
-  z-index: 1055; /* maior que modal-backdrop (z-index:1050) */
+  z-index: var(--z-navbar); /* maior que modal-backdrop */
 }
 
 /* Agrupamentos internos */
@@ -147,7 +148,7 @@ button:hover,
   -webkit-backdrop-filter: blur(10px);
   max-width: 1200px;
   width: 100%;
-  margin: 1rem auto;
+  margin: calc(var(--navbar-height) + 1rem) auto 1rem;
   padding: 2rem;
   border-radius: 12px;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
@@ -227,16 +228,42 @@ ul li::before {
   color: var(--accent);
 }
 
+nav[aria-label="breadcrumb"] {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+nav[aria-label="breadcrumb"] ol {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0;
+  padding: 0;
+}
+nav[aria-label="breadcrumb"] ol li {
+  display: flex;
+  align-items: center;
+}
+nav[aria-label="breadcrumb"] ol li + li::before {
+  content: "\203A"; /* › */
+  margin: 0 0.25rem;
+  color: var(--text-color);
+}
+
 /* ---------- Modal ---------- */
 .modal,
 .user-modal {
-  z-index: 1060; /* acima da navbar (1055) */
+  z-index: var(--z-modal);
 }
 .user-modal .modal-content {
   background: var(--card-bg);
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   padding: 1.5rem;
+}
+.user-modal .modal-body {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
 }
 
 /* ---------- Skeleton ---------- */
@@ -306,7 +333,7 @@ ul li::before {
   }
   .floating-container {
     padding: 1rem;
-    margin: var(--navbar-height) auto 0;
+    margin: calc(var(--navbar-height) + 0.5rem) auto 0;
   }
 }
 @media (max-width: 576px) {

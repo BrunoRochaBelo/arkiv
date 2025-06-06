@@ -1,0 +1,18 @@
+/* Normalize elements reset by default */
+ul {
+  list-style: disc inside;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-bottom: 1rem;
+}
+
+hr {
+  margin: 2rem 0;
+  border-color: #e5e5e5;
+}
