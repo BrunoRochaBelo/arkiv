@@ -327,3 +327,8 @@ button:hover, .btn:hover {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+#assetPreview {
+  max-height: 60vh;
+  transition: transform .3s ease;
+}

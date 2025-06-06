@@ -1,7 +1,16 @@
 import os
 import uuid
 import hashlib
-from flask import render_template, redirect, url_for, flash, request, current_app
+from datetime import datetime
+from flask import (
+    render_template,
+    redirect,
+    url_for,
+    flash,
+    request,
+    current_app,
+    send_file,
+)
 from flask_login import login_required, current_user
 
 from ..extensions import db, limiter
@@ -69,3 +78,37 @@ def upload_asset(folder_id):
         folder=folder,
         title="Arquivos",
     )
+
+
+@asset_bp.route("/assets/<int:asset_id>")
+@login_required
+def view_asset(asset_id):
+    asset = Asset.query.get_or_404(asset_id)
+    return render_template("asset/detail.html", asset=asset, title=asset.filename_orig)
+
+
+@asset_bp.route("/assets/<int:asset_id>/download")
+@login_required
+def download_asset(asset_id):
+    asset = Asset.query.get_or_404(asset_id)
+    filepath = os.path.join(current_app.config["UPLOAD_FOLDER"], asset.filename_storage)
+    return send_file(filepath, as_attachment=True, download_name=asset.filename_orig)
+
+
+@asset_bp.route("/assets/<int:asset_id>/raw")
+@login_required
+def asset_file(asset_id):
+    asset = Asset.query.get_or_404(asset_id)
+    filepath = os.path.join(current_app.config["UPLOAD_FOLDER"], asset.filename_storage)
+    return send_file(filepath)
+
+
+@asset_bp.route("/assets/<int:asset_id>/delete", methods=["POST"])
+@login_required
+def delete_asset(asset_id):
+    asset = Asset.query.get_or_404(asset_id)
+    asset.deleted_at = datetime.utcnow()
+    db.session.commit()
+    record_audit("delete", "asset", asset.id, user_id=current_user.id, org_id=asset.folder.library.org_id)
+    flash("Asset removido")
+    return redirect(url_for("folder.view_folder", folder_id=asset.folder_id))
