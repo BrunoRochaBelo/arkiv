@@ -278,3 +278,19 @@ button:hover, .btn:hover {
   font-size: 0.9rem;
   color: var(--text-color);
 }
+
+.library-card {
+  background: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  transition: transform .2s, box-shadow .2s;
+}
+
+.library-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.library-thumbs img {
+  object-fit: cover;
+}

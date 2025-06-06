@@ -1,20 +1,59 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>Bibliotecas</h1>
-<a href="{{ url_for('library.create_library') }}" class="btn btn-accent mb-3"><i class="bi bi-plus-circle"></i> Nova Biblioteca</a>
-<ul class="list-group">
-  {% for lib in libraries %}
-  <li class="list-group-item d-flex justify-content-between align-items-center">
-    <span><a href="{{ url_for('library.show_library', lib_id=lib.id) }}">{{ lib.name }}</a></span>
-    <div class="btn-group">
-      <a href="{{ url_for('library.edit_library', lib_id=lib.id) }}" class="btn btn-outline-secondary btn-sm"><i class="bi bi-pencil"></i></a>
-      <form action="{{ url_for('library.delete_library', lib_id=lib.id) }}" method="post" class="d-inline">
-        <button type="submit" class="btn btn-outline-danger btn-sm"><i class="bi bi-trash"></i></button>
-      </form>
+<div class="d-flex justify-content-between align-items-center mb-4 flex-column flex-sm-row gap-3">
+  <h1 class="mb-0">Minhas Bibliotecas</h1>
+  <a href="{{ url_for('library.create_library') }}" class="btn btn-accent"><i class="bi bi-plus-circle"></i> Criar nova biblioteca</a>
+</div>
+<form method="get" role="search" class="mb-4">
+  <div class="input-group">
+    <span class="input-group-text"><i class="bi bi-search"></i></span>
+    <input type="search" class="form-control" name="q" value="{{ q }}" placeholder="Buscar biblioteca…" aria-label="Buscar biblioteca">
+  </div>
+</form>
+{% if libraries %}
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+  {% for item in libraries %}
+  {% set lib = item.instance %}
+  <div class="col">
+    <div class="library-card card h-100">
+      <div class="card-body d-flex flex-column">
+        <div class="d-flex justify-content-between align-items-start">
+          <div>
+            <h5 class="card-title mb-1"><a href="{{ url_for('library.show_library', lib_id=lib.id) }}">{{ lib.name }}</a></h5>
+            {% if lib.description %}<p class="card-text small text-muted">{{ lib.description|truncate(100) }}</p>{% endif %}
+          </div>
+          <div class="dropdown">
+            <button class="btn btn-link text-muted p-0" type="button" data-bs-toggle="dropdown" aria-label="Ações"><i class="bi bi-three-dots-vertical"></i></button>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="{{ url_for('library.edit_library', lib_id=lib.id) }}">Editar</a></li>
+              <li>
+                <form action="{{ url_for('library.delete_library', lib_id=lib.id) }}" method="post" onsubmit="return confirm('Remover biblioteca?');">
+                  <button type="submit" class="dropdown-item text-danger">Deletar</button>
+                </form>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="mt-auto">
+          <div class="library-thumbs d-flex gap-1 mb-2">
+            {% for a in item.thumbs %}
+              <img src="{{ url_for('static', filename='img/avatar.svg') }}" width="40" height="40" class="rounded" alt="thumbnail">
+            {% endfor %}
+          </div>
+          <div class="d-flex justify-content-between small text-muted">
+            <span>{{ item.asset_count }} imagens</span>
+            <span>{% if item.last_update %}{{ item.last_update.strftime('%d/%m/%Y') }}{% endif %}</span>
+          </div>
+        </div>
+      </div>
     </div>
-  </li>
-  {% else %}
-  <li class="list-group-item">Nenhuma biblioteca</li>
+  </div>
   {% endfor %}
-</ul>
+</div>
+{% else %}
+<div class="text-center py-5">
+  <p class="lead">Você ainda não criou nenhuma biblioteca. Comece agora!</p>
+  <a href="{{ url_for('library.create_library') }}" class="btn btn-accent btn-lg"><i class="bi bi-plus-circle"></i> Criar primeira biblioteca</a>
+</div>
+{% endif %}
 {% endblock %}
