@@ -16,7 +16,7 @@
 </head>
 <body>
   {% include 'components/navbar.html' %}
-  <main id="content" class="py-5">
+  <main id="content">
     <div class="floating-container container-fluid">
       {% if not login_page %}
       <a href="{{ request.referrer or url_for('main.index') }}" class="btn btn-outline-accent back-btn mb-3" onclick="if (history.length > 1) { history.back(); return false; }">Voltar</a>
