@@ -1,16 +1,55 @@
 {% extends 'base.html' %}
+{% block breadcrumb %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item"><a href="{{ url_for('library.list_libraries') }}">Bibliotecas</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ library.name }}</li>
+  </ol>
+</nav>
+{% endblock %}
 {% block content %}
-<h1>{{ library.name }}</h1>
-<p><a href="{{ url_for('library.list_libraries') }}">Voltar para lista</a></p>
-<p>{{ library.description }}</p>
-<a href="{{ url_for('folder.create_folder') }}?library_id={{ library.id }}" class="btn btn-accent mb-3"><i class="bi bi-folder-plus"></i> Nova Pasta</a>
-<ul class="list-group">
-  {% for folder in folders %}
-  <li class="list-group-item d-flex justify-content-between align-items-center">
-    <a href="{{ url_for('folder.view_folder', folder_id=folder.id) }}">{{ folder.name }}</a>
-  </li>
-  {% else %}
-  <li class="list-group-item">Nenhuma pasta</li>
-  {% endfor %}
-</ul>
+<div class="d-flex justify-content-between align-items-start flex-column flex-sm-row gap-3 mb-4">
+  <div>
+    <h1 class="mb-0">{{ library.name }}</h1>
+    {% if library.description %}
+    <p class="text-muted mb-0">{{ library.description }}</p>
+    {% endif %}
+  </div>
+  <a href="{{ url_for('library.edit_library', lib_id=library.id) }}" class="btn btn-outline-accent"><i class="bi bi-pencil"></i> Editar Biblioteca</a>
+</div>
+<div class="row">
+  <div class="col-md-3 mb-4">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+      <h6 class="mb-0">Pastas</h6>
+      <a href="{{ url_for('folder.create_folder') }}?library_id={{ library.id }}" class="btn btn-sm btn-accent" aria-label="Nova Pasta"><i class="bi bi-folder-plus"></i></a>
+    </div>
+    <ul class="list-group folder-list">
+      {% for folder in folders %}
+      <li class="list-group-item"><a href="{{ url_for('folder.view_folder', folder_id=folder.id) }}">{{ folder.name }}</a></li>
+      {% else %}
+      <li class="list-group-item text-muted">Nenhuma pasta</li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div class="col-md-9">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h6 class="mb-0">Arquivos recentes</h6>
+    </div>
+    {% if assets %}
+    <div class="asset-grid">
+      {% for a in assets %}
+      <div class="asset-card">
+        <img src="{{ url_for('static', filename='img/avatar.svg') }}" alt="thumb">
+        <div class="asset-info">{{ a.filename_orig }}</div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center p-5 border rounded bg-light">
+      <p class="lead mb-3">Nada aqui ainda. Faça seu primeiro upload!</p>
+      <a href="{{ url_for('folder.create_folder') }}?library_id={{ library.id }}" class="btn btn-accent"><i class="bi bi-folder-plus"></i> Nova Pasta</a>
+    </div>
+    {% endif %}
+  </div>
+</div>
 {% endblock %}
