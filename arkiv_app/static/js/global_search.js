@@ -1,9 +1,11 @@
-document.addEventListener('DOMContentLoaded', () => {
+function initGlobalSearch() {
   const input = document.querySelector('#globalSearchInput');
   const resultsEl = document.querySelector('#results');
   const noResultsEl = document.querySelector('#noResults');
   const filtersForm = document.querySelector('#filtersForm');
   const clearBtn = document.querySelector('#clearSearch');
+
+  if (!input || !resultsEl || !filtersForm) return;
 
   function fetchResults() {
     const params = new URLSearchParams(new FormData(filtersForm));
@@ -41,4 +43,10 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   fetchResults();
-});
+}
+
+if (document.readyState !== 'loading') {
+  initGlobalSearch();
+} else {
+  document.addEventListener('DOMContentLoaded', initGlobalSearch);
+}

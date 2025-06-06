@@ -11,6 +11,8 @@ from . import search_bp
 @login_required
 def search_page():
     """Renderiza a tela de busca global."""
+    if request.headers.get('HX-Request'):
+        return render_template('search/_global_partial.html')
     return render_template('search/global.html', title='Busca Global')
 
 

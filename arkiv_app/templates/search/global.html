@@ -1,31 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="row g-4">
-  <div class="col-lg-3 order-lg-1">
-    <div class="card shadow-soft">
-      <form id="filtersForm" class="d-flex flex-column gap-3">
-        <div>
-          <label class="form-label">Tipo</label>
-          <select class="form-select" name="type">
-            <option value="">Todos</option>
-            <option value="asset">Imagem/Arquivo</option>
-            <option value="folder">Pasta</option>
-            <option value="library">Biblioteca</option>
-          </select>
-        </div>
-      </form>
-    </div>
-  </div>
-  <div class="col-lg-9 order-lg-0">
-    <div class="input-group input-group-lg mb-3">
-      <span class="input-group-text"><i class="bi bi-search"></i></span>
-      <input id="globalSearchInput" class="form-control" type="search" placeholder="Buscar por nome, tag, tipo, usuário..." aria-label="Buscar">
-      <button class="btn btn-outline-secondary" type="button" id="clearSearch" aria-label="Limpar"><i class="bi bi-x-lg"></i></button>
-    </div>
-    <div id="results" class="row g-3"></div>
-    <div id="noResults" class="text-center text-muted mt-4 d-none">Nenhum resultado encontrado</div>
-  </div>
-</div>
+{% include 'search/_global_partial.html' %}
 {% endblock %}
 {% block scripts %}
 <script src="{{ url_for('static', filename='js/global_search.js') }}"></script>

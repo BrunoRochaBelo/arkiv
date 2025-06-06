@@ -193,6 +193,12 @@ button:hover, .btn:hover {
   }
 }
 
+@media (max-width: 768px) {
+  .floating-container {
+    margin-top: 70px;
+  }
+}
+
 .skeleton-card {
   background: linear-gradient(90deg, var(--card-bg) 25%, #e0e0e0 50%, var(--card-bg) 75%);
   background-size: 200% 100%;
@@ -217,6 +223,19 @@ button:hover, .btn:hover {
   background: var(--card-bg);
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   z-index: 1030;
+}
+
+@media (max-width: 768px) {
+  body {
+    padding-top: 70px;
+  }
+  .navbar-floating {
+    width: 100%;
+    left: 0;
+    transform: none;
+    border-radius: 0;
+    top: 0;
+  }
 }
 
 .avatar-frame {
