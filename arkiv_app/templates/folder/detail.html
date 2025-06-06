@@ -11,11 +11,13 @@
 <h1>{{ folder.name }}</h1>
 <a href="{{ url_for('asset.upload_asset', folder_id=folder.id) }}" class="btn btn-accent mb-2"><i class="bi bi-upload"></i> Enviar Arquivo</a>
 <a href="{{ url_for('folder.create_folder') }}?library_id={{ folder.library_id }}&parent_id={{ folder.id }}" class="btn btn-accent mb-3"><i class="bi bi-folder-plus"></i> Nova Subpasta</a>
-<ul class="list-group">
+<div class="d-grid gap-2">
   {% for sub in subfolders %}
-  <li class="list-group-item"><a href="{{ url_for('folder.view_folder', folder_id=sub.id) }}">{{ sub.name }}</a></li>
+  {% set folder = sub %}
+  {% set item_count = sub.assets|length + sub.children|length %}
+  {% include 'folder/_tile.html' %}
   {% else %}
-  <li class="list-group-item">Nenhuma subpasta</li>
+  <p class="text-muted">Nenhuma subpasta</p>
   {% endfor %}
-</ul>
+</div>
 {% endblock %}

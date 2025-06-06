@@ -13,11 +13,6 @@
     <a href="{{ url_for('folder.view_folder', folder_id=folder.id) }}" class="btn btn-secondary btn-cancel">Cancelar</a>
   </div>
 </form>
-<ul>
-  {% for asset in assets %}
-  <li>{{ asset.filename_orig }} ({{ asset.size }} bytes)</li>
-  {% else %}
-  <li>Nenhum arquivo</li>
-  {% endfor %}
-</ul>
+{% set assets = assets %}
+{% include 'asset/gallery.html' %}
 {% endblock %}

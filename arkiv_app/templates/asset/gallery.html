@@ -1,0 +1,18 @@
+<div class="asset-gallery">
+  {% for asset in assets %}
+  <div class="asset-item asset-item-selectable">
+    <input type="checkbox" class="form-check-input">
+    <img src="{{ url_for('asset.asset_file', asset_id=asset.id) }}" alt="{{ asset.filename_orig }}" loading="lazy">
+    <div class="asset-overlay">
+      <a href="{{ url_for('asset.view_asset', asset_id=asset.id) }}" class="btn btn-sm btn-light"><i class="bi bi-pencil"></i></a>
+      <a href="{{ url_for('asset.download_asset', asset_id=asset.id) }}" class="btn btn-sm btn-light"><i class="bi bi-download"></i></a>
+      <form action="{{ url_for('asset.delete_asset', asset_id=asset.id) }}" method="post" onsubmit="return confirm('Excluir arquivo?');" class="d-inline">
+        <button class="btn btn-sm btn-danger" type="submit"><i class="bi bi-trash"></i></button>
+      </form>
+    </div>
+  </div>
+  {% else %}
+  <p class="text-muted">Nenhum arquivo</p>
+  {% endfor %}
+</div>
+<div data-gallery-sentinel></div>
