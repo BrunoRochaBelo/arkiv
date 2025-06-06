@@ -1,19 +1,107 @@
 {% extends 'base.html' %}
 {% block content %}
-<section class="text-center mb-5">
+<div class="text-center mb-5">
+  {% if current_user.is_authenticated %}
+  <h2 class="welcome">Olá, {{ current_user.name }}! Bem-vindo ao Arkiv.</h2>
+  <p class="lead">Centralize, catalogue e encontre imagens com segurança e rapidez.</p>
+  {% else %}
   <h1 class="mb-3">Bem-vindo ao Arkiv</h1>
-  <form class="d-flex justify-content-center" role="search" action="{{ url_for('search.search_page') }}" method="get">
-    <input class="form-control" style="max-width:400px" type="search" placeholder="Buscar em tudo" name="q" aria-label="Buscar">
+  {% endif %}
+  <form class="search-global mt-4" role="search" action="{{ url_for('search.search_page') }}" method="get">
+    <div class="input-group input-group-lg">
+      <span class="input-group-text"><i class="bi bi-search"></i></span>
+      <input class="form-control" id="globalSearchInput" type="search" placeholder="Buscar imagens, bibliotecas ou tags…" name="q" aria-label="Buscar">
+    </div>
   </form>
-</section>
-
-{% if current_user.is_authenticated %}
-<div class="row text-center mb-4" style="gap:1rem; justify-content:center;">
-  <a href="{{ url_for('library.create_library') }}" class="btn btn-accent"><i class="bi bi-collection"></i> Nova Biblioteca</a>
-  <a href="{{ url_for('folder.create_folder') }}" class="btn btn-accent"><i class="bi bi-folder-plus"></i> Nova Pasta</a>
 </div>
-<a href="{{ url_for('library.list_libraries') }}" class="btn btn-outline-accent">Ir para Bibliotecas</a>
+{% if current_user.is_authenticated %}
+<div class="row g-3 mb-4 justify-content-center">
+  <div class="col-6 col-sm-4 col-md-2">
+    <a href="{{ url_for('library.list_libraries') }}" class="card quick-link shadow-soft h-100" aria-label="Minhas Bibliotecas">
+      <div class="card-body">
+        <i class="bi bi-collection-fill display-6 text-accent"></i>
+        <h6 class="mt-2 mb-0">Minhas Bibliotecas</h6>
+      </div>
+    </a>
+  </div>
+  <div class="col-6 col-sm-4 col-md-2">
+    <a href="{{ url_for('library.create_library') }}" class="card quick-link shadow-soft h-100" aria-label="Upload Rápido">
+      <div class="card-body">
+        <i class="bi bi-upload display-6 text-accent"></i>
+        <h6 class="mt-2 mb-0">Upload Rápido</h6>
+      </div>
+    </a>
+  </div>
+  <div class="col-6 col-sm-4 col-md-2">
+    <a href="{{ url_for('reports.assets_report') }}" class="card quick-link shadow-soft h-100" aria-label="Relatórios">
+      <div class="card-body">
+        <i class="bi bi-bar-chart-line-fill display-6 text-accent"></i>
+        <h6 class="mt-2 mb-0">Relatórios</h6>
+      </div>
+    </a>
+  </div>
+  {% if current_user.memberships and current_user.memberships[0].role in ['OWNER','ADMIN'] %}
+  <div class="col-6 col-sm-4 col-md-2">
+    <a href="#" class="card quick-link shadow-soft h-100" aria-label="Usuários e Permissões">
+      <div class="card-body">
+        <i class="bi bi-people-fill display-6 text-accent"></i>
+        <h6 class="mt-2 mb-0">Usuários & Permissões</h6>
+      </div>
+    </a>
+  </div>
+  <div class="col-6 col-sm-4 col-md-2">
+    <a href="#" class="card quick-link shadow-soft h-100" aria-label="Configurações da Organização">
+      <div class="card-body">
+        <i class="bi bi-gear-fill display-6 text-accent"></i>
+        <h6 class="mt-2 mb-0">Configurações</h6>
+      </div>
+    </a>
+  </div>
+  {% endif %}
+</div>
+<div class="row g-3">
+  <div class="col-6 col-md-3">
+    <div class="dashboard-widget">
+      <div class="display-6">{{ stats.total_images }}</div>
+      <h6>Total de imagens</h6>
+    </div>
+  </div>
+  <div class="col-6 col-md-3">
+    <div class="dashboard-widget">
+      <div class="display-6">{{ (stats.used_storage/1024/1024)|int }}MB{% if stats.quota %} / {{ (stats.quota/1024/1024/1024)|int }}GB{% endif %}</div>
+      <h6>Espaço usado</h6>
+    </div>
+  </div>
+  <div class="col-12 col-md-4">
+    <div class="dashboard-widget">
+      {% if stats.last_uploads %}
+        <ul class="list-unstyled mb-0 d-flex flex-wrap gap-2 justify-content-center">
+          {% for up in stats.last_uploads %}
+          <li class="small">{{ up.filename_orig }}</li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <span class="text-muted">Nenhum upload recente</span>
+      {% endif %}
+      <h6>Últimos uploads</h6>
+    </div>
+  </div>
+  <div class="col-6 col-md-2">
+    <div class="dashboard-widget">
+      <div class="display-6">{{ stats.plan.name if stats.plan else '-' }}</div>
+      <h6>Status do plano</h6>
+    </div>
+  </div>
+</div>
+{% if stats.libs_count == 0 %}
+<div class="mt-5 text-center">
+  <p class="lead">Você ainda não possui bibliotecas.</p>
+  <a href="{{ url_for('library.create_library') }}" class="btn btn-accent btn-lg">Criar primeira biblioteca</a>
+</div>
+{% endif %}
 {% else %}
-<a href="{{ url_for('auth.login') }}" class="btn btn-accent">Entrar</a>
+<div class="text-center mt-4">
+  <a href="{{ url_for('auth.login') }}" class="btn btn-accent">Entrar</a>
+</div>
 {% endif %}
 {% endblock %}
