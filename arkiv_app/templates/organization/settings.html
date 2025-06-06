@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
+{% import 'components/breadcrumb.html' as breadcrumb %}
 {% block breadcrumb %}
-<span class="text-muted">Org: {{ org.name }} &gt; Configurações</span>
+{{ breadcrumb.render([
+  ('Org: ' ~ org.name, None),
+  ('Configurações', None)
+]) }}
 {% endblock %}
 {% block content %}
 <h1 class="mb-4">Configurações da Organização</h1>

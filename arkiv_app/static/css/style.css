@@ -243,11 +243,12 @@ ul li::before {
 nav[aria-label="breadcrumb"] {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
 }
 nav[aria-label="breadcrumb"] ol {
   display: flex;
+  align-items: center;
   gap: 0.5rem;
+  flex-wrap: wrap;
   margin-bottom: 0;
   padding: 0;
 }
@@ -255,10 +256,13 @@ nav[aria-label="breadcrumb"] ol li {
   display: flex;
   align-items: center;
 }
-nav[aria-label="breadcrumb"] ol li + li::before {
+nav[aria-label="breadcrumb"] .breadcrumb-item + .breadcrumb-item::before {
   content: "\203A"; /* › */
   margin: 0 0.25rem;
-  color: var(--text-color);
+  color: #6c757d;
+}
+nav[aria-label="breadcrumb"] .breadcrumb-item.active {
+  font-weight: var(--w-semibold);
 }
 
 /* ---------- Modal ---------- */

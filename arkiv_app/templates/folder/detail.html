@@ -1,7 +1,14 @@
 {% extends 'base.html' %}
+{% import 'components/breadcrumb.html' as breadcrumb %}
+{% block breadcrumb %}
+{{ breadcrumb.render([
+  ('Bibliotecas', url_for('library.list_libraries')),
+  (folder.library.name, url_for('library.show_library', lib_id=folder.library_id)),
+  (folder.name, None)
+]) }}
+{% endblock %}
 {% block content %}
 <h1>{{ folder.name }}</h1>
-<p><a href="{{ url_for('library.show_library', lib_id=folder.library_id) }}">Voltar para biblioteca</a></p>
 <a href="{{ url_for('asset.upload_asset', folder_id=folder.id) }}" class="btn btn-accent mb-2"><i class="bi bi-upload"></i> Enviar Arquivo</a>
 <a href="{{ url_for('folder.create_folder') }}?library_id={{ folder.library_id }}&parent_id={{ folder.id }}" class="btn btn-accent mb-3"><i class="bi bi-folder-plus"></i> Nova Subpasta</a>
 <ul class="list-group">

@@ -1,13 +1,12 @@
 {% extends 'base.html' %}
+{% import 'components/breadcrumb.html' as breadcrumb %}
 {% block breadcrumb %}
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb mb-0">
-    <li class="breadcrumb-item"><a href="{{ url_for('library.list_libraries') }}">Bibliotecas</a></li>
-    <li class="breadcrumb-item"><a href="{{ url_for('library.show_library', lib_id=asset.folder.library_id) }}">{{ asset.folder.library.name }}</a></li>
-    <li class="breadcrumb-item"><a href="{{ url_for('folder.view_folder', folder_id=asset.folder_id) }}">{{ asset.folder.name }}</a></li>
-    <li class="breadcrumb-item active" aria-current="page">{{ asset.filename_orig }}</li>
-  </ol>
-</nav>
+{{ breadcrumb.render([
+  ('Bibliotecas', url_for('library.list_libraries')),
+  (asset.folder.library.name, url_for('library.show_library', lib_id=asset.folder.library_id)),
+  (asset.folder.name, url_for('folder.view_folder', folder_id=asset.folder_id)),
+  (asset.filename_orig, None)
+]) }}
 {% endblock %}
 {% block content %}
 <div class="row">
