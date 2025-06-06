@@ -7,6 +7,7 @@ from flask_login import current_user
 
 from .utils import current_org_id
 from .utils.audit import ensure_audit_log_schema
+from .auth.routes import oauth
 
 def create_app(config_name='development'):
     app = Flask(__name__)
@@ -27,6 +28,8 @@ def create_app(config_name='development'):
                         scope.set_tag('org_id', org_id)
 
     init_extensions(app)
+    if oauth:
+        oauth.init_app(app)
 
     from .main.routes import main_bp
     from .api import api_bp
