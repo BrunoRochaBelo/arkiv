@@ -332,3 +332,11 @@ button:hover, .btn:hover {
   max-height: 60vh;
   transition: transform .3s ease;
 }
+
+.search-result {
+  transition: transform .24s cubic-bezier(.4,0,.2,1);
+}
+
+.search-result:hover {
+  transform: translateY(-4px);
+}
