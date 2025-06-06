@@ -2,10 +2,13 @@
 {% block title %}Biblioteca{% endblock %}
 {% block content %}
 <h1>Biblioteca</h1>
-<form method="post" class="card">
+<form method="post" class="card guarded-form">
   {{ form.hidden_tag() }}
-  <div class="field">{{ form.name.label }} {{ form.name(size=32) }}</div>
+  <div class="field">{{ form.name.label }} {{ form.name(size=32, required=True) }}</div>
   <div class="field">{{ form.description.label }} {{ form.description(cols=40, rows=4) }}</div>
-  <div>{{ form.submit(class_='btn') }}</div>
+  <div class="d-flex gap-2">
+    {{ form.submit(class_='btn') }}
+    <button type="button" class="btn btn-secondary btn-cancel" onclick="history.back()">Cancelar</button>
+  </div>
 </form>
 {% endblock %}
