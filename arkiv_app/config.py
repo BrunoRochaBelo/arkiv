@@ -15,6 +15,7 @@ class Config:
     THUMB_FOLDER = os.environ.get('THUMB_FOLDER', 'instance/thumbnails')
     LOG_LEVEL = os.environ.get('LOG_LEVEL', 'INFO')
     SENTRY_DSN = os.environ.get('SENTRY_DSN')
+    TRASH_RETENTION_DAYS = int(os.environ.get('TRASH_RETENTION_DAYS', 30))
 
 class DevelopmentConfig(Config):
     DEBUG = True
