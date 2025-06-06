@@ -15,7 +15,7 @@
 <body>
   {% include 'components/navbar.html' %}
   <div class="container mt-3 d-flex align-items-center" id="breadcrumb">
-    <a href="{{ request.referrer or url_for('main.index') }}" class="btn btn-link p-0 me-2"><i class="bi bi-arrow-left"></i> Voltar</a>
+    <a href="{{ request.referrer or url_for('main.index') }}" class="btn btn-link p-0 me-2" onclick="if (history.length > 1) { history.back(); return false; }"><i class="bi bi-arrow-left"></i> Voltar</a>
     {% block breadcrumb %}{% endblock %}
   </div>
   <main id="content" class="py-5">
