@@ -17,6 +17,15 @@
   </div>
   <a href="{{ url_for('library.edit_library', lib_id=library.id) }}" class="btn btn-outline-accent"><i class="bi bi-pencil"></i> Editar Biblioteca</a>
 </div>
+{% if not folders and not assets %}
+{{ empty.render(
+    img='empty.svg',
+    title='Nada aqui ainda',
+    description='Envie arquivos ou crie uma pasta para começar.',
+    cta_url=url_for('folder.create_folder') ~ '?library_id=' ~ library.id,
+    cta_label='Nova Pasta'
+) }}
+{% else %}
 <div class="row">
   <div class="col-md-3 mb-4">
     <div class="d-flex justify-content-between align-items-center mb-2">
@@ -56,4 +65,5 @@
     {% endif %}
   </div>
 </div>
+{% endif %}
 {% endblock %}
