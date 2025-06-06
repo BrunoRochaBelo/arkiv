@@ -14,10 +14,12 @@
 </head>
 <body>
   {% include 'components/navbar.html' %}
+  {% if not login_page %}
   <div class="container mt-3 d-flex align-items-center" id="breadcrumb">
     <a href="{{ request.referrer or url_for('main.index') }}" class="btn btn-link p-0 me-2" onclick="if (history.length > 1) { history.back(); return false; }"><i class="bi bi-arrow-left"></i> Voltar</a>
     {% block breadcrumb %}{% endblock %}
   </div>
+  {% endif %}
   <main id="content" class="py-5">
     <div class="floating-container">
       {% with messages = get_flashed_messages() %}
