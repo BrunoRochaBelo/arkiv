@@ -32,8 +32,10 @@
 <div class="modal fade user-modal" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
-      <div class="modal-body" id="userModalLabel">
+      <div class="modal-body text-center" id="userModalLabel">
         <a href="#" class="btn btn-accent">Configurações do Perfil</a>
+      </div>
+      <div class="modal-footer">
         <a href="{{ url_for('auth.logout') }}" class="btn btn-outline-danger btn-logout">Logout</a>
       </div>
     </div>
