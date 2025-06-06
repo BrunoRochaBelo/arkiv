@@ -15,19 +15,9 @@
   {% for item in libraries %}
   {% set lib = item.instance %}
   <div class="col">
-    <article class="card library-card h-100">
-      <div class="library-card__title">
-        <h5 class="mb-1"><a href="{{ url_for('library.show_library', lib_id=lib.id) }}">{{ lib.name }}</a></h5>
-        <small>{{ item.asset_count }} imagens</small>
-      </div>
-      {% if lib.description %}<p class="text-muted small">{{ lib.description|truncate(100) }}</p>{% endif %}
-      <div class="library-actions mt-auto">
-        <a href="{{ url_for('library.edit_library', lib_id=lib.id) }}" class="btn-outline-accent">Editar</a>
-        <form action="{{ url_for('library.delete_library', lib_id=lib.id) }}" method="post" onsubmit="return confirm('Remover biblioteca?');">
-          <button type="submit" class="btn-delete">Deletar</button>
-        </form>
-      </div>
-    </article>
+    {% set library = lib %}
+    {% set asset_count = item.asset_count %}
+    {% include 'library/_card.html' %}
   </div>
   {% endfor %}
 </div>

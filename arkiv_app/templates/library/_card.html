@@ -1,0 +1,25 @@
+<article class="library-card">
+  <div class="library-thumb">
+    {% if library.thumbnail_url %}
+    <img src="{{ library.thumbnail_url }}" alt="thumb" loading="lazy">
+    {% else %}
+    <span>{{ library.name[0]|upper }}</span>
+    {% endif %}
+  </div>
+  <div class="flex-grow-1">
+    <h5 class="library-title mb-0"><a href="{{ url_for('library.show_library', lib_id=library.id) }}">{{ library.name }}</a></h5>
+    {% if library.description %}<p class="text-muted small mb-1">{{ library.description|truncate(100) }}</p>{% endif %}
+    <div class="library-metrics text-muted">{{ asset_count }} imagens · {{ library.created_at.strftime('%d/%m/%Y') }}</div>
+  </div>
+  <div class="library-menu dropdown">
+    <button class="btn btn-sm btn-link text-muted" data-bs-toggle="dropdown" aria-label="Ações"><i class="bi bi-three-dots-vertical"></i></button>
+    <ul class="dropdown-menu dropdown-menu-end">
+      <li><a class="dropdown-item" href="{{ url_for('library.edit_library', lib_id=library.id) }}">Editar</a></li>
+      <li>
+        <form action="{{ url_for('library.delete_library', lib_id=library.id) }}" method="post" onsubmit="return confirm('Remover biblioteca?');">
+          <button type="submit" class="dropdown-item text-danger">Deletar</button>
+        </form>
+      </li>
+    </ul>
+  </div>
+</article>
