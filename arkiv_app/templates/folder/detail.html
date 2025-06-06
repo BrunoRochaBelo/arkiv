@@ -2,13 +2,13 @@
 {% block content %}
 <h1>{{ folder.name }}</h1>
 <p><a href="{{ url_for('library.show_library', lib_id=folder.library_id) }}">Voltar para biblioteca</a></p>
-<a href="{{ url_for('asset.upload_asset', folder_id=folder.id) }}" class="btn"><i class="bi bi-upload"></i> Enviar Arquivo</a>
-<a href="{{ url_for('folder.create_folder') }}?library_id={{ folder.library_id }}&parent_id={{ folder.id }}" class="btn"><i class="bi bi-folder-plus"></i> Nova Subpasta</a>
-<ul>
+<a href="{{ url_for('asset.upload_asset', folder_id=folder.id) }}" class="btn btn-accent mb-2"><i class="bi bi-upload"></i> Enviar Arquivo</a>
+<a href="{{ url_for('folder.create_folder') }}?library_id={{ folder.library_id }}&parent_id={{ folder.id }}" class="btn btn-accent mb-3"><i class="bi bi-folder-plus"></i> Nova Subpasta</a>
+<ul class="list-group">
   {% for sub in subfolders %}
-  <li><a href="{{ url_for('folder.view_folder', folder_id=sub.id) }}">{{ sub.name }}</a></li>
+  <li class="list-group-item"><a href="{{ url_for('folder.view_folder', folder_id=sub.id) }}">{{ sub.name }}</a></li>
   {% else %}
-  <li>Nenhuma subpasta</li>
+  <li class="list-group-item">Nenhuma subpasta</li>
   {% endfor %}
 </ul>
 {% endblock %}

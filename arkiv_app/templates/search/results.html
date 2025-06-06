@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
 <h1>Resultados para "{{ query }}"</h1>
-<ul>
+<ul class="list-group">
   {% for a in assets %}
-  <li class="card">Arquivo: {{ a.filename_orig }}</li>
+  <li class="list-group-item">Arquivo: {{ a.filename_orig }}</li>
   {% endfor %}
   {% for f in folders %}
-  <li class="card">Pasta: {{ f.name }}</li>
+  <li class="list-group-item">Pasta: {{ f.name }}</li>
   {% endfor %}
   {% for l in libraries %}
-  <li class="card">Biblioteca: {{ l.name }}</li>
+  <li class="list-group-item">Biblioteca: {{ l.name }}</li>
   {% endfor %}
 </ul>
 {% endblock %}
