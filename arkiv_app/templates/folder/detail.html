@@ -9,8 +9,8 @@
 {% endblock %}
 {% block content %}
 <h1>{{ folder.name }}</h1>
-<a href="{{ url_for('asset.upload_asset', folder_id=folder.id) }}" class="btn btn-accent mb-2"><i class="bi bi-upload"></i> Enviar Arquivo</a>
-<a href="{{ url_for('folder.create_folder') }}?library_id={{ folder.library_id }}&parent_id={{ folder.id }}" class="btn btn-accent mb-3"><i class="bi bi-folder-plus"></i> Nova Subpasta</a>
+<a href="{{ url_for('asset.upload_asset', folder_id=folder.id) }}" class="btn btn-accent mb-2"><i class="bi bi-upload" aria-hidden="true"></i> Enviar Arquivo</a>
+<a href="{{ url_for('folder.create_folder') }}?library_id={{ folder.library_id }}&parent_id={{ folder.id }}" class="btn btn-accent mb-3"><i class="bi bi-folder-plus" aria-hidden="true"></i> Nova Subpasta</a>
 <div class="d-grid gap-2">
   {% for sub in subfolders %}
   {% set folder = sub %}

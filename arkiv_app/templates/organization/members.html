@@ -2,7 +2,7 @@
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-4 flex-column flex-sm-row gap-3">
   <h1 class="mb-0">Usuários &amp; Permissões</h1>
-  <a href="{{ url_for('organization.settings') }}" class="btn btn-outline-secondary"><i class="bi bi-gear"></i> Configurações</a>
+  <a href="{{ url_for('organization.settings') }}" class="btn btn-outline-secondary"><i class="bi bi-gear" aria-hidden="true"></i> Configurações</a>
 </div>
 <div class="d-flex flex-column flex-sm-row justify-content-between gap-3 mb-3">
   <form method="post" class="d-flex gap-2" action="{{ url_for('organization.members') }}">
@@ -13,7 +13,7 @@
   </form>
   <form method="get" role="search" class="flex-grow-1">
     <div class="input-group">
-      <span class="input-group-text"><i class="bi bi-search"></i></span>
+      <span class="input-group-text"><i class="bi bi-search" aria-hidden="true"></i></span>
       <input type="search" class="form-control" name="q" value="{{ q }}" placeholder="Buscar usuário por nome ou e-mail…" aria-label="Buscar usuário">
     </div>
   </form>
@@ -23,10 +23,10 @@
   <table class="table align-middle card">
     <thead>
       <tr>
-        <th>Nome</th>
-        <th>Email</th>
-        <th>Papel</th>
-        <th class="text-end">Ações</th>
+        <th scope="col">Nome</th>
+        <th scope="col">Email</th>
+        <th scope="col">Papel</th>
+        <th scope="col" class="text-end">Ações</th>
       </tr>
     </thead>
     <tbody>

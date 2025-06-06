@@ -13,14 +13,20 @@
   <div class="col-md-8 mb-4 text-center">
     <div class="card p-3">
       {% if asset.mime.startswith('image') %}
-      <img id="assetPreview" src="{{ url_for('asset.asset_file', asset_id=asset.id) }}" class="img-fluid rounded" alt="{{ asset.filename_orig }}">
+      <img id="assetPreview" src="{{ url_for('asset.asset_file', asset_id=asset.id) }}" class="img-fluid rounded" alt="{{ asset.filename_orig }}" loading="lazy">
       <div class="mt-2">
-        <button class="btn btn-outline-secondary btn-sm" onclick="zoom(1.1)" aria-label="Zoom in"><i class="bi bi-zoom-in"></i></button>
-        <button class="btn btn-outline-secondary btn-sm" onclick="zoom(0.9)" aria-label="Zoom out"><i class="bi bi-zoom-out"></i></button>
-        <button class="btn btn-outline-secondary btn-sm" onclick="rotate()" aria-label="Rotate"><i class="bi bi-arrow-clockwise"></i></button>
+        <button class="btn btn-outline-secondary btn-sm" onclick="zoom(1.1)" aria-label="Zoom in">
+          <i class="bi bi-zoom-in" aria-hidden="true"></i>
+        </button>
+        <button class="btn btn-outline-secondary btn-sm" onclick="zoom(0.9)" aria-label="Zoom out">
+          <i class="bi bi-zoom-out" aria-hidden="true"></i>
+        </button>
+        <button class="btn btn-outline-secondary btn-sm" onclick="rotate()" aria-label="Rotate">
+          <i class="bi bi-arrow-clockwise" aria-hidden="true"></i>
+        </button>
       </div>
       {% else %}
-      <div class="display-1 text-muted py-5"><i class="bi bi-file-earmark"></i></div>
+      <div class="display-1 text-muted py-5"><i class="bi bi-file-earmark" aria-hidden="true"></i></div>
       {% endif %}
     </div>
   </div>
@@ -52,9 +58,9 @@
       <a href="{{ url_for('tag.list_tags') }}" class="small">Gerenciar Tags</a>
     </div>
     <div class="d-grid gap-2">
-      <a href="{{ url_for('asset.download_asset', asset_id=asset.id) }}" class="btn btn-accent"><i class="bi bi-download"></i> Download</a>
+      <a href="{{ url_for('asset.download_asset', asset_id=asset.id) }}" class="btn btn-accent"><i class="bi bi-download" aria-hidden="true"></i> Download</a>
       <form action="{{ url_for('asset.delete_asset', asset_id=asset.id) }}" method="post" onsubmit="return confirm('Excluir arquivo?');">
-        <button class="btn btn-outline-danger"><i class="bi bi-trash"></i> Excluir</button>
+        <button class="btn btn-outline-danger"><i class="bi bi-trash" aria-hidden="true"></i> Excluir</button>
       </form>
     </div>
   </div>
