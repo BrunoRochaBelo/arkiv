@@ -23,11 +23,12 @@ def ensure_audit_log_schema():
     engine = db.engine
     if not engine.url.drivername.startswith("sqlite"):
         return
-    result = engine.execute(
-        text(
-            "SELECT sql FROM sqlite_master WHERE type='table' AND name='audit_log'"
-        )
-    ).fetchone()
+    with engine.connect() as conn:
+        result = conn.execute(
+            text(
+                "SELECT sql FROM sqlite_master WHERE type='table' AND name='audit_log'"
+            )
+        ).fetchone()
     if result and "AUTOINCREMENT" not in result[0].upper():
         with engine.begin() as conn:
             conn.execute(text("ALTER TABLE audit_log RENAME TO audit_log_old"))
