@@ -1,3 +1,4 @@
+{% macro render(img=None, title='', description=None, cta_url=None, cta_label=None) %}
 <div class="empty-state">
   {% if img %}
   <img src="{{ url_for('static', filename='img/' + img) }}" alt="" class="mb-3" loading="lazy">
@@ -10,3 +11,4 @@
   <a href="{{ cta_url }}" class="btn btn-accent btn-lg">{{ cta_label }}</a>
   {% endif %}
 </div>
+{% endmacro %}
