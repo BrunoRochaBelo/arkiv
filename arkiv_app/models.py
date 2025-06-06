@@ -56,6 +56,7 @@ class User(db.Model, UserMixin):
     is_staff = db.Column(db.Boolean, default=False)
     last_login = db.Column(db.DateTime)
     mfa_enabled = db.Column(db.Boolean, default=False)
+    totp_secret = db.Column(db.String(32))
 
     memberships = db.relationship('Membership', back_populates='user')
     uploads = db.relationship('Asset', back_populates='uploader')
@@ -68,6 +69,26 @@ class User(db.Model, UserMixin):
             return ph.verify(self.password_hash, password)
         except VerifyMismatchError:
             return False
+
+    def generate_totp_secret(self) -> str:
+        if not self.totp_secret:
+            try:
+                import pyotp
+                self.totp_secret = pyotp.random_base32()
+            except Exception:  # pragma: no cover - optional dependency
+                import secrets
+                self.totp_secret = secrets.token_hex(16)
+        return self.totp_secret
+
+    def verify_totp(self, token: str) -> bool:
+        if not self.totp_secret:
+            return False
+        try:
+            import pyotp
+        except Exception:  # pragma: no cover - optional dependency
+            return False
+        totp = pyotp.TOTP(self.totp_secret)
+        return totp.verify(token, valid_window=1)
 
 class Membership(db.Model):
     __tablename__ = 'membership'
