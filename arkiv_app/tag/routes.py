@@ -14,7 +14,7 @@ from .forms import TagForm
 def list_tags():
     org_id = current_org_id()
     tags = Tag.query.filter_by(org_id=org_id).all()
-    return render_template('tag/list.html', tags=tags)
+    return render_template('tag/list.html', tags=tags, title='Tags')
 
 
 @tag_bp.route('/tags/create', methods=['GET', 'POST'])
@@ -29,7 +29,7 @@ def create_tag():
         record_audit('create', 'tag', tag.id, user_id=current_user.id, org_id=org_id)
         flash('Tag criada')
         return redirect(url_for('tag.list_tags'))
-    return render_template('tag/form.html', form=form)
+    return render_template('tag/form.html', form=form, title='Nova Tag')
 
 
 @tag_bp.route('/tags/<int:tag_id>/edit', methods=['GET', 'POST'])
@@ -44,7 +44,7 @@ def edit_tag(tag_id):
         record_audit('update', 'tag', tag.id, user_id=current_user.id, org_id=current_org_id())
         flash('Tag atualizada')
         return redirect(url_for('tag.list_tags'))
-    return render_template('tag/form.html', form=form)
+    return render_template('tag/form.html', form=form, title='Editar Tag')
 
 
 @tag_bp.route('/tags/<int:tag_id>/delete', methods=['POST'])

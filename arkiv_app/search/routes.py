@@ -20,7 +20,14 @@ def search_page():
         assets = Asset.query.join(Library).filter(Library.org_id == org_id, Asset.filename_orig.ilike(like)).all()
         folders = Folder.query.join(Library).filter(Library.org_id == org_id, Folder.name.ilike(like)).all()
         libs = Library.query.filter_by(org_id=org_id).filter(Library.name.ilike(like)).all()
-    return render_template('search/results.html', assets=assets, folders=folders, libraries=libs, query=q)
+    return render_template(
+        'search/results.html',
+        assets=assets,
+        folders=folders,
+        libraries=libs,
+        query=q,
+        title='Busca',
+    )
 
 
 @search_bp.route('/api/search')

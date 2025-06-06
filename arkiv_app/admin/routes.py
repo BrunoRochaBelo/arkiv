@@ -13,14 +13,14 @@ def _staff_required():
 def list_plans():
     _staff_required()
     plans = Plan.query.all()
-    return render_template('admin/plans.html', plans=plans)
+    return render_template('admin/plans.html', plans=plans, title='Planos')
 
 @admin_bp.route('/orgs')
 @login_required
 def list_orgs():
     _staff_required()
     orgs = Organization.query.all()
-    return render_template('admin/orgs.html', orgs=orgs)
+    return render_template('admin/orgs.html', orgs=orgs, title='Organizações')
 
 
 @admin_bp.route('/users')
@@ -28,7 +28,7 @@ def list_orgs():
 def list_users():
     _staff_required()
     users = User.query.all()
-    return render_template('admin/users.html', users=users)
+    return render_template('admin/users.html', users=users, title='Usuários')
 
 
 @admin_bp.route('/logs')
@@ -36,11 +36,11 @@ def list_users():
 def list_logs():
     _staff_required()
     logs = AuditLog.query.order_by(AuditLog.timestamp.desc()).limit(100).all()
-    return render_template('admin/logs.html', logs=logs)
+    return render_template('admin/logs.html', logs=logs, title='Auditoria')
 
 
 @admin_bp.route('/')
 @login_required
 def index():
     _staff_required()
-    return render_template('admin/index.html')
+    return render_template('admin/index.html', title='Admin')
