@@ -4,7 +4,7 @@ from flask_login import login_required, current_user
 from ..utils import current_org_id, role_required
 
 from ..extensions import db
-from ..models import Library, Folder
+from ..models import Library, Folder, Asset
 from ..utils.audit import record_audit
 from . import folder_bp
 from .forms import FolderForm
@@ -109,9 +109,11 @@ def delete_folder(folder_id):
 def view_folder(folder_id):
     folder = Folder.query.get_or_404(folder_id)
     subfolders = Folder.query.filter_by(parent_id=folder.id).all()
+    assets = Asset.query.filter_by(folder_id=folder.id).all()
     return render_template(
         "folder/detail.html",
         folder=folder,
         subfolders=subfolders,
+        assets=assets,
         title=folder.name,
     )

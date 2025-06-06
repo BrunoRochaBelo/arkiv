@@ -65,18 +65,10 @@ def list_libraries():
 def show_library(lib_id):
     lib = Library.query.get_or_404(lib_id)
     folders = Folder.query.filter_by(library_id=lib_id, parent_id=None).all()
-    assets = (
-        Asset.query
-        .filter_by(library_id=lib_id)
-        .order_by(Asset.created_at.desc())
-        .limit(20)
-        .all()
-    )
     return render_template(
         "library/detail.html",
         library=lib,
         folders=folders,
-        assets=assets,
         title=lib.name,
     )
 

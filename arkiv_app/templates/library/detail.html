@@ -17,53 +17,22 @@
   </div>
   <a href="{{ url_for('library.edit_library', lib_id=library.id) }}" class="btn btn-outline-accent"><i class="bi bi-pencil"></i> Editar Biblioteca</a>
 </div>
-{% if not folders and not assets %}
-{{ empty.render(
-    img='empty.svg',
-    title='Nada aqui ainda',
-    description='Envie arquivos ou crie uma pasta para começar.',
-    cta_url=url_for('folder.create_folder') ~ '?library_id=' ~ library.id,
-    cta_label='Nova Pasta'
-) }}
-{% else %}
-<div class="row">
-  <div class="col-md-3 mb-4">
-    <div class="d-flex justify-content-between align-items-center mb-2">
-      <h6 class="mb-0">Pastas</h6>
-      <a href="{{ url_for('folder.create_folder') }}?library_id={{ library.id }}" class="btn btn-sm btn-accent" aria-label="Nova Pasta"><i class="bi bi-folder-plus"></i></a>
-    </div>
-    <div class="d-grid gap-2">
-      {% for folder in folders %}
-      {% set item_count = folder.assets|length + folder.children|length %}
-      {% include 'folder/_tile.html' %}
-      {% else %}
-      {{ empty.render(
-          img='empty.svg',
-          title='Nenhuma pasta',
-          description='Crie uma pasta para organizar seus arquivos.',
-          cta_url=url_for('folder.create_folder') ~ '?library_id=' ~ library.id,
-          cta_label='Nova Pasta'
-      ) }}
-      {% endfor %}
-    </div>
-  </div>
-  <div class="col-md-9">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-      <h6 class="mb-0">Arquivos recentes</h6>
-    </div>
-    {% if assets %}
-    {% set assets = assets %}
-    {% include 'asset/gallery.html' %}
-    {% else %}
-    {{ empty.render(
-        img='empty.svg',
-        title='Nada aqui ainda',
-        description='Envie arquivos ou crie uma pasta para começar.',
-        cta_url=url_for('folder.create_folder') ~ '?library_id=' ~ library.id,
-        cta_label='Nova Pasta'
-    ) }}
-    {% endif %}
-  </div>
+<div class="d-flex justify-content-between align-items-center mb-2">
+  <h6 class="mb-0">Pastas</h6>
+  <a href="{{ url_for('folder.create_folder') }}?library_id={{ library.id }}" class="btn btn-sm btn-accent" aria-label="Nova Pasta"><i class="bi bi-folder-plus"></i></a>
 </div>
-{% endif %}
+<div class="d-grid gap-2">
+  {% for folder in folders %}
+  {% set item_count = folder.assets|length + folder.children|length %}
+  {% include 'folder/_tile.html' %}
+  {% else %}
+  {{ empty.render(
+      img='empty.svg',
+      title='Nenhuma pasta',
+      description='Crie uma pasta para organizar seus arquivos.',
+      cta_url=url_for('folder.create_folder') ~ '?library_id=' ~ library.id,
+      cta_label='Nova Pasta'
+  ) }}
+  {% endfor %}
+</div>
 {% endblock %}
