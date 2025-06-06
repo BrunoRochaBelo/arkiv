@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% block title %}{{ folder.name }}{% endblock %}
 {% block content %}
 <h1>{{ folder.name }}</h1>
 <p><a href="{{ url_for('library.show_library', lib_id=folder.library_id) }}">Voltar para biblioteca</a></p>

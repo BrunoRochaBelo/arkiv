@@ -62,4 +62,10 @@ def upload_asset(folder_id):
         flash("Arquivo enviado")
         return redirect(url_for("asset.upload_asset", folder_id=folder.id))
     assets = Asset.query.filter_by(folder_id=folder_id).all()
-    return render_template("asset/list.html", form=form, assets=assets, folder=folder)
+    return render_template(
+        "asset/list.html",
+        form=form,
+        assets=assets,
+        folder=folder,
+        title="Arquivos",
+    )

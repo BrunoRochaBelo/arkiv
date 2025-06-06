@@ -15,7 +15,7 @@ from .forms import LibraryForm
 def list_libraries():
     org_id = current_org_id()
     libs = Library.query.filter_by(org_id=org_id).all() if org_id else []
-    return render_template("library/list.html", libraries=libs)
+    return render_template("library/list.html", libraries=libs, title="Bibliotecas")
 
 
 @library_bp.route("/libraries/<int:lib_id>")
@@ -23,7 +23,12 @@ def list_libraries():
 def show_library(lib_id):
     lib = Library.query.get_or_404(lib_id)
     folders = Folder.query.filter_by(library_id=lib_id, parent_id=None).all()
-    return render_template("library/detail.html", library=lib, folders=folders)
+    return render_template(
+        "library/detail.html",
+        library=lib,
+        folders=folders,
+        title=lib.name,
+    )
 
 
 @library_bp.route("/libraries/create", methods=["GET", "POST"])
@@ -42,7 +47,7 @@ def create_library():
         )
         flash("Biblioteca criada")
         return redirect(url_for("library.list_libraries"))
-    return render_template("library/form.html", form=form)
+    return render_template("library/form.html", form=form, title="Nova Biblioteca")
 
 
 @library_bp.route("/libraries/<int:lib_id>/edit", methods=["GET", "POST"])
@@ -63,7 +68,7 @@ def edit_library(lib_id):
         )
         flash("Biblioteca atualizada")
         return redirect(url_for("library.list_libraries"))
-    return render_template("library/form.html", form=form)
+    return render_template("library/form.html", form=form, title="Editar Biblioteca")
 
 
 @library_bp.route("/libraries/<int:lib_id>/delete", methods=["POST"])

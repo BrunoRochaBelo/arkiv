@@ -22,7 +22,7 @@ def login():
             login_user(user)
             return redirect(url_for('library.list_libraries'))
         flash('Credenciais inválidas')
-    return render_template('auth/login.html', form=form)
+    return render_template('auth/login.html', form=form, title='Entrar')
 
 
 @auth_bp.route('/logout')

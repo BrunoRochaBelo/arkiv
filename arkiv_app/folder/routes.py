@@ -53,7 +53,7 @@ def create_folder():
         )
         flash("Pasta criada")
         return redirect(url_for("library.list_libraries"))
-    return render_template("folder/form.html", form=form)
+    return render_template("folder/form.html", form=form, title="Nova Pasta")
 
 
 @folder_bp.route("/folders/<int:folder_id>/edit", methods=["GET", "POST"])
@@ -81,7 +81,7 @@ def edit_folder(folder_id):
         )
         flash("Pasta atualizada")
         return redirect(url_for("library.list_libraries"))
-    return render_template("folder/form.html", form=form)
+    return render_template("folder/form.html", form=form, title="Editar Pasta")
 
 
 @folder_bp.route("/folders/<int:folder_id>/delete", methods=["POST"])
@@ -106,4 +106,9 @@ def delete_folder(folder_id):
 def view_folder(folder_id):
     folder = Folder.query.get_or_404(folder_id)
     subfolders = Folder.query.filter_by(parent_id=folder.id).all()
-    return render_template("folder/detail.html", folder=folder, subfolders=subfolders)
+    return render_template(
+        "folder/detail.html",
+        folder=folder,
+        subfolders=subfolders,
+        title=folder.name,
+    )
