@@ -193,8 +193,9 @@ arkiv/                              # Raiz do repositório
      * **MANAGER**: cria/edita bibliotecas, gerencia usuários e configurações.
      * **EDITOR**: faz upload, edita tags, move assets.
      * **CONTRIBUTOR**: apenas upload em pastas designadas.
-     * **VIEWER**: somente leitura (útil para compliance/auditoria).
-   * Decorators `@role_required("EDITOR")` em rotas sensíveis garantem que só usuários com papel adequado acessem.
+    * **VIEWER**: somente leitura (útil para compliance/auditoria).
+  * Decorators `@role_required("EDITOR")` em rotas sensíveis garantem que só usuários com papel adequado acessem.
+  * Administradores acessam a tela "Usuários & Permissões" para convidar membros e alterar papéis.
 
 ---
 
