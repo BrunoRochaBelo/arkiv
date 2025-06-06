@@ -5,14 +5,33 @@
 {% endblock %}
 {% block content %}
 <h1>Arquivos de {{ folder.name }}</h1>
-<form method="post" enctype="multipart/form-data" class="card guarded-form">
+<form method="post" enctype="multipart/form-data" class="card p-4 guarded-form" id="upload-form">
   {{ form.hidden_tag() }}
-  <div class="field">{{ form.file() }}</div>
+  <div class="row mb-3">
+    {{ form.file.label(class_='col-12 col-md-3 form-label') }}
+    <div class="col-12 col-md-9">
+      <div id="upload-area" class="form-upload">
+        <p class="mb-0">Arraste arquivos ou clique para selecionar</p>
+        {{ form.file(class_='form-control', multiple=True, style='display:none') }}
+        <div id="preview" class="d-flex flex-wrap mt-2"></div>
+      </div>
+      {% if form.file.errors %}
+      <div class="form-error">{{ form.file.errors[0] }}</div>
+      {% endif %}
+    </div>
+  </div>
   <div class="d-flex gap-2">
-    {{ form.submit(class_='btn') }}
-    <a href="{{ url_for('folder.view_folder', folder_id=folder.id) }}" class="btn btn-secondary btn-cancel">Cancelar</a>
+    {{ form.submit(class_='btn btn-accent', id='upload-submit') }}
+    <a href="{{ url_for('folder.view_folder', folder_id=folder.id) }}" class="btn btn-outline-accent btn-cancel">Cancelar</a>
+  </div>
+  <div class="progress mt-3 d-none">
+    <div class="progress-bar" role="progressbar"></div>
   </div>
 </form>
 {% set assets = assets %}
 {% include 'asset/gallery.html' %}
+{% endblock %}
+{% block scripts %}
+{{ super() }}
+<script src="{{ url_for('static', filename='js/upload.js') }}"></script>
 {% endblock %}
