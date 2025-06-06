@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <h1>Usuários</h1>
+<p><a href="{{ url_for('admin.index') }}">Voltar</a></p>
 <table class="card" style="width:100%">
   <tr><th>Nome</th><th>Email</th><th>Ativo</th><th>Admin</th></tr>
   {% for u in users %}

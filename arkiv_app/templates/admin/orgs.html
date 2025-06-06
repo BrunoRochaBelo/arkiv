@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <h1>Organizações</h1>
+<p><a href="{{ url_for('admin.index') }}">Voltar</a></p>
 <ul>
   {% for org in orgs %}
   <li class="card">{{ org.name }} ({{ org.slug }})</li>

@@ -9,8 +9,9 @@
     <div class="field">
       {{ form.password.label }} {{ form.password(size=32) }}
     </div>
-    <div>
+    <div class="d-flex gap-2">
       {{ form.submit(class_='btn') }}
+      <a href="{{ url_for('main.index') }}" class="btn btn-outline-secondary">Voltar</a>
     </div>
   </form>
 </div>

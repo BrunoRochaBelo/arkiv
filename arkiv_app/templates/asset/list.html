@@ -7,7 +7,7 @@
   <div class="field">{{ form.file() }}</div>
   <div class="d-flex gap-2">
     {{ form.submit(class_='btn') }}
-    <button type="button" class="btn btn-secondary btn-cancel" onclick="history.back()">Cancelar</button>
+    <a href="{{ url_for('folder.view_folder', folder_id=folder.id) }}" class="btn btn-secondary btn-cancel">Cancelar</a>
   </div>
 </form>
 <ul>
