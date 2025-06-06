@@ -1,0 +1,21 @@
+{% macro guard(form_selector='.guarded-form') %}
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('{{ form_selector }}').forEach((form) => {
+      const submit = form.querySelector('[type="submit"]');
+      if (submit) submit.disabled = true;
+      const initial = new FormData(form);
+      const check = () => {
+        const current = new FormData(form);
+        let changed = false;
+        for (const [k, v] of current.entries()) {
+          if (initial.get(k) !== v) { changed = true; break; }
+        }
+        submit.disabled = !(changed && form.checkValidity());
+      };
+      form.addEventListener('input', check);
+      form.addEventListener('change', check);
+    });
+  });
+</script>
+{% endmacro %}

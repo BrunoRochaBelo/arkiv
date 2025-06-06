@@ -647,6 +647,8 @@ class AuditLog(db.Model):
 
    * **Grid de Thumbnails**: CSS Grid / Masonry para reflow suave de 320px a 4K.
    * **Navbar Fixa** com campo de busca e menu de usuário.
+   * **Tema Claro/Escuro** alternável pelo botão no topo. A escolha fica salva em `localStorage`.
+   * Fonte base **Inter** e botões `.btn-accent` padronizam o visual.
    * **Sidebar Colapsável** para filtros em telas maiores; em telas pequenas vira dropdown no topo.
 
 3. **Navegação por Teclado & Acessibilidade**

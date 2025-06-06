@@ -9,11 +9,11 @@
 
 {% if current_user.is_authenticated %}
 <div class="row text-center mb-4" style="gap:1rem; justify-content:center;">
-  <a href="{{ url_for('library.create_library') }}" class="btn"><i class="bi bi-collection"></i> Nova Biblioteca</a>
-  <a href="{{ url_for('folder.create_folder') }}" class="btn"><i class="bi bi-folder-plus"></i> Nova Pasta</a>
+  <a href="{{ url_for('library.create_library') }}" class="btn btn-accent"><i class="bi bi-collection"></i> Nova Biblioteca</a>
+  <a href="{{ url_for('folder.create_folder') }}" class="btn btn-accent"><i class="bi bi-folder-plus"></i> Nova Pasta</a>
 </div>
-<a href="{{ url_for('library.list_libraries') }}" class="btn">Ir para Bibliotecas</a>
+<a href="{{ url_for('library.list_libraries') }}" class="btn btn-outline-accent">Ir para Bibliotecas</a>
 {% else %}
-<a href="{{ url_for('auth.login') }}" class="btn">Entrar</a>
+<a href="{{ url_for('auth.login') }}" class="btn btn-accent">Entrar</a>
 {% endif %}
 {% endblock %}
