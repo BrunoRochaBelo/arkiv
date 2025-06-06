@@ -1,9 +1,10 @@
 :root {
-  --brand-color: #28a0b0;
-  --brand-color-dark: #1d7580;
+  --accent: #1493a3;
+  --accent-dark: #0d6c7a;
   --text-color: #333;
   --bg-color: #fff;
   --card-bg: #fff;
+  --bs-body-font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 }
 
 [data-theme="dark"] {
@@ -15,13 +16,13 @@
 body {
   margin: 0;
   padding-top: 70px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: var(--bs-body-font-family);
   color: var(--text-color);
   background: var(--bg-color);
 }
 
 header {
-  background: var(--brand-color);
+  background: var(--accent);
   color: #fff;
 }
 
@@ -50,7 +51,7 @@ nav a:hover {
 }
 
 a {
-  color: var(--brand-color-dark);
+  color: var(--accent-dark);
   text-decoration: none;
 }
 
@@ -83,7 +84,7 @@ input, textarea, select, button {
 }
 
 button {
-  background-color: var(--brand-color);
+  background-color: var(--accent);
   color: #fff;
   border: none;
   cursor: pointer;
@@ -92,17 +93,34 @@ button {
 }
 
 button:hover {
-  background-color: var(--brand-color-dark);
+  background-color: var(--accent-dark);
 }
 
 .btn {
-  background-color: var(--brand-color);
+  background-color: var(--accent);
   color: #fff;
   border: none;
   cursor: pointer;
   border-radius: 4px;
   padding: 0.5rem 1rem;
 }
+.btn-accent {
+  background-color: var(--accent);
+  color: #fff;
+}
+.btn-outline-accent {
+  background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+}
+.btn-outline-accent:hover {
+  background: var(--accent);
+  color: #fff;
+}
+.theme-light-only { display: inline; }
+.theme-dark-only { display: none; }
+[data-theme="dark"] .theme-light-only { display: none; }
+[data-theme="dark"] .theme-dark-only { display: inline; }
 
 .theme-toggle {
   background: none;
@@ -113,7 +131,7 @@ button:hover {
 }
 
 .btn:hover {
-  background-color: var(--brand-color-dark);
+  background-color: var(--accent-dark);
 }
 
 .card {
@@ -130,7 +148,7 @@ button:hover {
 }
 
 .flash li {
-  background: var(--brand-color);
+  background: var(--accent);
   color: #fff;
   margin-bottom: 0.5rem;
   padding: 0.5rem 2rem 0.5rem 0.5rem;

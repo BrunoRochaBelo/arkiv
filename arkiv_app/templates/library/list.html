@@ -1,18 +1,22 @@
 {% extends 'base.html' %}
 {% block content %}
 <h1>Bibliotecas</h1>
-<a href="{{ url_for('library.create_library') }}" class="btn"><i class="bi bi-plus-circle"></i> Nova Biblioteca</a>
-<ul>
+<div class="mb-3">
+  <a href="{{ url_for('library.create_library') }}" class="btn btn-accent"><i class="bi bi-plus-circle"></i> Nova Biblioteca</a>
+</div>
+<ul class="list-group list-group-flush">
   {% for lib in libraries %}
-  <li class="card" style="margin-bottom:1rem; list-style:none;">
-    <a href="{{ url_for('library.show_library', lib_id=lib.id) }}">{{ lib.name }}</a> -
-    <a href="{{ url_for('library.edit_library', lib_id=lib.id) }}"><i class="bi bi-pencil"></i> Editar</a>
-    <form action="{{ url_for('library.delete_library', lib_id=lib.id) }}" method="post" style="display:inline">
-      <button type="submit" class="btn"><i class="bi bi-trash"></i> Excluir</button>
-    </form>
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+    <span class="fw-medium"><a href="{{ url_for('library.show_library', lib_id=lib.id) }}">{{ lib.name }}</a></span>
+    <span>
+      <a href="{{ url_for('library.edit_library', lib_id=lib.id) }}" class="btn btn-sm btn-outline-secondary"><i class="bi bi-pencil"></i> Editar</a>
+      <form action="{{ url_for('library.delete_library', lib_id=lib.id) }}" method="post" class="d-inline">
+        <button type="submit" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i> Excluir</button>
+      </form>
+    </span>
   </li>
   {% else %}
-  <li>Nenhuma biblioteca</li>
+  <li class="list-group-item">Nenhuma biblioteca</li>
   {% endfor %}
 </ul>
 {% endblock %}

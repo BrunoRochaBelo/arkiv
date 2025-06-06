@@ -3,7 +3,7 @@ const STORAGE_KEY = 'arkiv_theme';
 function applyTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
   localStorage.setItem(STORAGE_KEY, theme);
-  const toggleBtn = document.querySelector('.theme-toggle');
+  const toggleBtn = document.getElementById('themeToggle');
   if (toggleBtn) {
     toggleBtn.innerHTML = theme === 'dark'
       ? '<i class="bi bi-sun-fill"></i>'

@@ -2,18 +2,20 @@
 {% block content %}
 <section class="text-center mb-5">
   <h1 class="mb-3">Bem-vindo ao Arkiv</h1>
-  <form class="d-flex justify-content-center" role="search" action="{{ url_for('search.search_page') }}" method="get">
+  <form class="d-flex justify-content-center" role="search" hx-get="{{ url_for('search.search_page') }}" hx-target="#content" hx-trigger="keyup changed delay:300ms">
     <input class="form-control" style="max-width:400px" type="search" placeholder="Buscar em tudo" name="q" aria-label="Buscar">
   </form>
 </section>
 
 {% if current_user.is_authenticated %}
-<div class="row text-center mb-4" style="gap:1rem; justify-content:center;">
-  <a href="{{ url_for('library.create_library') }}" class="btn"><i class="bi bi-collection"></i> Nova Biblioteca</a>
-  <a href="{{ url_for('folder.create_folder') }}" class="btn"><i class="bi bi-folder-plus"></i> Nova Pasta</a>
+<div class="mb-4 text-center">
+  <div class="btn-group" role="group">
+    <a href="{{ url_for('library.create_library') }}" class="btn btn-accent"><i class="bi bi-collection"></i> Nova Biblioteca</a>
+    <a href="{{ url_for('folder.create_folder') }}" class="btn btn-accent"><i class="bi bi-folder-plus"></i> Nova Pasta</a>
+    <a href="{{ url_for('library.list_libraries') }}" class="btn btn-outline-accent">Ir para Bibliotecas</a>
+  </div>
 </div>
-<a href="{{ url_for('library.list_libraries') }}" class="btn">Ir para Bibliotecas</a>
 {% else %}
-<a href="{{ url_for('auth.login') }}" class="btn">Entrar</a>
+<a href="{{ url_for('auth.login') }}" class="btn btn-accent">Entrar</a>
 {% endif %}
 {% endblock %}
