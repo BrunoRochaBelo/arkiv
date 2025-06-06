@@ -63,11 +63,6 @@ a:hover {
   text-decoration: underline;
 }
 
-.container {
-  width: 90%;
-  max-width: 960px;
-  margin: 2rem auto;
-}
 
 form {
   display: flex;
@@ -189,22 +184,6 @@ button:hover {
 
 .card, .btn {
   transition: all .24s cubic-bezier(.4,0,.2,1);
-}
-.floating-container {
-  background: var(--card-bg);
-  max-width: 1200px;
-  width: 90%;
-  margin: 0 auto;
-  padding: 2rem;
-  margin-top: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-}
-@media (max-width: 576px) {
-  .floating-container {
-    padding: 1rem;
-    margin-top: 80px;
-  }
 }
 
 .skeleton-card {
