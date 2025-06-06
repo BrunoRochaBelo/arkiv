@@ -62,7 +62,11 @@ def create_app(config_name='development'):
 
     @app.after_request
     def _security_headers(resp):
-        resp.headers['Content-Security-Policy'] = "default-src 'self'; img-src 'self' https:;"
+        resp.headers['Content-Security-Policy'] = (
+            "default-src 'self'; "
+            "script-src 'self' https://cdn.jsdelivr.net 'unsafe-inline'; "
+            "img-src 'self' https:;"
+        )
         resp.headers['X-Frame-Options'] = 'DENY'
         resp.headers['X-Content-Type-Options'] = 'nosniff'
         resp.headers['Referrer-Policy'] = 'no-referrer-when-downgrade'

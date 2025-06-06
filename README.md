@@ -570,7 +570,7 @@ class AuditLog(db.Model):
    * Cabeçalhos de segurança adicionados por padrão:
 
      ```plaintext
-     Content-Security-Policy: default-src 'self'; img-src 'self' https:;
+    Content-Security-Policy: default-src 'self'; script-src 'self' https://cdn.jsdelivr.net 'unsafe-inline'; img-src 'self' https:;
      X-Frame-Options: DENY
      X-Content-Type-Options: nosniff
      Referrer-Policy: no-referrer-when-downgrade
