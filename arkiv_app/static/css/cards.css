@@ -23,7 +23,7 @@
   align-items: center;
   justify-content: center;
   background: var(--accent);
-  color: #fff;
+  color: var(--white);
   font-weight: var(--w-semibold);
   flex-shrink: 0;
 }
@@ -58,7 +58,7 @@
 }
 .folder-badge {
   background: var(--accent);
-  color: #fff;
+  color: var(--white);
   font-size: 0.75rem;
 }
 

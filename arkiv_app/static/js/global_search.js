@@ -23,7 +23,7 @@ function initGlobalSearch() {
           const col = document.createElement('div');
           col.className = 'col-12 col-md-6 col-lg-4';
           col.innerHTML = `
-            <div class="card search-result shadow-soft h-100">
+            <div class="card search-result shadow-sm h-100">
               <div class="card-body">
                 <div class="fw-semibold mb-1">${item.name}</div>
                 <small class="text-muted text-capitalize">${item.type}</small>
