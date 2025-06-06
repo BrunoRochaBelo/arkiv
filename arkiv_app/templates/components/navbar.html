@@ -21,7 +21,7 @@
     <button class="btn btn-link theme-toggle p-0" onclick="toggleTheme()" aria-label="Alternar tema" aria-pressed="false"><i class="bi bi-moon-fill" aria-hidden="true"></i></button>
     {% if current_user.is_authenticated %}
     {% set pending = pending_tasks if pending_tasks is defined else 0 %}
-    <div class="avatar-frame position-relative" data-bs-toggle="modal" data-bs-target="#userModal">
+    <div id="avatarTrigger" class="avatar-frame position-relative">
       {% if pending %}<span class="avatar-badge">{{ pending }}</span>{% endif %}
       <img src="{{ url_for('static', filename='img/avatar.svg') }}" alt="{{ current_user.name }}" loading="lazy">
     </div>
@@ -29,15 +29,12 @@
   </div>
 </header>
 
-<div class="modal fade user-modal" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-body text-center" id="userModalLabel">
-        <a href="#" class="btn btn-accent">Configurações do Perfil</a>
-      </div>
-      <div class="modal-footer">
-        <a href="{{ url_for('auth.logout') }}" class="btn btn-outline-danger btn-logout">Logout</a>
-      </div>
-    </div>
+<div id="userModal" class="user-modal" hidden>
+  <div class="user-modal-box">
+    <button class="user-modal-close" aria-label="Fechar">&times;</button>
+    <ul class="user-options">
+      <li><a href="#" class="dropdown-item">Configurações do Perfil</a></li>
+      <li><a href="{{ url_for('auth.logout') }}" class="dropdown-item btn-logout">Logout</a></li>
+    </ul>
   </div>
 </div>
