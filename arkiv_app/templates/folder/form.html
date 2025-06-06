@@ -1,14 +1,38 @@
 {% extends 'base.html' %}
 {% block content %}
 <h1>Pasta</h1>
-<form method="post" class="card guarded-form">
+<form method="post" class="card p-4 guarded-form">
   {{ form.hidden_tag() }}
-  <div class="field">{{ form.library_id.label }} {{ form.library_id() }}</div>
-  <div class="field">{{ form.parent_id.label }} {{ form.parent_id() }}</div>
-  <div class="field">{{ form.name.label }} {{ form.name(size=32, required=True) }}</div>
+  <div class="row mb-3">
+    {{ form.library_id.label(class_='col-12 col-md-3 form-label') }}
+    <div class="col-12 col-md-9">
+      {{ form.library_id(class_='form-select') }}
+      {% if form.library_id.errors %}
+      <div class="form-error">{{ form.library_id.errors[0] }}</div>
+      {% endif %}
+    </div>
+  </div>
+  <div class="row mb-3">
+    {{ form.parent_id.label(class_='col-12 col-md-3 form-label') }}
+    <div class="col-12 col-md-9">
+      {{ form.parent_id(class_='form-select') }}
+      {% if form.parent_id.errors %}
+      <div class="form-error">{{ form.parent_id.errors[0] }}</div>
+      {% endif %}
+    </div>
+  </div>
+  <div class="row mb-3">
+    {{ form.name.label(class_='col-12 col-md-3 form-label') }}
+    <div class="col-12 col-md-9">
+      {{ form.name(class_='form-control', required=True) }}
+      {% if form.name.errors %}
+      <div class="form-error">{{ form.name.errors[0] }}</div>
+      {% endif %}
+    </div>
+  </div>
   <div class="d-flex gap-2">
     {{ form.submit(class_='btn btn-accent') }}
-    <a href="{{ url_for('library.list_libraries') }}" class="btn btn-outline-secondary btn-cancel">Cancelar</a>
+    <a href="{{ url_for('library.list_libraries') }}" class="btn btn-outline-accent btn-cancel">Cancelar</a>
   </div>
 </form>
 {% from 'components/form_dirty_guard.html' import guard %}

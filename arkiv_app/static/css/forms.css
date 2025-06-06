@@ -19,3 +19,38 @@ textarea:focus {
   border-color: var(--accent);
   box-shadow: 0 0 0 3px rgba(40, 160, 176, 0.35);
 }
+.form-error {
+  color: var(--danger);
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+.form-error::before {
+  content: "\26A0\fe0f ";
+}
+input[type="checkbox"],
+input[type="radio"] {
+  width: 24px;
+  height: 24px;
+}
+input[type="checkbox"]:focus,
+input[type="radio"]:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(40, 160, 176, 0.35);
+}
+.form-upload {
+  border: 2px dashed #ccc;
+  padding: 1.5rem;
+  text-align: center;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.form-upload.dragover {
+  border-color: var(--accent);
+  background: rgba(40, 160, 176, 0.05);
+}
+.form-upload img {
+  max-width: 100px;
+  max-height: 80px;
+  object-fit: cover;
+  margin: 0.5rem;
+}
