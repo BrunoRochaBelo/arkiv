@@ -60,6 +60,7 @@
     <div class="d-grid gap-2">
       <a href="{{ url_for('asset.download_asset', asset_id=asset.id) }}" class="btn btn-accent"><i class="bi bi-download" aria-hidden="true"></i> Download</a>
       <form action="{{ url_for('asset.delete_asset', asset_id=asset.id) }}" method="post" onsubmit="return confirm('Excluir arquivo?');">
+        {{ csrf_token() }}
         <button class="btn btn-outline-danger"><i class="bi bi-trash" aria-hidden="true"></i> Excluir</button>
       </form>
     </div>
