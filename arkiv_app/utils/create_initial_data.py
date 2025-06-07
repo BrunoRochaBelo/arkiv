@@ -2,6 +2,7 @@
 from arkiv_app import create_app
 from arkiv_app.extensions import db
 from arkiv_app.models import Plan, Organization, User, Membership, Library
+from flask import current_app
 
 
 def ensure_initial_data():
@@ -49,14 +50,14 @@ def ensure_initial_data():
         db.session.add(lib)
         db.session.commit()
 
-    print('Initial data ensured.')
+    current_app.logger.info('Initial data ensured.')
 
 
 def main():
     app = create_app()
     with app.app_context():
         ensure_initial_data()
-        print('Initial data created.')
+        current_app.logger.info('Initial data created.')
 
 
 if __name__ == '__main__':
