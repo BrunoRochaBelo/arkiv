@@ -21,7 +21,7 @@
     <button class="btn btn-link theme-toggle p-0" onclick="toggleTheme()" aria-label="Alternar tema" aria-pressed="false"><i class="bi bi-moon-fill" aria-hidden="true"></i></button>
     {% if current_user.is_authenticated %}
     {% set pending = pending_tasks if pending_tasks is defined else 0 %}
-    <div id="avatarTrigger" class="avatar-frame position-relative">
+    <div id="avatarTrigger" class="avatar-frame position-relative" role="button" tabindex="0" aria-haspopup="dialog">
       {% if pending %}<span class="avatar-badge">{{ pending }}</span>{% endif %}
       <img src="{{ url_for('static', filename='img/avatar.svg') }}" alt="{{ current_user.name }}" loading="lazy">
     </div>
@@ -30,14 +30,14 @@
 </header>
 
 <div id="profileModal" class="profile-modal-overlay" hidden>
-  <div class="profile-modal">
+  <div class="profile-modal" role="dialog" aria-modal="true" aria-labelledby="profileModalTitle" tabindex="-1">
     <div class="profile-modal-header">
       <button class="profile-modal-close" aria-label="Fechar">&times;</button>
     </div>
     <div class="profile-modal-body">
       <div class="profile-avatar">
         <img src="{{ url_for('static', filename='img/avatar.svg') }}" alt="{{ current_user.name }}" loading="lazy">
-        <h3 class="mb-0">{{ current_user.name }}</h3>
+        <h3 id="profileModalTitle" class="mb-0">{{ current_user.name }}</h3>
         <p class="text-muted mb-0">{{ current_user.email }}</p>
       </div>
       <div class="profile-actions">

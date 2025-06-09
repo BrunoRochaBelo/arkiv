@@ -23,7 +23,7 @@
       {% block back %}{% endblock %}
       {% block breadcrumb %}{% endblock %}
       {% endif %}
-      <div class="toast-container">
+      <div class="toast-container" role="log" aria-live="polite">
         {% with messages = get_flashed_messages(with_categories=True) %}
           {% for category, m in messages %}
           <div class="toast toast-{{ category }}" role="status">

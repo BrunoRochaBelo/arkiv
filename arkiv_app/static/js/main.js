@@ -1,11 +1,16 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   document.querySelectorAll('.toast').forEach((el) => {
-    const timer = setTimeout(() => el.remove(), 4000);
+    const remove = () => el.remove();
+    const timer = setTimeout(() => {
+      el.classList.add('toast-removing');
+      setTimeout(remove, 300);
+    }, 4000);
     const btn = el.querySelector('button');
     if (btn) btn.addEventListener('click', () => {
       clearTimeout(timer);
-      el.remove();
+      el.classList.add('toast-removing');
+      setTimeout(remove, 300);
     });
   });
 
