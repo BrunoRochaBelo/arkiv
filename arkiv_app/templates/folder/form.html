@@ -6,27 +6,27 @@
   <div class="row mb-3">
     {{ form.library_id.label(class_='col-12 col-md-3 form-label') }}
     <div class="col-12 col-md-9">
-      {{ form.library_id(class_='form-select') }}
+      {{ form.library_id(class_='form-select', aria_describedby='lib-error') }}
       {% if form.library_id.errors %}
-      <div class="form-error">{{ form.library_id.errors[0] }}</div>
+      <div class="form-error" id="lib-error" role="alert">{{ form.library_id.errors[0] }}</div>
       {% endif %}
     </div>
   </div>
   <div class="row mb-3">
     {{ form.parent_id.label(class_='col-12 col-md-3 form-label') }}
     <div class="col-12 col-md-9">
-      {{ form.parent_id(class_='form-select') }}
+      {{ form.parent_id(class_='form-select', aria_describedby='parent-error') }}
       {% if form.parent_id.errors %}
-      <div class="form-error">{{ form.parent_id.errors[0] }}</div>
+      <div class="form-error" id="parent-error" role="alert">{{ form.parent_id.errors[0] }}</div>
       {% endif %}
     </div>
   </div>
   <div class="row mb-3">
     {{ form.name.label(class_='col-12 col-md-3 form-label') }}
     <div class="col-12 col-md-9">
-      {{ form.name(class_='form-control', required=True) }}
+      {{ form.name(class_='form-control', required=True, aria_describedby='name-error') }}
       {% if form.name.errors %}
-      <div class="form-error">{{ form.name.errors[0] }}</div>
+      <div class="form-error" id="name-error" role="alert">{{ form.name.errors[0] }}</div>
       {% endif %}
     </div>
   </div>

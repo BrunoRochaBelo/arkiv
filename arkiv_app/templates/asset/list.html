@@ -12,11 +12,11 @@
     <div class="col-12 col-md-9">
       <div id="upload-area" class="form-upload">
         <p class="mb-0">Arraste arquivos ou clique para selecionar</p>
-        {{ form.file(class_='form-control', multiple=True, style='display:none') }}
+        {{ form.file(class_='form-control', multiple=True, style='display:none', aria_describedby='file-error') }}
         <div id="preview" class="d-flex flex-wrap mt-2"></div>
       </div>
       {% if form.file.errors %}
-      <div class="form-error">{{ form.file.errors[0] }}</div>
+      <div class="form-error" id="file-error" role="alert">{{ form.file.errors[0] }}</div>
       {% endif %}
     </div>
   </div>
