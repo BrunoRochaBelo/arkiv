@@ -292,20 +292,24 @@ h2 {
 }
 
 /* ---------- Listas padrão ---------- */
-ul {
+ul,
+ol {
   list-style: none;
-  padding-left: 1rem;
+  padding-left: 0;
+  margin: 0;
 }
-ul li {
-  position: relative;
-  padding-left: 0.75rem;
+
+ul li,
+ol li {
   margin: 0.25rem 0;
+  padding-left: 0;
 }
-ul li::before {
-  content: "•";
-  position: absolute;
-  left: 0;
-  color: var(--accent);
+
+/* Remove bullets from Bootstrap components */
+.dropdown-menu li::before,
+.list-group li::before,
+.list-unstyled li::before {
+  content: none;
 }
 
 nav[aria-label="breadcrumb"] {
