@@ -44,9 +44,6 @@ def create_app(config_name='development'):
     from .admin import admin_bp
     from .organization import organization_bp
     from .trash import trash_bp
-    from .notice import notice_bp
-    from .poll import poll_bp
-    from .ticket import ticket_bp
 
     app.register_blueprint(main_bp)
     app.register_blueprint(api_bp)
@@ -61,9 +58,6 @@ def create_app(config_name='development'):
     app.register_blueprint(admin_bp)
     app.register_blueprint(organization_bp)
     app.register_blueprint(trash_bp)
-    app.register_blueprint(notice_bp)
-    app.register_blueprint(poll_bp)
-    app.register_blueprint(ticket_bp)
     csrf.exempt(api_bp)
 
     @app.after_request
