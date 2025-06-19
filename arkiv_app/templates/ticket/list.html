@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Chamados</h1>
+<a href="{{ url_for('ticket.create_ticket') }}" class="btn btn-accent mb-3">Novo Chamado</a>
+<ul class="list-group">
+  {% for t in tickets %}
+  <li class="list-group-item">
+    <strong>{{ t.title }}</strong> - {{ t.status }}
+    <div>{{ t.description }}</div>
+  </li>
+  {% else %}
+  <li class="list-group-item">Nenhum chamado.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

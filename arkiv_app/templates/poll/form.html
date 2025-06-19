@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Nova Enquete</h1>
+<form method="post">
+  {{ form.hidden_tag() }}
+  <div class="mb-3">{{ form.question.label }} {{ form.question(class='form-control') }}</div>
+  <div class="mb-3">{{ form.closes_at.label }} {{ form.closes_at(class='form-control') }}</div>
+  {% for opt in form.options %}
+  <div class="mb-3">{{ opt.label }} {{ opt(class='form-control') }}</div>
+  {% endfor %}
+  {{ form.submit(class='btn btn-primary') }}
+</form>
+{% endblock %}
