@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Mural</h1>
+<a href="{{ url_for('notice.create_notice') }}" class="btn btn-accent mb-3">Novo Aviso</a>
+<ul class="list-group">
+  {% for n in notices %}
+  <li class="list-group-item">
+    <strong>{{ n.title }}</strong> - {{ n.category }}
+    <div>{{ n.body }}</div>
+  </li>
+  {% else %}
+  <li class="list-group-item">Nenhum aviso.</li>
+  {% endfor %}
+</ul>
+{% endblock %}
